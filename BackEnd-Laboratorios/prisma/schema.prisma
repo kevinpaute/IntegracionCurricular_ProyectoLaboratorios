@@ -12,3 +12,137 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+model Roles {
+  id_rol      Int      @id @default(autoincrement())
+  nombre_rol  String
+  estado      String
+  Permisos    Permisos[]
+  Usuarios    Usuarios[]
+}
+
+model Permisos {
+  id_permiso    Int     @id @default(autoincrement())
+  nombre_permiso String
+  id_rol        Int?
+  Roles         Roles?  @relation(fields: [id_rol], references: [id_rol])
+}
+
+model Usuarios {
+  id_usuario      Int           @id @default(autoincrement())
+  primer_nombre   String
+  segundo_nombre  String?
+  primer_apellido String
+  segundo_apellido String?
+  cedula          String
+  fecha_nacimiento DateTime
+  correo          String
+  celular         String?
+  edad            Int
+  genero          String?
+  estado          String
+  id_rol          Int?
+  Roles           Roles?        @relation(fields: [id_rol], references: [id_rol])
+  Autenticacion   Autenticacion[]
+  Grado           Grado[]
+  Reservas        Reservas[]
+  Asistencias     Asistencias[]
+}
+
+model Autenticacion {
+  id_autenticacion Int     @id @default(autoincrement())
+  usuario          String
+  contrasena       String
+  id_usuario       Int
+  Usuarios         Usuarios @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model Carreras {
+  id_carrera      Int     @id @default(autoincrement())
+  nombre_carrera  String
+  estado          String
+  Materias        Materias[]
+}
+
+model Periodos_Academicos {
+  id_periodo       Int     @id @default(autoincrement())
+  nombre_periodo   String
+  detalle_periodo  String
+  anio_lectivo     String
+  estado           String
+  Materias         Materias[]
+}
+
+model Catalogo_Materias {
+  id_catalogo    Int     @id @default(autoincrement())
+  nombre_materia String
+  Materias       Materias[]
+}
+
+model Materias {
+  id_materia    Int                @id @default(autoincrement())
+  codigo_materia String
+  estado         String
+  id_catalogo    Int?
+  id_carrera     Int?
+  id_periodo     Int?
+  Catalogo_Materias Catalogo_Materias? @relation(fields: [id_catalogo], references: [id_catalogo])
+  Carreras        Carreras?            @relation(fields: [id_carrera], references: [id_carrera])
+  Periodos_Academicos Periodos_Academicos? @relation(fields: [id_periodo], references: [id_periodo])
+  Reservas        Reservas[]
+}
+
+model Grado {
+  id_grado    Int       @id @default(autoincrement())
+  nombre_grado String
+  id_materia   String
+  id_usuario   Int
+  Usuarios     Usuarios  @relation(fields: [id_usuario], references: [id_usuario])
+}
+
+model Laboratorios {
+  id_laboratorio   Int     @id @default(autoincrement())
+  nombre_laboratorio String
+  ubicacion        String
+  capacidad        Int
+  Equipos_Laboratorio Equipos_Laboratorio[]
+  Reservas         Reservas[]
+}
+
+model Equipos_Laboratorio {
+  id_equipo       Int       @id @default(autoincrement())
+  nombre_equipo   String
+  fecha_ingreso   DateTime
+  fecha_inventario DateTime
+  marca           String
+  modelo          String
+  serie           String
+  proveedor       String
+  descripcion     String
+  id_laboratorio  Int?
+  estado          String
+  Laboratorios    Laboratorios? @relation(fields: [id_laboratorio], references: [id_laboratorio])
+}
+
+model Reservas {
+  id_reserva    Int       @id @default(autoincrement())
+  fecha_inicio  DateTime
+  fecha_fin     DateTime
+  motivo        String
+  id_usuario    Int?
+  id_laboratorio Int?
+  id_materia    Int?
+  Usuarios      Usuarios? @relation(fields: [id_usuario], references: [id_usuario])
+  Laboratorios  Laboratorios? @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  Materias      Materias? @relation(fields: [id_materia], references: [id_materia])
+  Asistencias   Asistencias[]
+}
+
+model Asistencias {
+  id_asistencia    Int      @id @default(autoincrement())
+  id_usuario       Int?
+  id_reserva       Int?
+  fecha_asistencia DateTime
+  tipo_asistencia  String
+  Usuarios         Usuarios? @relation(fields: [id_usuario], references: [id_usuario])
+  Reservas         Reservas? @relation(fields: [id_reserva], references: [id_reserva])
+}
