@@ -17,4 +17,6 @@ router.put('/periodos_academicos/:id', periodosAcademicosController.update);
 //Borrar por id
 router.delete('/periodos_academicos/:id', periodosAcademicosController.delete);
 
+router.post('/periodos_academicos/many', periodosAcademicosController.createMany);
+
 module.exports = router;

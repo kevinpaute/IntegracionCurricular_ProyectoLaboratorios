@@ -23,6 +23,15 @@ class CarreraController {
             res.status(500).json({ error: error.message });
         }
     }
+    async createMany(req, res) {
+        try {
+            const carreras = req.body;
+            const nuevasCarreras = await carreraService.createMany(carreras);
+            res.status(201).json(nuevasCarreras);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 
     async create(req, res) {
         try {

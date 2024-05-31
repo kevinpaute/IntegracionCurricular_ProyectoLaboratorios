@@ -33,6 +33,15 @@ class PeriodosAcademicosController {
             res.status(500).json({ error: error.message });
         }
     }
+    async createMany(req, res) {
+        try {
+            const periodos = req.body;
+            const nuevosPeriodos = await periodosAcademicosService.createMany(periodos);
+            res.status(201).json(nuevosPeriodos);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 
     async update(req, res) {
         try {

@@ -17,4 +17,5 @@ router.put('/carreras/:id', carreraController.update);
 //Borrar por id
 router.delete('/carreras/:id', carreraController.delete);
 
+router.post('/carreras/many', carreraController.createMany);
 module.exports = router;

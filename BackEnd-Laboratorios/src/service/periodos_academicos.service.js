@@ -40,6 +40,16 @@ class PeriodosAcademicosService {
             throw new Error(`No se pudo crear el período académico: ${error.message}`);
         }
     }
+    async createMany(periodos) {
+        try {
+            const nuevosPeriodos = await prisma.periodos_Academicos.createMany({
+                data: periodos
+            });
+            return nuevosPeriodos;
+        } catch (error) {
+            throw new Error(`No se pudieron crear los periodos académicos: ${error.message}`);
+        }
+    }
   
     async update(id, { nombre_periodo, detalle_periodo, anio_lectivo, estado }) {
         try {

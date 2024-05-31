@@ -12,6 +12,7 @@ class CarreraService {
         }
     }
 
+
     async getById(id) {
         try {
             const carrera = await prisma.carreras.findUnique({
@@ -36,6 +37,16 @@ class CarreraService {
             return nuevaCarrera;
         } catch (error) {
             throw new Error(`No se pudo crear la carrera: ${error.message}`);
+        }
+    }
+    async createMany(carreras) {
+        try {
+            const nuevasCarreras = await prisma.carreras.createMany({
+                data: carreras
+            });
+            return nuevasCarreras;
+        } catch (error) {
+            throw new Error(`No se pudieron crear las carreras: ${error.message}`);
         }
     }
   
