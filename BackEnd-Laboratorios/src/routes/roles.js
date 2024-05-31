@@ -17,4 +17,6 @@ router.put('/roles/:id', rolesController.update);
 //Borrar por id
 router.delete('/roles/:id', rolesController.delete);
 
+router.post('/roles/many', rolesController.createMany);
+
 module.exports = router;

@@ -18,4 +18,6 @@ router.put('/permisos/:id', permisosController.update);
 //Borrar por id
 router.delete('/permisos/:id', permisosController.delete);
 
+router.post('/permisos/many', permisosController.createMany);
+
 module.exports = router;

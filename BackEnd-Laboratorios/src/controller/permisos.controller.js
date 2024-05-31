@@ -33,6 +33,15 @@ class PermisosController {
             res.status(500).json({ error: error.message });
         }
     }
+    async createMany(req, res) {
+        try {
+            const permisos = req.body;
+            const nuevosPermisos = await permisosService.createMany(permisos);
+            res.status(201).json(nuevosPermisos);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 
     async update(req, res) {
         try {

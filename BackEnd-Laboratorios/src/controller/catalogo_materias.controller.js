@@ -34,6 +34,16 @@ class CatalogoMateriasController {
         }
     }
 
+    async createMany(req, res) {
+        try {
+            const materias = req.body;
+            const nuevasMaterias = await catalogoMateriasService.createMany(materias);
+            res.status(201).json(nuevasMaterias);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
     async update(req, res) {
         try {
             const { id } = req.params;

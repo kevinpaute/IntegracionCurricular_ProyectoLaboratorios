@@ -17,4 +17,5 @@ router.put('/catalogo_materias/:id', catalogoMateriasController.update);
 //Borrar catalogo por id
 router.delete('/catalogo_materias/:id', catalogoMateriasController.delete);
 
+router.post('/catalogo-materias/many', catalogoMateriasController.createMany);
 module.exports = router;

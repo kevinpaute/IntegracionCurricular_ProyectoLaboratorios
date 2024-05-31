@@ -17,4 +17,6 @@ router.put('/laboratorios/:id', laboratorioController.update);
 // Eliminar un laboratorio por ID
 router.delete('/laboratorios/:id', laboratorioController.delete);
 
+router.post('/laboratorios/many', laboratorioController.createMany);
+
 module.exports = router;

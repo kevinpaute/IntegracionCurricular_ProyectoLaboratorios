@@ -33,6 +33,16 @@ class LaboratorioController {
             res.status(500).json({ error: error.message });
         }
     }
+
+    async createMany(req, res) {
+        try {
+            const laboratorios = req.body;
+            const nuevosLaboratorios = await laboratorioService.createMany(laboratorios);
+            res.status(201).json(nuevosLaboratorios);
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
 //actualizar laboratorio
     async update(req, res) {
         try {

@@ -17,4 +17,6 @@ router.put('/materias/:id', materiasController.update);
 //borrar por id
 router.delete('/materias/:id', materiasController.delete);
 
+router.post('/materias/many', materiasController.createMany);
+
 module.exports = router;

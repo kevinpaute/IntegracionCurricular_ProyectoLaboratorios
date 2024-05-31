@@ -52,6 +52,18 @@ class MateriasService {
             throw new Error(`No se pudo crear la materia: ${error.message}`);
         }
     }
+    async createMany(materias) {
+        try {
+            const nuevasMaterias = await prisma.materias.createMany({
+                data: materias
+            });
+            return nuevasMaterias;
+        } catch (error) {
+            throw new Error(`No se pudieron crear las materias: ${error.message}`);
+        }
+    }
+
+    
 
     async update(id, { codigo_materia, estado, id_catalogo, id_carrera, id_periodo }) {
         try {

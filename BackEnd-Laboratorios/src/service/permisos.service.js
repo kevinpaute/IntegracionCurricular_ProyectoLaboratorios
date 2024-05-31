@@ -46,6 +46,17 @@ class PermisosService {
         }
     }
 
+    async createMany(permisos) {
+        try {
+            const nuevosPermisos = await prisma.permisos.createMany({
+                data: permisos
+            });
+            return nuevosPermisos;
+        } catch (error) {
+            throw new Error(`No se pudieron crear los permisos: ${error.message}`);
+        }
+    }
+
     async update(id, { nombre_permiso, id_rol }) {
         try {
             const permisoActualizado = await prisma.permisos.update({

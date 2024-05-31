@@ -51,6 +51,16 @@ class LaboratorioService {
             throw new Error(`No se pudo crear el laboratorio: ${error.message}`);
         }
     }
+    async createMany(laboratorios) {
+        try {
+            const nuevosLaboratorios = await prisma.laboratorios.createMany({
+                data: laboratorios
+            });
+            return nuevosLaboratorios;
+        } catch (error) {
+            throw new Error(`No se pudieron crear los laboratorios: ${error.message}`);
+        }
+    }
   
     // Actualizar un laboratorio por id
 
