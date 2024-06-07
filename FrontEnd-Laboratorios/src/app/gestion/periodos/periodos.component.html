@@ -1,0 +1,29 @@
+<div class="container">
+  <h2>Listado de Períodos Académicos</h2>
+  <button class="btn btn-primary" routerLink="/gestion/periodos/crear">Crear Período Académico</button>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Detalle</th>
+        <th>Año Lectivo</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let periodo of periodos">
+        <td>{{ periodo.id_periodo }}</td>
+        <td>{{ periodo.nombre_periodo }}</td>
+        <td>{{ periodo.detalle_periodo }}</td>
+        <td>{{ periodo.anio_lectivo }}</td>
+        <td>{{ periodo.estado }}</td>
+        <td>
+          <button class="btn btn-warning" [routerLink]="['/gestion/periodos/editar', periodo.id_periodo]">Editar</button>
+          <button class="btn btn-danger" (click)="eliminarPeriodo(periodo.id_periodo)">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

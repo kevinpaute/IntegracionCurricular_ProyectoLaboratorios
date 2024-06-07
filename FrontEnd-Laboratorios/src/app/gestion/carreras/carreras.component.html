@@ -1,0 +1,26 @@
+<div class="container">
+    <h2>Listado de Carreras</h2>
+    <button class="btn btn-primary" routerLink="/gestion/carreras/crear">Crear Carrera</button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let carrera of carreras">
+          <td>{{ carrera.id_carrera }}</td>
+          <td>{{ carrera.nombre_carrera }}</td>
+          <td>{{ carrera.estado }}</td>
+          <td>
+            <button class="btn btn-warning" [routerLink]="['/gestion/carreras/editar', carrera.id_carrera]">Editar</button>
+            <button class="btn btn-danger" (click)="eliminarCarrera(carrera.id_carrera)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

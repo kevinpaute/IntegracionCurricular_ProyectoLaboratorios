@@ -42,9 +42,9 @@ class MateriasService {
                 data: {
                     codigo_materia,
                     estado,
-                    id_catalogo,
-                    id_carrera,
-                    id_periodo
+                    id_catalogo: id_catalogo ? id_catalogo : null,
+                    id_carrera: id_carrera ? id_carrera : null,
+                    id_periodo: id_periodo ? id_periodo : null
                 }
             });
             return nuevaMateria;
@@ -52,18 +52,6 @@ class MateriasService {
             throw new Error(`No se pudo crear la materia: ${error.message}`);
         }
     }
-    async createMany(materias) {
-        try {
-            const nuevasMaterias = await prisma.materias.createMany({
-                data: materias
-            });
-            return nuevasMaterias;
-        } catch (error) {
-            throw new Error(`No se pudieron crear las materias: ${error.message}`);
-        }
-    }
-
-    
 
     async update(id, { codigo_materia, estado, id_catalogo, id_carrera, id_periodo }) {
         try {
@@ -74,9 +62,9 @@ class MateriasService {
                 data: {
                     codigo_materia,
                     estado,
-                    id_catalogo,
-                    id_carrera,
-                    id_periodo
+                    id_catalogo: id_catalogo ? id_catalogo : null,
+                    id_carrera: id_carrera ? id_carrera : null,
+                    id_periodo: id_periodo ? id_periodo : null
                 }
             });
             return materiaActualizada;

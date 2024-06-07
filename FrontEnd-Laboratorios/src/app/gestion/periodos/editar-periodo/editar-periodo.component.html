@@ -1,0 +1,27 @@
+<div class="container">
+    <h2>Editar Período Académico</h2>
+    <form (ngSubmit)="actualizarPeriodo()">
+      <div class="form-group">
+        <label for="nombre_periodo">Nombre del Período</label>
+        <input type="text" class="form-control" id="nombre_periodo" [(ngModel)]="nombre_periodo" name="nombre_periodo" required>
+      </div>
+      <div class="form-group">
+        <label for="detalle_periodo">Detalle del Período</label>
+        <input type="text" class="form-control" id="detalle_periodo" [(ngModel)]="detalle_periodo" name="detalle_periodo">
+      </div>
+      <div class="form-group">
+        <label for="anio_lectivo">Año Lectivo</label>
+        <input type="text" class="form-control" id="anio_lectivo" [(ngModel)]="anio_lectivo" name="anio_lectivo" required>
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <select class="form-control" id="estado" [(ngModel)]="estado" name="estado">
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+      <button class="btn btn-secondary" routerLink="/gestion/periodos">Cancelar</button>
+    </form>
+  </div>
+  

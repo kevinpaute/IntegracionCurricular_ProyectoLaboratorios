@@ -1,0 +1,39 @@
+<div class="container">
+    <h2>Crear Materia</h2>
+    <form (ngSubmit)="crearMateria()" #materiaForm="ngForm">
+      <div class="form-group">
+        <label for="codigo_materia">Código de Materia</label>
+        <input type="text" class="form-control" id="codigo_materia" name="codigo_materia" [(ngModel)]="codigo_materia" required>
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <select class="form-control" id="estado" name="estado" [(ngModel)]="estado" required>
+          <option value="activo">Activo</option>
+          <option value="inactivo">Inactivo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="id_catalogo">Catálogo de Materia</label>
+        <select class="form-control" id="id_catalogo" name="id_catalogo" [(ngModel)]="id_catalogo">
+          <option [value]="null">Selecciona un catálogo</option>
+          <option *ngFor="let catalogo of catalogos" [value]="catalogo.id_catalogo">{{ catalogo.nombre_materia }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="id_carrera">Carrera</label>
+        <select class="form-control" id="id_carrera" name="id_carrera" [(ngModel)]="id_carrera">
+          <option [value]="null">Selecciona una carrera</option>
+          <option *ngFor="let carrera of carreras" [value]="carrera.id_carrera">{{ carrera.nombre_carrera }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="id_periodo">Periodo Académico</label>
+        <select class="form-control" id="id_periodo" name="id_periodo" [(ngModel)]="id_periodo">
+          <option [value]="null">Selecciona un periodo</option>
+          <option *ngFor="let periodo of periodos" [value]="periodo.id_periodo">{{ periodo.nombre_periodo }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Crear</button>
+    </form>
+  </div>
+  

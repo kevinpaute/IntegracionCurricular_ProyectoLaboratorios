@@ -157,8 +157,6 @@ CREATE TABLE Reportes (
 );
 
 CREATE TABLE Bitacora ( 
-/* Tabla Bitacora para subir el pdf(escaneado/tomado foto) que llenan los docentes que ocupan ese dia el laboratorio 
-es decir, que cuando se sube esta evidencia se debe especificar que laboratorio, la fecha del dia y automaticamente se guarda la ruta donde se guardo el pdf */
     id_bitacora INT PRIMARY KEY AUTO_INCREMENT,
     id_laboratorio INT NOT NULL,
     fecha DATE NOT NULL,

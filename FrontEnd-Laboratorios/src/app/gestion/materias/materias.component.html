@@ -1,0 +1,30 @@
+<div class="container">
+    <h2>Listado de Materias</h2>
+    <button class="btn btn-primary" routerLink="/gestion/materias/crear">Crear Materia</button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Código</th>
+          <th>Estado</th>
+          <th>Carrera</th>
+          <th>Periodo Académico</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let materia of materias">
+          <td>{{ materia.id_materia }}</td>
+          <td>{{ materia.codigo_materia }}</td>
+          <td>{{ materia.estado }}</td>
+          <td>{{ materia.Carreras.nombre_carrera }}</td>
+          <td>{{ materia.Periodos_Academicos.nombre_periodo }}</td>
+          <td>
+            <button class="btn btn-warning" [routerLink]="['/gestion/materias/editar', materia.id_materia]">Editar</button>
+            <button class="btn btn-danger" (click)="eliminarMateria(materia.id_materia)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

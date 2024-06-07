@@ -1,0 +1,24 @@
+<div class="container">
+    <h2>Listado de Catálogos de Materias</h2>
+    <button class="btn btn-primary" routerLink="/gestion/catalogo-materias/crear">Crear Catálogo de Materias</button>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let catalogo of catalogos">
+          <td>{{ catalogo.id_catalogo }}</td>
+          <td>{{ catalogo.nombre_materia }}</td>
+          <td>
+            <button class="btn btn-warning" [routerLink]="['/gestion/catalogo-materias/editar', catalogo.id_catalogo]">Editar</button>
+            <button class="btn btn-danger" (click)="eliminarCatalogo(catalogo.id_catalogo)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
