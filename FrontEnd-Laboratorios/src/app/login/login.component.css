@@ -1,0 +1,85 @@
+.login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #e0f7fa;
+  }
+  
+  .login-box {
+    display: flex;
+    flex-direction: row;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-logo {
+    padding: 20px;
+    background-color: #0288d1;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    width: 400px;
+    text-align: center;
+    color: #ffffff !important;
+    
+  }
+  
+  hr{
+    opacity: 50;
+  }
+
+  
+  .login-logo img {
+    width: 150px;
+    height: auto;
+  }
+  
+  .login-form {
+    padding: 40px;
+  }
+  
+  .login-form h2 {
+    margin-bottom: 20px;
+    color: #0288d1;
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333333;
+  }
+  
+  .form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+  }
+  
+  .form-check-input {
+    margin-top: 7px;
+  }
+  
+  .form-check-label {
+    margin-left: 5px;
+    color: #333333;
+  }
+  
+  .btn-primary {
+    background-color: #0288d1;
+    border: none;
+    padding: 10px 20px;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0277bd;
+  }
+  

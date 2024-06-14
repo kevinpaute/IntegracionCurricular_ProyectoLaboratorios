@@ -14,6 +14,9 @@ import { EditarPeriodoComponent } from './periodos/editar-periodo/editar-periodo
 import { CatalogoMateriasComponent } from './catalogo-materias/catalogo-materias.component';
 import { CrearCatalogoMateriasComponent } from './catalogo-materias/crear-catalogo-materias/crear-catalogo-materias.component';
 import { EditarCatalogoMateriasComponent } from './catalogo-materias/editar-catalogo-materias/editar-catalogo-materias.component';
+import { UsuariosComponent } from './usuarios/usuarios.component';
+import { CrearUsuariosComponent } from './usuarios/crear-usuarios/crear-usuarios.component';
+import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +31,10 @@ import { EditarCatalogoMateriasComponent } from './catalogo-materias/editar-cata
     EditarPeriodoComponent,
     CatalogoMateriasComponent,
     CrearCatalogoMateriasComponent,
-    EditarCatalogoMateriasComponent
+    EditarCatalogoMateriasComponent,
+    UsuariosComponent,
+    CrearUsuariosComponent,
+    EditarUsuarioComponent
   ],
   imports: [
     CommonModule,

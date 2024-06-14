@@ -1,4 +1,40 @@
-<div class="container">
+<div class="modal-dialog">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">Editar Periodo</h5>
+      <button type="button" class="btn-close" (click)="close()"></button>
+    </div>
+    <div class="modal-body">
+      <form (ngSubmit)="actualizarPeriodo()">
+        <div class="mb-3">
+          <label for="nombre_periodo" class="form-label">Nombre Periodo</label>
+          <input type="text" id="nombre_periodo" [(ngModel)]="nombre_periodo" name="nombre_periodo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="detalle_periodo" class="form-label">Detalle Periodo</label>
+          <input type="text" id="detalle_periodo" [(ngModel)]="detalle_periodo" name="detalle_periodo" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="anio_lectivo" class="form-label">Año Lectivo</label>
+          <input type="text" id="anio_lectivo" [(ngModel)]="anio_lectivo" name="anio_lectivo" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label for="estado" class="form-label">Estado</label>
+          <select id="estado" [(ngModel)]="estado" name="estado" class="form-select">
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" (click)="close()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="container">
     <h2>Editar Período Académico</h2>
     <form (ngSubmit)="actualizarPeriodo()">
       <div class="form-group">
@@ -24,4 +60,4 @@
       <button class="btn btn-secondary" routerLink="/gestion/periodos">Cancelar</button>
     </form>
   </div>
-  
+   -->

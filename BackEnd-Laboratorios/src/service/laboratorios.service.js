@@ -6,7 +6,7 @@ class LaboratorioService {
     // Obtener todos los laboratorios
     async getAll() {
         try {
-            const laboratorios = await prisma.laboratorios.findMany({
+            const laboratorios = await prisma.laboratorio.findMany({
                 include: {
                     Equipos_Laboratorio: true,
                     Reservas: true 
@@ -21,7 +21,7 @@ class LaboratorioService {
     // Obtener un laboratorio por id
     async getById(id) {
         try {
-            const laboratorio = await prisma.laboratorios.findUnique({
+            const laboratorio = await prisma.laboratorio.findUnique({
                 where: {
                     id_laboratorio: parseInt(id, 10)
                 },
@@ -39,7 +39,7 @@ class LaboratorioService {
     // Crear un nuevo laboratorio
     async create({ nombre_laboratorio, ubicacion, capacidad }) {
         try {
-            const nuevoLaboratorio = await prisma.laboratorios.create({
+            const nuevoLaboratorio = await prisma.laboratorio.create({
                 data: {
                     nombre_laboratorio,
                     ubicacion,
@@ -53,7 +53,7 @@ class LaboratorioService {
     }
     async createMany(laboratorios) {
         try {
-            const nuevosLaboratorios = await prisma.laboratorios.createMany({
+            const nuevosLaboratorios = await prisma.laboratorio.createMany({
                 data: laboratorios
             });
             return nuevosLaboratorios;
@@ -66,7 +66,7 @@ class LaboratorioService {
 
     async update(id, { nombre_laboratorio, ubicacion, capacidad }) {
         try {
-            const laboratorioActualizado = await prisma.laboratorios.update({
+            const laboratorioActualizado = await prisma.laboratorio.update({
                 where: {
                     id_laboratorio: parseInt(id, 10)
                 },
@@ -85,7 +85,7 @@ class LaboratorioService {
     // Eliminar un laboratorio por id
     async delete(id) {
         try {
-            const laboratorioEliminado = await prisma.laboratorios.delete({
+            const laboratorioEliminado = await prisma.laboratorio.delete({
                 where: {
                     id_laboratorio: parseInt(id, 10)
                 }

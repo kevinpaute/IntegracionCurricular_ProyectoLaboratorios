@@ -1,0 +1,8 @@
+<div class="container">
+    <h2>Editar Usuario</h2>
+    <form [formGroup]="usuarioForm" (ngSubmit)="onSubmit()">
+      <!-- The form fields are similar to those in crear-usuario.component.html -->
+      <button type="submit" class="btn btn-primary" [disabled]="usuarioForm.invalid">Guardar</button>
+    </form>
+  </div>
+  

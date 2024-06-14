@@ -4,145 +4,190 @@
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
-generator client {
-  provider = "prisma-client-js"
-}
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+generator client {
+  provider = "prisma-client-js"
+}
+
 model Roles {
   id_rol      Int      @id @default(autoincrement())
   nombre_rol  String
   estado      String
-  Permisos    Permisos[]
-  Usuarios    Usuarios[]
+  Usuarios    Usuario[]
 }
 
-model Permisos {
-  id_permiso    Int     @id @default(autoincrement())
-  nombre_permiso String
-  id_rol        Int?
-  Roles         Roles?  @relation(fields: [id_rol], references: [id_rol])
+model Detalle_Usuario {
+  id_detalle_usuario Int    @id @default(autoincrement())
+  nombres            String
+  apellidos          String
+  cedula             String
+  fecha_nacimiento   DateTime
+  correo             String
+  celular            String?
+  edad               Int
+  genero             String
+  estado             String
+  contrasena         String
+  Usuario            Usuario[]
 }
 
-model Usuarios {
-  id_usuario      Int           @id @default(autoincrement())
-  primer_nombre   String
-  segundo_nombre  String?
-  primer_apellido String
-  segundo_apellido String?
-  cedula          String
-  fecha_nacimiento DateTime
-  correo          String
-  celular         String?
-  edad            Int
-  genero          String?
-  estado          String
-  id_rol          Int?
-  Roles           Roles?        @relation(fields: [id_rol], references: [id_rol])
-  Autenticacion   Autenticacion[]
-  Grado           Grado[]
-  Reservas        Reservas[]
-  Asistencias     Asistencias[]
+model Usuario {
+  id_usuario         Int              @id @default(autoincrement())
+  id_detalle_usuario Int
+  id_rol             Int
+  Detalle_Usuario    Detalle_Usuario  @relation(fields: [id_detalle_usuario], references: [id_detalle_usuario])
+  Roles              Roles            @relation(fields: [id_rol], references: [id_rol])
+  Materias           Materia[]        @relation("UsuarioMaterias")
+  Materia_Docente    Materia[]        @relation("MateriaDocente")
+  Revision_Equipos   Revision_Equipo[]
+  Inscripciones      Inscripcion[]
+  Reportes           Reporte[]
 }
 
-model Autenticacion {
-  id_autenticacion Int     @id @default(autoincrement())
-  usuario          String
-  contrasena       String
-  id_usuario       Int
-  Usuarios         Usuarios @relation(fields: [id_usuario], references: [id_usuario])
-}
-
-model Carreras {
-  id_carrera      Int     @id @default(autoincrement())
-  nombre_carrera  String
-  estado          String
-  Materias        Materias[]
-}
-
-model Periodos_Academicos {
-  id_periodo       Int     @id @default(autoincrement())
-  nombre_periodo   String
-  detalle_periodo  String
-  anio_lectivo     String
-  estado           String
-  Materias         Materias[]
-}
-
-model Catalogo_Materias {
-  id_catalogo    Int     @id @default(autoincrement())
-  nombre_materia String
-  Materias       Materias[]
-}
-
-model Materias {
-  id_materia    Int                @id @default(autoincrement())
-  codigo_materia String
+model Carrera {
+  id_carrera     Int               @id @default(autoincrement())
+  nombre_carrera String
   estado         String
-  id_catalogo    Int?
-  id_carrera     Int?
-  id_periodo     Int?
-  Catalogo_Materias Catalogo_Materias? @relation(fields: [id_catalogo], references: [id_catalogo])
-  Carreras        Carreras?            @relation(fields: [id_carrera], references: [id_carrera])
-  Periodos_Academicos Periodos_Academicos? @relation(fields: [id_periodo], references: [id_periodo])
-  Reservas        Reservas[]
+  Periodos_Academicos Periodo_Academico[]
 }
 
-model Grado {
-  id_grado    Int       @id @default(autoincrement())
-  nombre_grado String
-  id_materia   String
-  id_usuario   Int
-  Usuarios     Usuarios  @relation(fields: [id_usuario], references: [id_usuario])
+model Periodo_Academico {
+  id_periodo     Int      @id @default(autoincrement())
+  nombre_periodo String
+  detalle_periodo String?
+  anio_lectivo   String
+  estado         String
+  id_carrera     Int
+  Carrera        Carrera  @relation(fields: [id_carrera], references: [id_carrera])
+  Cursos         Curso[]
+
+  @@unique([id_periodo, id_carrera])
 }
 
-model Laboratorios {
-  id_laboratorio   Int     @id @default(autoincrement())
+model Curso {
+  id_curso       Int      @id @default(autoincrement())
+  nombre_curso   String
+  paralelo       String
+  estado         String
+  id_periodo     Int
+  id_carrera     Int
+  Periodo_Academico Periodo_Academico @relation(fields: [id_periodo, id_carrera], references: [id_periodo, id_carrera])
+  Materias       Materia[]
+}
+
+model Catalogo_Materia {
+  id_catalogo_materia Int      @id @default(autoincrement())
+  nombre_materia      String
+  Materias            Materia[]
+}
+
+model Materia {
+  id_materia          Int      @id @default(autoincrement())
+  id_catalogo_materia Int
+  id_curso            Int
+  id_docente          Int
+  descripcion         String?
+  estado              String
+  Catalogo_Materia    Catalogo_Materia @relation(fields: [id_catalogo_materia], references: [id_catalogo_materia])
+  Curso               Curso            @relation(fields: [id_curso], references: [id_curso])
+  Usuario             Usuario          @relation(fields: [id_docente], references: [id_usuario], name: "MateriaDocente")
+  Inscripciones       Inscripcion[]
+  Reservas            Reserva[]
+  Usuarios            Usuario[]        @relation("UsuarioMaterias")
+}
+
+model Inscripcion {
+  id_inscripcion Int       @id @default(autoincrement())
+  id_materia     Int
+  id_estudiante  Int
+  Materia        Materia   @relation(fields: [id_materia], references: [id_materia])
+  Usuario        Usuario   @relation(fields: [id_estudiante], references: [id_usuario])
+  Asistencias    Asistencia[]
+}
+
+model Laboratorio {
+  id_laboratorio  Int                @id @default(autoincrement())
   nombre_laboratorio String
-  ubicacion        String
-  capacidad        Int
-  Equipos_Laboratorio Equipos_Laboratorio[]
-  Reservas         Reservas[]
+  ubicacion       String
+  capacidad       Int
+  Equipos_Laboratorio Equipo_Laboratorio[]
+  Bitacoras       Bitacora[]
+  Reservas        Reserva[]
 }
 
-model Equipos_Laboratorio {
-  id_equipo       Int       @id @default(autoincrement())
+model Equipo_Laboratorio {
+  id_equipo       Int                @id @default(autoincrement())
+  id_laboratorio  Int
   nombre_equipo   String
   fecha_ingreso   DateTime
-  fecha_inventario DateTime
   marca           String
-  modelo          String
-  serie           String
+  modelo          String?
+  serie           String?
   proveedor       String
   descripcion     String
-  id_laboratorio  Int?
   estado          String
-  Laboratorios    Laboratorios? @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  Laboratorio     Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  Revision_Equipos Revision_Equipo[]
 }
 
-model Reservas {
-  id_reserva    Int       @id @default(autoincrement())
-  fecha_inicio  DateTime
-  fecha_fin     DateTime
-  motivo        String
-  id_usuario    Int?
-  id_laboratorio Int?
-  id_materia    Int?
-  Usuarios      Usuarios? @relation(fields: [id_usuario], references: [id_usuario])
-  Laboratorios  Laboratorios? @relation(fields: [id_laboratorio], references: [id_laboratorio])
-  Materias      Materias? @relation(fields: [id_materia], references: [id_materia])
-  Asistencias   Asistencias[]
+model Revision_Equipo {
+  id_revision     Int      @id @default(autoincrement())
+  id_equipo       Int
+  id_responsable  Int
+  fecha_inicio    DateTime
+  tipo_revision   String
+  estado_revision String
+  novedad         String
+  observaciones   String?
+  solucion        String
+  repuestos_utilizados String?
+  costo_revision  Decimal
+  fecha_fin       DateTime
+  foto_antes      String?
+  foto_despues    String?
+  Equipo_Laboratorio Equipo_Laboratorio @relation(fields: [id_equipo], references: [id_equipo])
+  Usuario         Usuario  @relation(fields: [id_responsable], references: [id_usuario])
 }
 
-model Asistencias {
-  id_asistencia    Int      @id @default(autoincrement())
-  id_usuario       Int?
-  id_reserva       Int?
+model Reserva {
+  id_reserva      Int      @id @default(autoincrement())
+  id_laboratorio  Int
+  id_materia      Int
+  fecha_inicio    DateTime
+  fecha_fin       DateTime
+  motivo          String
+  estado          String
+  Laboratorio     Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  Materia         Materia @relation(fields: [id_materia], references: [id_materia])
+  Asistencias     Asistencia[]
+}
+
+model Asistencia {
+  id_asistencia   Int        @id @default(autoincrement())
+  id_inscripcion  Int
+  id_reserva      Int
   fecha_asistencia DateTime
-  tipo_asistencia  String
-  Usuarios         Usuarios? @relation(fields: [id_usuario], references: [id_usuario])
-  Reservas         Reservas? @relation(fields: [id_reserva], references: [id_reserva])
+  observaciones   String?
+  Inscripcion     Inscripcion @relation(fields: [id_inscripcion], references: [id_inscripcion])
+  Reserva         Reserva @relation(fields: [id_reserva], references: [id_reserva])
+}
+
+model Bitacora {
+  id_bitacora     Int        @id @default(autoincrement())
+  id_laboratorio  Int
+  fecha           DateTime
+  ruta            String
+  Laboratorio     Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
+}
+
+model Reporte {
+  id_reporte      Int        @id @default(autoincrement())
+  id_usuario      Int
+  fecha           DateTime
+  tipo_reporte    String
+  Usuario         Usuario    @relation(fields: [id_usuario], references: [id_usuario])
 }

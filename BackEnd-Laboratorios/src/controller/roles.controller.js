@@ -1,4 +1,4 @@
-const rolesService = require('../services/roles.service');
+const rolesService = require('../service/roles.service');
 
 class RolesController {
     async getAll(req, res) {
@@ -19,6 +19,16 @@ class RolesController {
             } else {
                 res.status(404).json({ error: 'Rol no encontrado' });
             }
+        } catch (error) {
+            res.status(500).json({ error: error.message });
+        }
+    }
+
+    async createMany(req, res) {
+        try {
+            const roles = req.body;
+            const nuevosRoles = await rolesService.createMany(roles);
+            res.status(201).json(nuevosRoles);
         } catch (error) {
             res.status(500).json({ error: error.message });
         }

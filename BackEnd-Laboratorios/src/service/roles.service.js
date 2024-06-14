@@ -2,6 +2,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class RolesService {
+    
     async getAll() {
         try {
             const roles = await prisma.roles.findMany({
@@ -28,6 +29,17 @@ class RolesService {
             return rol;
         } catch (error) {
             throw new Error(`No se pudo obtener el rol: ${error.message}`);
+        }
+    }
+
+    async createMany(roles) {
+        try {
+            const nuevosRoles = await prisma.roles.createMany({
+                data: roles
+            });
+            return nuevosRoles;
+        } catch (error) {
+            throw new Error(`No se pudieron crear los roles: ${error.message}`);
         }
     }
 

@@ -3,3 +3,13 @@
     color: #007bff !important;
   }
   
+  :host {
+    display: block;
+    padding-top: 80px; /* height of navbar */
+  }
+  
+  main {
+    margin-left: 300px; /* width of sidebar */
+    padding: 20px;
+  }
+  

@@ -1,0 +1,28 @@
+<div class="container mt-3">
+    <h2 class="text-center">Módulo Laboratorios</h2>
+    <button class="btn btn-success mb-3" (click)="openCreateModal()">Crear</button>
+    <!-- <input class="form-control mb-3" type="text" [(ngModel)]="searchQuery" placeholder="Buscar laboratorio..."> -->
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nombre de laboratorio</th>
+          <th>Ubicación</th>
+          <th>Capacidad</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let laboratorio of laboratorios">
+          <td>{{ laboratorio.nombre_laboratorio }}</td>
+          <td>{{ laboratorio.ubicacion }}</td>
+          <td>{{ laboratorio.capacidad }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="openEditModal(laboratorio)">Editar</button>
+            <!-- <button class="btn btn-danger" (click)="deleteLaboratorio(laboratorio.id_laboratorio)">Eliminar</button> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <pagination-controls (pageChange)="page = $event"></pagination-controls> -->
+  </div>
+  

@@ -1,12 +1,14 @@
 const jwt = require('jsonwebtoken');
+const { PrismaClient } = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const authenticateToken = (req, res, next) => {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
-
+  
   if (!token) return res.sendStatus(401);
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) return res.sendStatus(403);
     req.user = user;
     next();
@@ -14,8 +16,10 @@ const authenticateToken = (req, res, next) => {
 };
 
 const authorizeRoles = (...roles) => {
-  return (req, res, next) => {
-    if (!roles.includes(req.user.id_rol)) {
+  return async (req, res, next) => {
+    const user = await prisma.usuarios.findUnique({ where: { id_usuario: req.user.id_usuario }, include: { Roles: true } });
+    
+    if (!user || !roles.includes(user.Roles.nombre_rol)) {
       return res.sendStatus(403);
     }
     next();
