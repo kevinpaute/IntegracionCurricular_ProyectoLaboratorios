@@ -1,0 +1,49 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ equipo ? 'Editar Equipo' : 'Registrar Equipo' }}</h4>
+    <button type="button" class="btn btn-light" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <form [formGroup]="equipoForm" (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="nombre_equipo">Código del Equipo</label>
+        <input id="nombre_equipo" type="text" class="form-control" formControlName="nombre_equipo">
+      </div>
+      <div class="form-group">
+        <label for="descripcion">Descripción</label>
+        <input id="descripcion" type="text" class="form-control" formControlName="descripcion">
+      </div>
+      <div class="form-group">
+        <label for="fecha_ingreso">Fecha de Ingreso</label>
+        <input id="fecha_ingreso" type="date" class="form-control" formControlName="fecha_ingreso">
+      </div>
+      <div class="form-group">
+        <label for="marca">Marca</label>
+        <input id="marca" type="text" class="form-control" formControlName="marca">
+      </div>
+      <div class="form-group">
+        <label for="modelo">Modelo</label>
+        <input id="modelo" type="text" class="form-control" formControlName="modelo">
+      </div>
+      <div class="form-group">
+        <label for="serie">Serie</label>
+        <input id="serie" type="text" class="form-control" formControlName="serie">
+      </div>
+      <div class="form-group">
+        <label for="proveedor">Proveedor</label>
+        <input id="proveedor" type="text" class="form-control" formControlName="proveedor">
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <select id="estado" class="form-control" formControlName="estado">
+          <option value="Activo">Activo</option>
+          <option value="Mantenimiento">Mantenimiento</option>
+          <option value="Inactivo">Inactivo</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+  
