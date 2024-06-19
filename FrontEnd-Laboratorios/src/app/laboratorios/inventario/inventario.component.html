@@ -1,35 +1,35 @@
 <div>
-    <div class="container mt-3">
-      <h2 class="text-center">Gestión de Equipos</h2>
-      <div class="d-flex align-items-center">
-        <button class="btn btn-success" (click)="openCreateModal()">Registrar Equipo</button>
-      </div>
-      <section class="tabla">
-        <table class="table table-striped">
-          <thead>
-            <tr>
-              <th>Código</th>
-              <th>Descripción</th>
-              <th>Fecha de Ingreso</th>
-              <th>Marca</th>
-              <th>Estado</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let equipo of equipos">
-              <td>{{ equipo.nombre_equipo }}</td>
-              <td>{{ equipo.descripcion }}</td>
-              <td>{{ equipo.fecha_ingreso | date: 'short' }}</td>
-              <td>{{ equipo.marca }}</td>
-              <td>{{ equipo.estado }}</td>
-              <td>
-                <button type="button" class="btn btn-primary" (click)="openEditModal(equipo)">Editar</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
+  <div class="container mt-3">
+    <h2 class="text-center">Gestión de Equipos</h2>
+    <div class="d-flex align-items-center">
+      <button class="btn btn-success" (click)="openCreateModal()">Registrar Equipo</button>
     </div>
+    <section class="tabla">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Fecha de Ingreso</th>
+            <th>Marca</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let equipo of equipos">
+            <td>{{ equipo.nombre_equipo }}</td>
+            <td>{{ equipo.descripcion }}</td>
+            <td>{{ equipo.fecha_ingreso | date: 'short' }}</td>
+            <td>{{ equipo.marca }}</td>
+            <td>{{ equipo.estado }}</td>
+            <td>
+              <button type="button" class="btn btn-primary" (click)="openEditModal(equipo)"><i
+                  class="bi bi-pencil-square"></i></button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </div>
-  
+</div>
