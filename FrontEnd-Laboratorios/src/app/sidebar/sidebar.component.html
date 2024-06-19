@@ -1,17 +1,24 @@
-<div class="sidebar">
-    <div class="logo">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div>
+  <div class="sidebar">
+    <div class="logo d-flex align-items-center">
       <img src="assets/logo_istla.png" alt="Instituto Superior de los Andes" class="img-fluid">
+      <div class="ms-3">
+        <h5>Instituto Superior Tecnológico "Los Andes" ISTLA</h5>
+      </div>
     </div>
+    <hr>
     <div class="sidebar-item">
-      <a routerLink="/laboratorios" routerLinkActive="active">LABORATORIOS</a>
-      <div class="sidebar-subitem">
-        <a routerLink="/laboratorios/modulo" routerLinkActive="active">MÓDULO</a>
-      </div>
-      <div class="sidebar-subitem">
-        <a routerLink="/laboratorios/inventario" routerLinkActive="active">INVENTARIO</a>
-      </div>
-      <div class="sidebar-subitem">
-        <a routerLink="/laboratorios/revision" routerLinkActive="active">REVISIÓN</a>
+      <div class="w3-dropdown-hover">
+        <button class="w3-button" routerLink="/laboratorios" routerLinkActive="active">LABORATORIOS
+          <i class="fa fa-caret-down"></i>
+        </button>
+        <div class="w3-dropdown-content ">
+          <a routerLink="/laboratorios/modulo" routerLinkActive="active">MÓDULO</a>
+          <a routerLink="/laboratorios/inventario" routerLinkActive="active">INVENTARIO</a>
+          <a routerLink="/laboratorios/revision" routerLinkActive="active">REVISIÓN</a>
+        </div>
       </div>
     </div>
     <div class="sidebar-item">
@@ -30,4 +37,3 @@
       <a routerLink="/usuarios" routerLinkActive="active">USUARIOS</a>
     </div>
   </div>
-  

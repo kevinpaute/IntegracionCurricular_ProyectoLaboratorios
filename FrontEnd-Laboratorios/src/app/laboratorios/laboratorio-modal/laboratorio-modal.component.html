@@ -1,24 +1,24 @@
 <div class="modal-header">
-    <h4 class="modal-title">{{ laboratorio ? 'Editar Laboratorio' : 'Crear Laboratorio' }}</h4>
-    <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <div class="modal-body">
-    <form [formGroup]="laboratorioForm" (ngSubmit)="save()">
-      <div class="form-group">
-        <label for="nombre_laboratorio">Nombre de laboratorio</label>
-        <input id="nombre_laboratorio" type="text" class="form-control" formControlName="nombre_laboratorio">
-      </div>
-      <div class="form-group">
-        <label for="ubicacion">Ubicación</label>
-        <input id="ubicacion" type="text" class="form-control" formControlName="ubicacion">
-      </div>
-      <div class="form-group">
-        <label for="capacidad">Capacidad</label>
-        <input id="capacidad" type="number" class="form-control" formControlName="capacidad">
-      </div>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-    </form>
-  </div>
-  
+  <h4 class="modal-title">{{ laboratorio ? 'Editar Laboratorio' : 'Crear Laboratorio' }}</h4>
+  <button type="button" class="btn btn-light" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <i class="bi bi-x-lg"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <form [formGroup]="laboratorioForm" (ngSubmit)="save()">
+    <div class="form-group">
+      <label for="nombre_laboratorio">Nombre de laboratorio</label>
+      <input id="nombre_laboratorio" type="text" class="form-control" formControlName="nombre_laboratorio">
+    </div>
+    <div class="form-group">
+      <label for="ubicacion">Ubicación</label>
+      <input id="ubicacion" type="text" class="form-control" formControlName="ubicacion">
+    </div>
+    <div class="form-group">
+      <label for="capacidad">Capacidad</label>
+      <input id="capacidad" type="number" class="form-control" formControlName="capacidad">
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+  </form>
+</div>

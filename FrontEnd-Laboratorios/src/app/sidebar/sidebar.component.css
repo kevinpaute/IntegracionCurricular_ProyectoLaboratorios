@@ -22,14 +22,73 @@
   }
    */
 
-   .sidebar {
-    background-color: #1b7fca;
-    height: 100vh;
-    padding-top: 20px; /* Espacio para el logo */
-    color: white;
-  }
-  
- /*  .logo {
+.sidebar {
+  background-color: #0274BE;
+  height: 100vh;
+  padding-top: 20px;
+  color: white;
+}
+
+h5 {
+  color: white;
+  font-size: 15px;
+  font-family: 'Raleway', sans-serif;
+  margin-right: 7%;
+}
+
+label {
+  color: white;
+  font-size: 12px;
+  font-family: 'Raleway', sans-serif;
+}
+
+a {
+  font-size: 13px;
+  font-family: 'Raleway', sans-serif;
+}
+
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  margin-left: 2px;
+  margin-left: 5px;
+}
+
+hr {
+  opacity: 50;
+  height: 14px;
+  width: 250px;
+  color: white;
+}
+
+.sidebar-item {
+  margin-bottom: 10px;
+}
+
+.w3-dropdown-content {
+  background-color: #ffffff;
+  /* Fondo blanco */
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  /* Sombra */
+}
+
+.w3-dropdown-content a {
+  padding: 10px 15px;
+  display: block;
+  text-decoration: none;
+  color: #333333;
+}
+
+.w3-dropdown-content a:hover {
+  color: black;
+}
+
+.w3-button {
+  background-color: #ffffff;
+}
+
+
+/*  .logo {
     text-align: center;
     padding: 10px 0;
   }
@@ -55,42 +114,43 @@
     background-color: #0056b3;
   }*/
 
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 250px;
-    height: 100%;
-    background-color: #007bff;
-    color: white;
-    padding-top: 20px; /* Espacio para el logo */
-    z-index: 1099;
-    overflow-y: auto;
-  }
-  
-  .logo {
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  .logo img {
-    max-height: 80px;
-  }
-  
-  .sidebar-item, .sidebar-subitem {
-    margin: 10px 0;
-    padding-left: 20px;
-  }
-  
-  .sidebar a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-  }
-  
-  .sidebar a.active {
-    font-weight: bold;
-    background-color: #0056b3;
-  }
-  
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #0274BE;
+  color: white;
+  padding-top: 20px;
+  /* Espacio para el logo */
+  z-index: 1099;
+  overflow-y: auto;
+}
+
+.logo {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.logo img {
+  max-height: 80px;
+}
+
+.sidebar-item,
+.sidebar-subitem {
+  margin: 10px 0;
+  padding-left: 20px;
+}
+
+.sidebar a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+}
+
+.sidebar a.active {
+  font-weight: bold;
+  background-color: #0273be60;
+}
