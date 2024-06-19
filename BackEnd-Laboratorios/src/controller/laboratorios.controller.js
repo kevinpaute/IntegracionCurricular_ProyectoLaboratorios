@@ -59,7 +59,7 @@ class LaboratorioController {
         }
     }
     
-
+    /*No es usado */
     async delete(req, res) {
         try {
             const { id } = req.params;
