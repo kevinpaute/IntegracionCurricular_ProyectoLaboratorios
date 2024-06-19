@@ -29,7 +29,7 @@ export class LaboratoriosComponent implements OnInit {
   openCreateModal(): void {
     const modalRef = this.modalService.open(LaboratorioModalComponent);
     modalRef.result.then((result) => {
-      if (result === 'success') {
+      if (result === 'saved') {
         this.getLaboratorios();
       }
     }).catch((error) => {});
@@ -39,9 +39,10 @@ export class LaboratoriosComponent implements OnInit {
     const modalRef = this.modalService.open(LaboratorioModalComponent);
     modalRef.componentInstance.laboratorio = laboratorio;
     modalRef.result.then((result) => {
-      if (result === 'success') {
+      if (result === 'saved') {
         this.getLaboratorios();
       }
     }).catch((error) => {});
   }
+
 }

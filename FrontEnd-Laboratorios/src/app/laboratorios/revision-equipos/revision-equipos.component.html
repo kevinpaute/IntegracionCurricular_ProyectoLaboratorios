@@ -1,0 +1,37 @@
+<div>
+    <div class="container mt-3">
+      <h2 class="text-center">Revisión de Equipos</h2>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-success" (click)="openCreateModal()">Registrar Revisión</button>
+      </div>
+      <section class="tabla">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Nombre de Equipo</th>
+              <th>Responsable</th>
+              <th>Fecha de Inicio</th>
+              <th>Tipo de Revisión</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let revision of revisiones">
+              <td>{{ revision.Equipo_Laboratorio.nombre_equipo }}</td>
+              <td>{{ revision.Usuario.Detalle_Usuario.nombres }} {{ revision.Usuario.Detalle_Usuario.apellidos }}</td>
+              <td>{{ revision.fecha_inicio | date: 'short' }}</td>
+              <td>{{ revision.tipo_revision }}</td>
+              <td>{{ revision.estado_revision }}</td>
+              <td>
+                <button type="button" class="btn btn-primary" (click)="openEditModal(revision)">Editar</button>
+                <button *ngIf="revision.estado_revision !== 'Inactivo'" type="button" class="btn btn-warning" (click)="terminarProceso(revision)">Terminar</button>
+                <button *ngIf="revision.estado_revision === 'Inactivo'" type="button" class="btn btn-info" (click)="openDetailModal(revision)">Ver Detalles</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+  

@@ -1,0 +1,71 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ revision ? 'Editar Revisión' : 'Registrar Revisión' }}</h4>
+    <button type="button" class="btn btn-light" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <form [formGroup]="revisionForm" (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="id_equipo">Equipo</label>
+        <select id="id_equipo" class="form-control" formControlName="id_equipo">
+          <option *ngFor="let equipo of equipos" [value]="equipo.id_equipo">
+            {{ equipo.nombre_equipo }}
+          </option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="fecha_inicio">Fecha de Inicio</label>
+        <input id="fecha_inicio" type="datetime-local" class="form-control" formControlName="fecha_inicio">
+      </div>
+      <div class="form-group">
+        <label for="tipo_revision">Tipo de Revisión</label>
+        <select id="tipo_revision" class="form-control" formControlName="tipo_revision">
+          <option value="Preventiva">Preventiva</option>
+          <option value="Correctiva">Correctiva</option>
+          <option value="Rendimiento">Rendimiento</option>
+          <option value="Actualización">Actualización</option>
+          <option value="Fin de Ciclo">Fin de Ciclo</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="estado_revision">Estado de Revisión</label>
+        <input id="estado_revision" type="text" class="form-control" formControlName="estado_revision">
+      </div>
+      <div class="form-group">
+        <label for="novedad">Novedades</label>
+        <input id="novedad" type="text" class="form-control" formControlName="novedad">
+      </div>
+      <div class="form-group">
+        <label for="observaciones">Observaciones</label>
+        <input id="observaciones" type="text" class="form-control" formControlName="observaciones">
+      </div>
+      <div class="form-group">
+        <label for="solucion">Solución</label>
+        <input id="solucion" type="text" class="form-control" formControlName="solucion">
+      </div>
+      <div class="form-group">
+        <label for="repuestos_utilizados">Repuestos Utilizados</label>
+        <input id="repuestos_utilizados" type="text" class="form-control" formControlName="repuestos_utilizados">
+      </div>
+      <div class="form-group">
+        <label for="costo_revision">Costo de Revisión</label>
+        <input id="costo_revision" type="number" class="form-control" formControlName="costo_revision">
+      </div>
+      <div class="form-group">
+        <label for="fecha_fin">Fecha de Finalización</label>
+        <input id="fecha_fin" type="datetime-local" class="form-control" formControlName="fecha_fin">
+      </div>
+      <div class="form-group">
+        <label for="foto_antes">Foto Antes</label>
+        <input id="foto_antes" type="text" class="form-control" formControlName="foto_antes">
+      </div>
+      <div class="form-group">
+        <label for="foto_despues">Foto Después</label>
+        <input id="foto_despues" type="text" class="form-control" formControlName="foto_despues">
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+  

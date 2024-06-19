@@ -3,7 +3,6 @@
 
 // Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
@@ -191,3 +190,4 @@ model Reporte {
   tipo_reporte    String
   Usuario         Usuario    @relation(fields: [id_usuario], references: [id_usuario])
 }
+

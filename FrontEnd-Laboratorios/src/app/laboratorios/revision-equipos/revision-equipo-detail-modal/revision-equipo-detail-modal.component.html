@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h4 class="modal-title">Detalles de la Revisión</h4>
+    <button type="button" class="btn btn-light" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <ul class="list-group">
+      <li class="list-group-item"><strong>Equipo:</strong> {{ revision.Equipo_Laboratorio?.nombre_equipo }}</li>
+      <li class="list-group-item"><strong>Responsable:</strong> {{ revision.Usuario?.nombres }} {{ revision.Usuario?.apellidos }}</li>
+      <li class="list-group-item"><strong>Fecha de Inicio:</strong> {{ revision.fecha_inicio | date: 'short' }}</li>
+      <li class="list-group-item"><strong>Tipo de Revisión:</strong> {{ revision.tipo_revision }}</li>
+      <li class="list-group-item"><strong>Novedad:</strong> {{ revision.novedad }}</li>
+      <li class="list-group-item"><strong>Estado de Revisión:</strong> {{ revision.estado_revision }}</li>
+      <li class="list-group-item"><strong>Observaciones:</strong> {{ revision.observaciones }}</li>
+      <li class="list-group-item"><strong>Solución:</strong> {{ revision.solucion }}</li>
+      <li class="list-group-item"><strong>Repuestos Utilizados:</strong> {{ revision.repuestos_utilizados }}</li>
+      <li class="list-group-item"><strong>Costo de Revisión:</strong> {{ revision.costo_revision }}</li>
+      <li class="list-group-item"><strong>Fecha de Fin:</strong> {{ revision.fecha_fin | date: 'short' }}</li>
+      <li class="list-group-item"><strong>Foto Antes:</strong> <img [src]="revision.foto_antes" alt="Foto Antes"></li>
+      <li class="list-group-item"><strong>Foto Después:</strong> <img [src]="revision.foto_despues" alt="Foto Después"></li>
+    </ul>
+  </div>
+  

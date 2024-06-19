@@ -6,7 +6,11 @@ class RevisionService {
         return await prisma.revision_Equipo.findMany({
             include: {
                 Equipo_Laboratorio: true,
-                Usuario: true
+                Usuario: {
+                    include: {
+                        Detalle_Usuario: true
+                    }
+                }
             }
         });
     }
@@ -16,7 +20,11 @@ class RevisionService {
             where: { id_revision: parseInt(id, 10) },
             include: {
                 Equipo_Laboratorio: true,
-                Usuario: true
+                Usuario: {
+                    include: {
+                        Detalle_Usuario: true
+                    }
+                }
             }
         });
     }
