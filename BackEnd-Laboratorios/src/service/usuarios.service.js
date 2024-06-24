@@ -22,6 +22,19 @@ class UsuariosService {
         });
     }
 
+    async create(usuario) {
+        return await prisma.usuario.create({
+          data: usuario
+        });
+      }
+
+      async update(id, usuario) {
+        return await prisma.usuario.update({
+          where: { id_usuario: parseInt(id) },
+          data: usuario
+        });
+      }
+
     async updatePassword(id, contrasena) {
         const hashedPassword = await bcrypt.hash(contrasena, 10);
 

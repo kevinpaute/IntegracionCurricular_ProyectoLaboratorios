@@ -5,7 +5,12 @@ class PeriodosAcademicosService {
     
     async getAll() {
         try {
-            const periodos = await prisma.periodos_Academicos.findMany();
+            const periodos = await prisma.periodo_Academico.findMany({
+                include:
+                {
+                    Carrera: true
+                }
+            });
             return periodos;
         } catch (error) {
             throw new Error(`No se pudieron obtener los períodos académicos: ${error.message}`);
@@ -14,9 +19,12 @@ class PeriodosAcademicosService {
 
     async getById(id) {
         try {
-            const periodo = await prisma.periodos_Academicos.findUnique({
+            const periodo = await prisma.periodo_Academico.findUnique({
                 where: {
                     id_periodo: parseInt(id, 10)
+                },
+                include:  {
+                    Carrera: true
                 }
             });
             return periodo;
@@ -25,14 +33,15 @@ class PeriodosAcademicosService {
         }
     }
   
-    async create({ nombre_periodo, detalle_periodo, anio_lectivo, estado }) {
+    async create({ nombre_periodo, detalle_periodo, anio_lectivo, estado, id_carrera }) {
         try {
-            const nuevoPeriodo = await prisma.periodos_Academicos.create({
+            const nuevoPeriodo = await prisma.periodo_Academico.create({
                 data: {
                     nombre_periodo,
                     detalle_periodo,
                     anio_lectivo,
-                    estado
+                    estado,
+                    id_carrera: id_carrera ? id_carrera : null
                 }
             });
             return nuevoPeriodo;
@@ -40,16 +49,7 @@ class PeriodosAcademicosService {
             throw new Error(`No se pudo crear el período académico: ${error.message}`);
         }
     }
-    async createMany(periodos) {
-        try {
-            const nuevosPeriodos = await prisma.periodos_Academicos.createMany({
-                data: periodos
-            });
-            return nuevosPeriodos;
-        } catch (error) {
-            throw new Error(`No se pudieron crear los periodos académicos: ${error.message}`);
-        }
-    }
+
   
     async update(id, { nombre_periodo, detalle_periodo, anio_lectivo, estado }) {
         try {

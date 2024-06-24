@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h4 class="modal-title">{{ usuario ? 'Editar Usuario' : 'Crear Usuario' }}</h4>
+    <button type="button" class="btn btn-light" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+  
+  <div class="modal-body">
+    <form [formGroup]="usuarioForm" (ngSubmit)="save()">
+      <div class="form-group">
+        <label for="nombres">Nombres</label>
+        <input id="nombres" type="text" class="form-control" formControlName="nombres">
+      </div>
+      <div class="form-group">
+        <label for="apellidos">Apellidos</label>
+        <input id="apellidos" type="text" class="form-control" formControlName="apellidos">
+      </div>
+      <div class="form-group">
+        <label for="cedula">Cédula</label>
+        <input id="cedula" type="text" class="form-control" formControlName="cedula">
+      </div>
+      <div class="form-group">
+        <label for="fecha_nacimiento">Fecha de Nacimiento</label>
+        <input id="fecha_nacimiento" type="date" class="form-control" formControlName="fecha_nacimiento">
+      </div>
+      <div class="form-group">
+        <label for="correo">Correo</label>
+        <input id="correo" type="email" class="form-control" formControlName="correo">
+      </div>
+      <div class="form-group">
+        <label for="celular">Celular</label>
+        <input id="celular" type="text" class="form-control" formControlName="celular">
+      </div>
+      <div class="form-group">
+        <label for="edad">Edad</label>
+        <input id="edad" type="number" class="form-control" formControlName="edad">
+      </div>
+      <div class="form-group">
+        <label for="genero">Género</label>
+        <input id="genero" type="text" class="form-control" formControlName="genero">
+      </div>
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <input id="estado" type="text" class="form-control" formControlName="estado">
+      </div>
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <input id="contrasena" type="password" class="form-control" formControlName="contrasena">
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+  </div>
+  

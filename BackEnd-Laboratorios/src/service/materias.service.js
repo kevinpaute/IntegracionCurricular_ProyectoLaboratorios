@@ -5,11 +5,11 @@ class MateriasService {
 
     async getAll() {
         try {
-            const materias = await prisma.materias.findMany({
+            const materias = await prisma.materia.findMany({
                 include: {
-                    Catalogo_Materias: true,
-                    Carreras: true,
-                    Periodos_Academicos: true
+                    Catalogo_Materia: true,
+                    Curso: true,
+                    Usuario: true
                 }
             });
             return materias;
@@ -20,14 +20,14 @@ class MateriasService {
 
     async getById(id) {
         try {
-            const materia = await prisma.materias.findUnique({
+            const materia = await prisma.materia.findUnique({
                 where: {
                     id_materia: parseInt(id, 10)
                 },
                 include: {
-                    Catalogo_Materias: true,
-                    Carreras: true,
-                    Periodos_Academicos: true
+                    Catalogo_Materia: true,
+                    Curso: true,
+                    Usuario: true
                 }
             });
             return materia;
@@ -36,15 +36,15 @@ class MateriasService {
         }
     }
 
-    async create({ codigo_materia, estado, id_catalogo, id_carrera, id_periodo }) {
+    async create({ codigo_materia, estado, id_catalogo, id_curso, id_usuario }) {
         try {
-            const nuevaMateria = await prisma.materias.create({
+            const nuevaMateria = await prisma.materia.create({
                 data: {
                     codigo_materia,
                     estado,
                     id_catalogo: id_catalogo ? id_catalogo : null,
-                    id_carrera: id_carrera ? id_carrera : null,
-                    id_periodo: id_periodo ? id_periodo : null
+                    id_curso: id_curso ? id_curso : null,
+                    id_usuario: id_usuario ? id_usuario : null
                 }
             });
             return nuevaMateria;
@@ -55,7 +55,7 @@ class MateriasService {
 
     async update(id, { codigo_materia, estado, id_catalogo, id_carrera, id_periodo }) {
         try {
-            const materiaActualizada = await prisma.materias.update({
+            const materiaActualizada = await prisma.materia.update({
                 where: {
                     id_materia: parseInt(id, 10)
                 },
@@ -63,8 +63,8 @@ class MateriasService {
                     codigo_materia,
                     estado,
                     id_catalogo: id_catalogo ? id_catalogo : null,
-                    id_carrera: id_carrera ? id_carrera : null,
-                    id_periodo: id_periodo ? id_periodo : null
+                    id_curso: id_curso ? id_curso : null,
+                    id_usuario: id_usuario ? id_usuario : null
                 }
             });
             return materiaActualizada;
@@ -75,7 +75,7 @@ class MateriasService {
 
     async delete(id) {
         try {
-            const materiaEliminada = await prisma.materias.delete({
+            const materiaEliminada = await prisma.materia.delete({
                 where: {
                     id_materia: parseInt(id, 10)
                 }

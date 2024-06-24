@@ -11,6 +11,7 @@ import { InventarioService } from 'src/app/services/laboratorios/inventario.serv
 })
 export class RevisionEquipoModalComponent implements OnInit {
   @Input() revision: any;
+  @Input() isTerminating: boolean = false;
   revisionForm: FormGroup;
   equipos: any[] = [];
 
@@ -42,7 +43,19 @@ export class RevisionEquipoModalComponent implements OnInit {
     });
 
     if (this.revision) {
-      this.revisionForm.patchValue(this.revision);
+      // Formatear fechas para que sean compatibles con los controles de fecha HTML5
+      const formattedFechaInicio = new Date(this.revision.fecha_inicio).toISOString().substring(0, 16);
+      const formattedFechaFin = this.revision.fecha_fin ? new Date(this.revision.fecha_fin).toISOString().substring(0, 16) : '';
+
+      this.revisionForm.patchValue({
+        ...this.revision,
+        fecha_inicio: formattedFechaInicio,
+        fecha_fin: formattedFechaFin
+      });
+
+      if (this.isTerminating) {
+        this.revisionForm.patchValue({ estado_revision: 'Inactivo', fecha_fin: new Date().toISOString().substring(0, 16) });
+      }
     }
   }
 
@@ -53,11 +66,11 @@ export class RevisionEquipoModalComponent implements OnInit {
 
     if (this.revision) {
       this.revisionService.updateRevision(this.revision.id_revision, this.revisionForm.value).subscribe(() => {
-        this.activeModal.close('success');
+        this.activeModal.close('saved');
       });
     } else {
       this.revisionService.createRevision(this.revisionForm.value).subscribe(() => {
-        this.activeModal.close('success');
+        this.activeModal.close('saved');
       });
     }
   }
