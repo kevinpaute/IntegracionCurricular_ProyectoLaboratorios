@@ -1,10 +1,19 @@
-<div class="container">
-    <h2>Gestión de Usuarios</h2>
-    <button class="btn btn-primary" routerLink="/gestion/usuarios/crear">Crear Usuario</button>
+<div class="container mt-3">
+  <h2 class="text-center">Gestión de Usuarios</h2>
+  <div class="d-flex align-items-center mb-3">
+    <select class="form-select" [(ngModel)]="selectedRole" (change)="filterUsersByRole()">
+      <option value="" disabled selected>Seleccione un Rol</option>
+      <option value="1">Administrador</option>
+      <option value="2">Laboratorista</option>
+      <option value="3">Docente</option>
+      <option value="4">Estudiante</option>
+    </select>
+    <button class="btn btn-success ms-3" (click)="openCreateModal()" *ngIf="selectedRole === '2'">Crear Usuario</button>
+  </div>
+  <section class="tabla" *ngIf="filteredUsuarios.length > 0">
     <table class="table table-striped">
       <thead>
         <tr>
-          <th>ID</th>
           <th>Nombre</th>
           <th>Correo</th>
           <th>Rol</th>
@@ -12,17 +21,18 @@
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let usuario of usuarios">
-          <td>{{ usuario.id_usuario }}</td>
-          <td>{{ usuario.primer_nombre }} {{ usuario.primer_apellido }}</td>
-          <td>{{ usuario.correo }}</td>
+        <tr *ngFor="let usuario of filteredUsuarios">
+          <td>{{ usuario.Detalle_Usuario.nombres }} {{ usuario.Detalle_Usuario.apellidos }}</td>
+          <td>{{ usuario.Detalle_Usuario.correo }}</td>
           <td>{{ usuario.Roles.nombre_rol }}</td>
           <td>
-            <button class="btn btn-warning" [routerLink]="['/gestion/usuarios/editar', usuario.id_usuario]">Editar</button>
-            <button class="btn btn-danger" (click)="deleteUsuario(usuario.id_usuario)">Eliminar</button>
+            <button type="button" class="btn btn-primary" (click)="openEditModal(usuario)"><i class="bi bi-pencil-square"></i></button>
           </td>
         </tr>
       </tbody>
     </table>
+  </section>
+  <div *ngIf="filteredUsuarios.length === 0 && selectedRole">
+    <p class="text-center">No hay usuarios disponibles para el rol seleccionado.</p>
   </div>
-  
+</div>

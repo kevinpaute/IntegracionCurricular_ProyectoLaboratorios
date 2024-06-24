@@ -38,6 +38,13 @@ button {
     width: 40px;
 }
 
+.btn-info{
+    height: 35px;
+    width: 40px;
+    margin-left: 11%;
+    color: white;
+}
+
 .btn-warning {
     background-color: #0274BE;
     border: 1px solid #0274BE;

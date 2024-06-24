@@ -13,8 +13,6 @@ import { CatalogoMateriasComponent } from './catalogo-materias/catalogo-materias
 import { CrearCatalogoMateriasComponent } from './catalogo-materias/crear-catalogo-materias/crear-catalogo-materias.component';
 import { EditarCatalogoMateriasComponent } from './catalogo-materias/editar-catalogo-materias/editar-catalogo-materias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { CrearUsuariosComponent } from './usuarios/crear-usuarios/crear-usuarios.component';
-import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
 
 const routes: Routes = [
   { path: 'carreras', component: CarrerasComponent },
@@ -30,8 +28,6 @@ const routes: Routes = [
   { path: 'catalogo-materias/crear', component: CrearCatalogoMateriasComponent },
   { path: 'catalogo-materias/editar/:id', component: EditarCatalogoMateriasComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'usuarios/crear', component: CrearUsuariosComponent },
-  { path: 'usuarios/editar/:id', component: EditarUsuarioComponent },
   { path: '', redirectTo: 'carreras', pathMatch: 'full' }
 ];
 

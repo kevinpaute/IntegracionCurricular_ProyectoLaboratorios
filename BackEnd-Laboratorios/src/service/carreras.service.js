@@ -5,7 +5,7 @@ class CarreraService {
     
     async getAll() {
         try {
-            const carreras = await prisma.carreras.findMany();
+            const carreras = await prisma.carrera.findMany();
             return carreras;
         } catch (error) {
             throw new Error(`No se pudieron obtener las carreras: ${error.message}`);
@@ -15,7 +15,7 @@ class CarreraService {
 
     async getById(id) {
         try {
-            const carrera = await prisma.carreras.findUnique({
+            const carrera = await prisma.carrera.findUnique({
                 where: {
                     id_carrera: parseInt(id, 10)
                 }
@@ -28,7 +28,7 @@ class CarreraService {
   
     async create({ nombre_carrera, estado }) {
         try {
-            const nuevaCarrera = await prisma.carreras.create({
+            const nuevaCarrera = await prisma.carrera.create({
                 data: {
                     nombre_carrera,
                     estado
@@ -41,7 +41,7 @@ class CarreraService {
     }
     async createMany(carreras) {
         try {
-            const nuevasCarreras = await prisma.carreras.createMany({
+            const nuevasCarreras = await prisma.carrera.createMany({
                 data: carreras
             });
             return nuevasCarreras;
@@ -52,7 +52,7 @@ class CarreraService {
   
     async update(id, { nombre_carrera, estado }) {
         try {
-            const carreraActualizada = await prisma.carreras.update({
+            const carreraActualizada = await prisma.carrera.update({
                 where: {
                     id_carrera: parseInt(id, 10)
                 },
@@ -69,7 +69,7 @@ class CarreraService {
   
     async delete(id) {
         try {
-            const carreraEliminada = await prisma.carreras.delete({
+            const carreraEliminada = await prisma.carrera.delete({
                 where: {
                     id_carrera: parseInt(id, 10)
                 }

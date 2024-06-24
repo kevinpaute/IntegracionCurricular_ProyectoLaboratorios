@@ -15,8 +15,7 @@ import { CatalogoMateriasComponent } from './catalogo-materias/catalogo-materias
 import { CrearCatalogoMateriasComponent } from './catalogo-materias/crear-catalogo-materias/crear-catalogo-materias.component';
 import { EditarCatalogoMateriasComponent } from './catalogo-materias/editar-catalogo-materias/editar-catalogo-materias.component';
 import { UsuariosComponent } from './usuarios/usuarios.component';
-import { CrearUsuariosComponent } from './usuarios/crear-usuarios/crear-usuarios.component';
-import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario.component';
+import { UsuarioModalComponent } from './usuarios/usuario-modal/usuario-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,8 +32,7 @@ import { EditarUsuarioComponent } from './usuarios/editar-usuario/editar-usuario
     CrearCatalogoMateriasComponent,
     EditarCatalogoMateriasComponent,
     UsuariosComponent,
-    CrearUsuariosComponent,
-    EditarUsuarioComponent
+    UsuarioModalComponent
   ],
   imports: [
     CommonModule,

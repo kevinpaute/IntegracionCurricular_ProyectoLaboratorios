@@ -4,7 +4,7 @@ const usuariosController = require('../controller/usuarios.controller');
 const { authenticateToken, authorizeRoles } = require('../middlewares/auth.middleware');
 
 // Obtener todos los usuarios (solo para admin)
-router.get('/usuarios', authenticateToken, authorizeRoles('administrador'), usuariosController.getAll);
+router.get('/usuarios', usuariosController.getAll);
 
 // Obtener un usuario por ID (acceso para admin y usuario mismo)
 router.get('/usuarios/:id', authenticateToken, authorizeRoles('administrador', 'docente', 'estudiante'), usuariosController.getById);

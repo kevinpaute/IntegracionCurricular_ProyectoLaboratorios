@@ -26,10 +26,10 @@
             <td>
               <button type="button" class="btn btn-primary" (click)="openEditModal(revision)"><i
                   class="bi bi-pencil-square"></i></button>
-              <button *ngIf="revision.estado_revision !== 'Inactivo'" type="button" class="btn btn-warning"
+              <button *ngIf="revision.estado_revision !== 'completada'" type="button" class="btn btn-warning"
                 (click)="terminarProceso(revision)"><i class="bi bi-check-square"></i></button>
-              <button *ngIf="revision.estado_revision === 'Inactivo'" type="button" class="btn btn-info"
-                (click)="openDetailModal(revision)">Ver Detalles</button>
+              <button *ngIf="revision.estado_revision === 'completada'" type="button" class="btn btn-info"
+                (click)="openDetailModal(revision)"><i class="bi bi-info-circle-fill "></i></button>
             </td>
           </tr>
         </tbody>
