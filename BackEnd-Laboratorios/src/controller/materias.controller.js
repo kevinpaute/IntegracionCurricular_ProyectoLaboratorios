@@ -1,77 +1,66 @@
-const materiasService = require('../service/materias.service');
+const materiaService = require('../service/materias.service');
 
 class MateriasController {
-    async getAll(req, res) {
-        try {
-            const materias = await materiasService.getAll();
-            res.json(materias);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
-        }
-    }
 
-    async getById(req, res) {
-        try {
-            const { id } = req.params;
-            const materia = await materiasService.getById(id);
-            if (materia) {
+        async getAll(req, res) {
+            try {
+                const materias = await materiaService.getAll();
+                res.json(materias);
+            } catch (error) {
+                res.status(500).json({ message: 'Error al obtener las materias', error: error.message });
+            }
+        }
+    
+        async getById(req, res) {
+            try {
+                const { id } = req.params;
+                const materia = await materiaService.getById(id);
                 res.json(materia);
-            } else {
-                res.status(404).json({ error: 'Materia no encontrada' });
+            } catch (error) {
+                res.status(500).json({ message: 'Error al obtener la materia', error: error.message });
             }
-        } catch (error) {
-            res.status(500).json({ error: error.message });
         }
-    }
-
-    async create(req, res) {
-        try {
-            const { codigo_materia, estado, id_catalogo, id_carrera, id_periodo } = req.body;
-            const nuevaMateria = await materiasService.create({ codigo_materia, estado, id_catalogo, id_carrera, id_periodo });
-            res.status(201).json(nuevaMateria);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+    
+        async getByCurso(req, res) {
+            try {
+                const { idCurso } = req.params;
+                const materias = await materiaService.getByCurso(idCurso);
+                res.json(materias);
+            } catch (error) {
+                res.status(500).json({ message: 'Error al obtener las materias', error: error.message });
+            }
         }
-    }
-
-    async createMany(req, res) {
-        try {
-            const materias = req.body;
-            const nuevasMaterias = await materiasService.createMany(materias);
-            res.status(201).json(nuevasMaterias);
-        } catch (error) {
-            res.status(500).json({ error: error.message });
+    
+        async create(req, res) {
+            try {
+                const materia = req.body;
+                const nuevaMateria = await materiaService.create(materia);
+                res.json(nuevaMateria);
+            } catch (error) {
+                res.status(500).json({ message: 'Error al crear la materia', error: error.message });
+            }
         }
-    }
-
-    async update(req, res) {
-        try {
-            const { id } = req.params;
-            const { codigo_materia, estado, id_catalogo, id_carrera, id_periodo } = req.body;
-            const materiaActualizada = await materiasService.update(id, { codigo_materia, estado, id_catalogo, id_carrera, id_periodo });
-            if (materiaActualizada) {
+    
+        async update(req, res) {
+            try {
+                const { id } = req.params;
+                const materia = req.body;
+                const materiaActualizada = await materiaService.update(id, materia);
                 res.json(materiaActualizada);
-            } else {
-                res.status(404).json({ error: 'Materia no encontrada' });
+            } catch (error) {
+                res.status(500).json({ message: 'Error al actualizar la materia', error: error.message });
             }
-        } catch (error) {
-            res.status(500).json({ error: error.message });
         }
-    }
-
-    async delete(req, res) {
-        try {
-            const { id } = req.params;
-            const materiaEliminada = await materiasService.delete(id);
-            if (materiaEliminada) {
-                res.json(materiaEliminada);
-            } else {
-                res.status(404).json({ error: 'Materia no encontrada' });
+    
+        async delete(req, res) {
+            try {
+                const { id } = req.params;
+                await materiaService.delete(id);
+                res.json({ message: 'Materia eliminada' });
+            } catch (error) {
+                res.status(500).json({ message: 'Error al eliminar la materia', error: error.message });
             }
-        } catch (error) {
-            res.status(500).json({ error: error.message });
         }
-    }
 }
 
 module.exports = new MateriasController();

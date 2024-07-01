@@ -5,12 +5,21 @@ class CarreraService {
     
     async getAll() {
         try {
-            const carreras = await prisma.carrera.findMany();
+            const carreras = await prisma.carrera.findMany({
+                where: { estado: 'activo' },
+            });
             return carreras;
         } catch (error) {
             throw new Error(`No se pudieron obtener las carreras: ${error.message}`);
         }
     }
+
+    // async getAll() {
+    //     return prisma.carrera.findMany({
+    //         where: { estado: 'activo' },
+    //     });
+    // }
+
 
 
     async getById(id) {
@@ -23,6 +32,20 @@ class CarreraService {
             return carrera;
         } catch (error) {
             throw new Error(`No se pudo obtener la carrera: ${error.message}`);
+        }
+    }
+    async getCursosByCarrera(idCarrera) {
+        try {
+            const cursos = await prisma.curso.findMany({
+                where: { id_carrera: parseInt(idCarrera) },
+                include: {
+                    Periodo_Academico: true,
+                    Carrera: true
+                }
+            });
+            return cursos;
+        } catch (error) {
+            throw new Error(`No se pudieron obtener los cursos: ${error.message}`);
         }
     }
   

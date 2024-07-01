@@ -17,7 +17,7 @@ const authenticateToken = (req, res, next) => {
 
 const authorizeRoles = (...roles) => {
   return async (req, res, next) => {
-    const user = await prisma.usuarios.findUnique({ where: { id_usuario: req.user.id_usuario }, include: { Roles: true } });
+    const user = await prisma.usuario.findUnique({ where: { id_usuario: req.user.id_usuario }, include: { Roles: true } });
     
     if (!user || !roles.includes(user.Roles.nombre_rol)) {
       return res.sendStatus(403);

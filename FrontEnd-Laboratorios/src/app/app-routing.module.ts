@@ -24,7 +24,8 @@ const routes: Routes = [
       // { path: 'asistencias', component: AsistenciasComponent, canActivate: [AuthGuard] },
       // { path: 'reportes', component: ReportesComponent, canActivate: [AuthGuard] },
       // { path: 'programas-academicos', component: ProgramasAcademicosComponent, canActivate: [AuthGuard] },
-      { path: 'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule), canActivate: [AuthGuard]}
+      { path: '', redirectTo: '/gestion/carreras', pathMatch: 'full' },
+      { path: 'gestion', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule) },
     ]
   }
 ];

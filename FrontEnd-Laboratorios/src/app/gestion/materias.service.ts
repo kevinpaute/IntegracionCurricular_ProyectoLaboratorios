@@ -6,10 +6,20 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class MateriasService {
-  private apiUrl = 'http://localhost:3000/api/materias'; // Ajusta la URL a tu backend
+  private apiUrl = 'http://localhost:3000/api';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
+  getMateriasByCurso(idCurso: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/cursos/${idCurso}/materias`);
+  }
+
+
+  getMateriaById(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/materias/${id}`);
+  }
+
+  /////
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
   }

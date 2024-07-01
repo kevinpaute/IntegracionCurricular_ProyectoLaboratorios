@@ -6,10 +6,7 @@ class PeriodosAcademicosService {
     async getAll() {
         try {
             const periodos = await prisma.periodo_Academico.findMany({
-                include:
-                {
-                    Carrera: true
-                }
+      
             });
             return periodos;
         } catch (error) {

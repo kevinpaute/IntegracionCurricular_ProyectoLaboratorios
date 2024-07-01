@@ -23,6 +23,21 @@ class CarreraController {
             res.status(500).json({ error: error.message });
         }
     }
+
+    async getCursosByCarrera(req, res) {
+        try {
+            const { idCarrera } = req.params;
+            const cursos = await carreraService.getCursosByCarrera(idCarrera);
+            if (cursos){
+                res.json(cursos);
+            }else{
+                res.status(404).json({ error: 'Cursos no encontrados' });
+            }
+        } catch (error) {
+            res.status(500).json({error: error.message });
+        }
+    }
+
     async createMany(req, res) {
         try {
             const carreras = req.body;

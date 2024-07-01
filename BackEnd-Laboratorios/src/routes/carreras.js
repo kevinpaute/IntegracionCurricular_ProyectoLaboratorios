@@ -2,20 +2,25 @@ const express = require('express');
 const router = express.Router();
 const carreraController = require('../controller/carreras.controller');
 
-//Obtener todos
 router.get('/carreras', carreraController.getAll);
-
-//Obtener por id
 router.get('/carreras/:id', carreraController.getById);
+// router.get('/carreras/:idCarrera/cursos', carreraController.getCursosByCarrera);
 
-//Insertar carrera
-router.post('/carreras', carreraController.create);
 
-//Actualizar carrera por id
-router.put('/carreras/:id', carreraController.update);
+// //Obtener todos
+// router.get('/carreras', carreraController.getAll);
 
-//Borrar por id
-router.delete('/carreras/:id', carreraController.delete);
+// //Obtener por id
+// router.get('/carreras/:id', carreraController.getById);
 
-router.post('/carreras/many', carreraController.createMany);
+// //Insertar carrera
+// router.post('/carreras', carreraController.create);
+
+// //Actualizar carrera por id
+// router.put('/carreras/:id', carreraController.update);
+
+// //Borrar por id
+// router.delete('/carreras/:id', carreraController.delete);
+
+// router.post('/carreras/many', carreraController.createMany);
 module.exports = router;

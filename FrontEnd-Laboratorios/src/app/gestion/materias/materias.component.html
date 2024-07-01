@@ -1,4 +1,20 @@
-<div class="container">
+<div class="container mt-3">
+  <h2 class="text-center">Materias</h2>
+  <div class="row mt-3">
+    <div class="col-md-4" *ngFor="let materia of materias">
+      <div class="card mb-3" (click)="goToEstudiantes(materia.id_materia)">
+        <img src="assets/img/materia.jpg" class="card-img-top" alt="Materia">
+        <div class="card-body">
+          <h5 class="card-title">{{ materia.Catalogo_Materia.nombre_materia }}</h5>
+          <p class="card-text">{{ materia.descripcion }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="container">
     <h2>Listado de Materias</h2>
     <button class="btn btn-primary" routerLink="/gestion/materias/crear">Crear Materia</button>
     <table class="table table-striped">
@@ -27,4 +43,4 @@
       </tbody>
     </table>
   </div>
-  
+   -->

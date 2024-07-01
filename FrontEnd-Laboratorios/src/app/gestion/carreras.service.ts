@@ -6,27 +6,38 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class CarrerasService {
-  private apiUrl = 'http://localhost:3000/api/carreras'; // Ajusta la URL a tu backend
+
+  private baseUrl = 'http://localhost:3000/api/carreras';
 
   constructor(private http: HttpClient) {}
 
+  getCarreras(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}`);
+  }
+
+  getCursosByCarrera(idCarrera: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${idCarrera}/cursos`);
+  }
+  
+  /////
+
   getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(this.baseUrl);
   }
 
   getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
   create(carrera: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, carrera);
+    return this.http.post<any>(this.baseUrl, carrera);
   }
 
   update(id: number, carrera: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, carrera);
+    return this.http.put<any>(`${this.baseUrl}/${id}`, carrera);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, { estado: 'inactivo' });
+    return this.http.put<any>(`${this.baseUrl}/${id}`, { estado: 'inactivo' });
   }
 }

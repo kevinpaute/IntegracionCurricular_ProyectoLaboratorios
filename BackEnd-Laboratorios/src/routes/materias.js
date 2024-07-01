@@ -1,22 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const materiasController = require('../controller/materias.controller');
+const materiaController = require('../controller/materias.controller');
 
-//Obtener todos
-router.get('/materias', materiasController.getAll);
-
-//Obtener por id
-router.get('/materias/:id', materiasController.getById);
-
-//insertar
-router.post('/materias', materiasController.create);
-
-//actualizar
-router.put('/materias/:id', materiasController.update);
-
-//borrar por id
-router.delete('/materias/:id', materiasController.delete);
-
-router.post('/materias/many', materiasController.createMany);
+router.get('/materias', materiaController.getAll);
+router.get('/materias/:id', materiaController.getById);
+router.get('/cursos/:idCurso/materias', materiaController.getByCurso);
+router.post('/materias', materiaController.create);
+router.put('/materias/:id', materiaController.update);
+router.delete('/materias/:id', materiaController.delete);
 
 module.exports = router;
