@@ -1,44 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CarrerasComponent } from './carreras/carreras.component';
-import { CrearCarreraComponent } from './carreras/crear-carrera/crear-carrera.component';
-import { EditarCarreraComponent } from './carreras/editar-carrera/editar-carrera.component';
-import { MateriasComponent } from './materias/materias.component';
-import { CrearMateriaComponent } from './materias/crear-materia/crear-materia.component';
-import { EditarMateriaComponent } from './materias/editar-materia/editar-materia.component';
-import { PeriodosComponent } from './periodos/periodos.component';
-import { CrearPeriodoComponent } from './periodos/crear-periodo/crear-periodo.component';
-import { EditarPeriodoComponent } from './periodos/editar-periodo/editar-periodo.component';
-import { CatalogoMateriasComponent } from './catalogo-materias/catalogo-materias.component';
-import { CrearCatalogoMateriasComponent } from './catalogo-materias/crear-catalogo-materias/crear-catalogo-materias.component';
-import { EditarCatalogoMateriasComponent } from './catalogo-materias/editar-catalogo-materias/editar-catalogo-materias.component';
-import { UsuariosComponent } from './usuarios/usuarios.component';
-import { InscripcionesComponent } from './inscripciones/inscripciones.component';
-import { DetalleMateriaComponent } from './materias/detalle-materia/detalle-materia.component';
 import { CursosComponent } from './cursos/cursos.component';
+import { MateriasComponent } from './materias/materias.component';
+import { InscripcionesComponent } from './inscripciones/inscripciones.component';
+import { AuthGuard } from '../guards/auth.guard';
 
 const routes: Routes = [
-  { path: 'carreras', component: CarrerasComponent },
-  // { path: 'carreras/crear', component: CrearCarreraComponent },
-  // { path: 'carreras/editar/:id', component: EditarCarreraComponent },
-  // { path: 'materias', component: MateriasComponent },
-  // { path: 'materias/crear', component: CrearMateriaComponent },
-  // { path: 'materias/editar/:id', component: EditarMateriaComponent },
-  // { path: 'periodos', component: PeriodosComponent },
-  // { path: 'periodos/crear', component: CrearPeriodoComponent },
-  // { path: 'periodos/editar/:id', component: EditarPeriodoComponent },
-  // { path: 'catalogo-materias', component: CatalogoMateriasComponent },
-  // { path: 'catalogo-materias/crear', component: CrearCatalogoMateriasComponent },
-  // { path: 'catalogo-materias/editar/:id', component: EditarCatalogoMateriasComponent },
-  { path: 'usuarios', component: UsuariosComponent },
-  { path: '', redirectTo: 'gestion', pathMatch: 'full' },
-  { path: 'cursos/:idCarrera', component: UsuariosComponent },
-  // { path: 'materias/:idCurso', component: MateriasComponent },
-  { path: 'carreras/:idCarrera/cursos', component: CursosComponent },
-  { path: 'carreras/:idCarrera/cursos/:idCurso/materias', component: MateriasComponent },
-  { path: 'materias/:id', component: DetalleMateriaComponent },
-  { path: 'carreras/:idCarrera/cursos/:idCurso/materias/:idMateria/estudiantes', component: InscripcionesComponent },
-  
+  { path: 'carreras', component: CarrerasComponent,  },
+  { path: 'carreras/:idCarrera/cursos', component: CursosComponent, canActivate: [AuthGuard], },
+  { path: 'carreras/:idCarrera/cursos/:idCurso/materias', component: MateriasComponent, canActivate: [AuthGuard],  },
+  { path: 'carreras/:idCarrera/cursos/:idCurso/materias/:idMateria/estudiantes', component: InscripcionesComponent, canActivate: [AuthGuard], },
 ];
 
 @NgModule({

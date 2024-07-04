@@ -17,7 +17,7 @@ export class LoginComponent {
   onSubmit(): void {
     this.authService.login(this.cedula, this.contrasena).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/gestion/carreras']);
       },
       error: err => {
         this.errorMessage = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';
