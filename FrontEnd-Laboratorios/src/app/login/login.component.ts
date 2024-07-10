@@ -17,7 +17,16 @@ export class LoginComponent {
   onSubmit(): void {
     this.authService.login(this.cedula, this.contrasena).subscribe({
       next: () => {
-        this.router.navigate(['/gestion/carreras']);
+        const role = this.authService.getRole();
+        if (role === 'administrador') {
+          this.router.navigate(['/gestion/carreras']);
+        } else if (role === 'laboratorista') {
+          this.router.navigate(['/laboratorios/modulo']);
+        } else if (role === 'docente') {
+          this.router.navigate(['/gestion/mis-materias']);
+        } else {
+          this.router.navigate(['/']);
+        }
       },
       error: err => {
         this.errorMessage = 'Credenciales incorrectas. Por favor, inténtelo de nuevo.';

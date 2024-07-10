@@ -1,22 +1,21 @@
 <div class="container mt-3">
-    <h2 class="text-center">Estudiantes Inscritos</h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Nombres</th>
-          <th>Apellidos</th>
-          <th>Cédula</th>
-          <th>Correo</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let estudiante of estudiantes">
-          <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }}</td>
-          <td>{{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
-          <td>{{ estudiante.Usuario.Detalle_Usuario.cedula }}</td>
-          <td>{{ estudiante.Usuario.Detalle_Usuario.correo }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
+  <h2 class="text-center">Estudiantes Inscritos</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nombres</th>
+        <th>Apellidos</th>
+        <th>Cédula</th>
+        <th>Correo</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let estudiante of estudiantes">
+        <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }}</td>
+        <td>{{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
+        <td>{{ estudiante.Usuario.Detalle_Usuario.cedula }}</td>
+        <td>{{ estudiante.Usuario.Detalle_Usuario.correo }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

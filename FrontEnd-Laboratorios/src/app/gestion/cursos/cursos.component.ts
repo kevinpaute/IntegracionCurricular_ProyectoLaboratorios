@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CursosService } from '../cursos.service';
 import { PeriodosService } from '../periodos.service';
-import { Curso } from '../../models/curso';
 
 @Component({
   selector: 'app-cursos',
@@ -10,20 +8,18 @@ import { Curso } from '../../models/curso';
   styleUrls: ['./cursos.component.css']
 })
 export class CursosComponent implements OnInit {
+  @Input() idCarrera: number;
+  @Output() navigate = new EventEmitter<number>();
   cursos: any[] = [];
   periodos: any[] = [];
   selectedPeriodo: number;
-  idCarrera: number;
 
   constructor(
     private cursosService: CursosService,
-    private periodosService: PeriodosService,
-    private route: ActivatedRoute,
-    private router: Router
+    private periodosService: PeriodosService
   ) {}
 
   ngOnInit(): void {
-    this.idCarrera = +this.route.snapshot.paramMap.get('idCarrera')!;
     this.getPeriodos();
   }
 
@@ -44,6 +40,6 @@ export class CursosComponent implements OnInit {
   }
 
   goToMaterias(idCurso: number): void {
-    this.router.navigate(['/gestion//carreras', this.idCarrera, 'cursos', idCurso, 'materias']);
+    this.navigate.emit(idCurso);
   }
 }

@@ -8,5 +8,9 @@ import { AuthService } from './services/login/auth.service';
 })
 export class AppComponent {
   title = 'FrontEnd-Laboratorios';
-  constructor(public authService: AuthService) {}
+  constructor(private authService: AuthService) {}
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
 }

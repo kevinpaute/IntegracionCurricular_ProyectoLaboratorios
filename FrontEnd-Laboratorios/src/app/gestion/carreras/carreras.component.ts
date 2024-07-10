@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { CarrerasService } from '../carreras.service';
 import { Router } from '@angular/router';
 
@@ -8,9 +8,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./carreras.component.css']
 })
 export class CarrerasComponent implements OnInit {
+  @Output() navigate = new EventEmitter<number>();
   carreras: any[] = [];
 
-  constructor(private carrerasService: CarrerasService, private router: Router) {}
+  constructor(private carrerasService: CarrerasService) {}
 
   ngOnInit(): void {
     this.getCarreras();
@@ -23,12 +24,12 @@ export class CarrerasComponent implements OnInit {
   }
 
   goToCursos(idCarrera: number): void {
-    this.router.navigate(['/gestion/carreras', idCarrera, 'cursos']);
-  
+    this.navigate.emit(idCarrera);
   }
+}
+
   // eliminarCarrera(id: number): void {
   //   this.carrerasService.delete(id).subscribe(() => {
   //     this.carreras = this.carreras.filter(c => c.id_carrera !== id);
   //   });
   // }
-}

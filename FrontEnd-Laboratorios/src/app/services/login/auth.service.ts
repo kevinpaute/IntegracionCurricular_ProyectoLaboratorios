@@ -21,7 +21,6 @@ export class AuthService {
             localStorage.setItem('role', response.role);
             localStorage.setItem('nombres', response.nombres);
             localStorage.setItem('apellidos', response.apellidos);
-          
           }
         })
       );

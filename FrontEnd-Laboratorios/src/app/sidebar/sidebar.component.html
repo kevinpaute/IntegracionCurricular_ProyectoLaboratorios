@@ -1,5 +1,6 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 <div>
   <div class="sidebar">
     <div class="logo d-flex align-items-center">
@@ -9,7 +10,19 @@
       </div>
     </div>
     <hr>
-    <div class="sidebar-item">
+    <!-- Gestión de Usuarios -->
+    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
+      <a routerLink="/gestion/usuarios" routerLinkActive="active"> <i class="bi bi-people-fill"></i> GESTIÓN DE USUARIOS</a>
+    </div>
+    <!-- Módulo de programas académicos -->
+    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
+      <a routerLink="/gestion/carreras" routerLinkActive="active"><i class="bi bi-journals"></i> PROGRAMAS ACADÉMICOS</a>
+    </div>
+    <div class="sidebar-item" *ngIf="isRole('docente')">
+      <a routerLink="/gestion/mis-materias" routerLinkActive="active"><i class="bi bi-book"></i> MIS MATERIAS</a>
+    </div>
+    <!-- Gestión de laboratorios -->
+    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
       <div class="w3-dropdown-hover">
         <button class="w3-button" routerLink="/laboratorios" routerLinkActive="active"> <i class="bi bi-pc-display"></i> LABORATORIOS
           <i class="fa fa-caret-down"></i>
@@ -21,19 +34,15 @@
         </div>
       </div>
     </div>
-    <div class="sidebar-item">
+    <!-- Gestión de reservas -->
+    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista') || isRole('docente')">
       <a routerLink="/reservas" routerLinkActive="active"> <i class="bi bi-calendar-date-fill"></i> RESERVAS</a>
     </div>
-    <div class="sidebar-item">
-      <a routerLink="/asistencias" routerLinkActive="active"><i class="bi bi-card-checklist"></i> ASISTENCIA</a>
-    </div>
-    <div class="sidebar-item">
+    <!-- Gestión de reportes -->
+    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista') || isRole('docente')">
       <a routerLink="/reportes" routerLinkActive="active"><i class="bi bi-file-earmark-pdf"></i> REPORTES</a>
     </div>
-    <div class="sidebar-item">
-      <a routerLink="/gestion/carreras" routerLinkActive="active"><i class="bi bi-journals"></i> PROGRAMAS ACADÉMICOS</a>
-    </div>
-    <div class="sidebar-item">
-      <a routerLink="/usuarios" routerLinkActive="active"> <i class="bi bi-people-fill"></i> USUARIOS</a>
-    </div>
+
   </div>
+</div>
+

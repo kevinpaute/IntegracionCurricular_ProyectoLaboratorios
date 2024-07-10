@@ -1,15 +1,43 @@
 .navbar-nav .nav-link.active {
-    font-weight: bold;
-    color: #007bff !important;
-  }
-  
-  :host {
-    display: block;
-    padding-top: 80px; /* height of navbar */
-  }
-  
-  main {
-    margin-left: 300px; /* width of sidebar */
-    padding: 20px;
-  }
-  
+  font-weight: bold;
+  color: #007bff !important;
+}
+
+:host {
+  display: block; 
+  /*padding-top: 80px; /* height of navbar */
+}
+
+main {
+  margin-left: 300px; /* width of sidebar */
+  padding: 20px;
+}
+
+.container-fluid{
+  padding-top: 80px !important;
+}
+
+/* Estilos específicos para el componente de inicio de sesión */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #e9f1f7;
+}
+
+.login-box {
+  padding-top: -80px !important;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-logo {
+  text-align: center;
+}
+
+.login-form {
+  text-align: center;
+}

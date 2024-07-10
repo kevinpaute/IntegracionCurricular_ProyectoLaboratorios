@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { InscripcionesService } from '../inscripciones.service';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-inscripciones',
@@ -8,16 +7,12 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./inscripciones.component.css']
 })
 export class InscripcionesComponent implements OnInit {
+  @Input() idMateria: number;
   estudiantes: any[] = [];
-  idMateria: number;
 
-  constructor(
-    private estudiantesService: InscripcionesService,
-    private route: ActivatedRoute
-  ) { }
+  constructor(private estudiantesService: InscripcionesService) {}
 
   ngOnInit(): void {
-    this.idMateria = +(this.route.snapshot.paramMap.get('idMateria') ?? 0);
     this.getEstudiantes();
   }
 

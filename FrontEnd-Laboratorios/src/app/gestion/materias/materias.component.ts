@@ -1,6 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MateriasService } from '../materias.service';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-materias',
@@ -8,20 +7,13 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./materias.component.css']
 })
 export class MateriasComponent implements OnInit {
-
+  @Input() idCurso: number;
+  @Output() navigate = new EventEmitter<number>();
   materias: any[] = [];
-  idCarrera: number;
-  idCurso: number;
 
-  constructor(
-    private materiasService: MateriasService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private materiasService: MateriasService) {}
 
   ngOnInit(): void {
-    this.idCarrera = +this.route.snapshot.paramMap.get('idCarrera')!;
-    this.idCurso = +this.route.snapshot.paramMap.get('idCurso')!;
     this.getMaterias();
   }
 
@@ -32,8 +24,9 @@ export class MateriasComponent implements OnInit {
   }
 
   goToEstudiantes(idMateria: number): void {
-    this.router.navigate(['/gestion/carreras', this.idCarrera, 'cursos', this.idCurso, 'materias', idMateria, 'estudiantes']);
+    this.navigate.emit(idMateria);
   }
+}
 
   // materias: any[] = [];
 
@@ -50,4 +43,3 @@ export class MateriasComponent implements OnInit {
   //     this.materias = this.materias.filter(m => m.id_materia !== id);
   //   });
   // }
-}

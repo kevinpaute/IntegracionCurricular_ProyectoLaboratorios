@@ -37,7 +37,9 @@
     height: 50px;
   }
    */
-
+   .container-fluid > .row{
+    padding-top: 80px !important;
+  }
   
   .navbar-logout button {
     background-color: #ffffff;

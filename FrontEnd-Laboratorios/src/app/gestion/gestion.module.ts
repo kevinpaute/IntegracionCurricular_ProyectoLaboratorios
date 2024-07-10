@@ -19,6 +19,8 @@ import { UsuarioModalComponent } from './usuarios/usuario-modal/usuario-modal.co
 import { InscripcionesComponent } from './inscripciones/inscripciones.component';
 import { CursosComponent } from './cursos/cursos.component';
 import { DetalleMateriaComponent } from './materias/detalle-materia/detalle-materia.component';
+import { ProgramasComponent } from './programas/programas.component';
+import { GestionMateriasComponent } from './gestion-materias/gestion-materias.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { DetalleMateriaComponent } from './materias/detalle-materia/detalle-mate
     UsuarioModalComponent,
     InscripcionesComponent,
     CursosComponent,
-    DetalleMateriaComponent
+    DetalleMateriaComponent,
+    ProgramasComponent,
+    GestionMateriasComponent
   ],
   imports: [
     CommonModule,

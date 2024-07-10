@@ -20,6 +20,7 @@ import { RevisionEquiposComponent } from './laboratorios/revision-equipos/revisi
 import { InventarioModalComponent } from './laboratorios/inventario/inventario-modal/inventario-modal.component';
 import { RevisionEquipoModalComponent } from './laboratorios/revision-equipos/revision-equipo-modal/revision-equipo-modal.component';
 import { RevisionEquipoDetailModalComponent } from './laboratorios/revision-equipos/revision-equipo-detail-modal/revision-equipo-detail-modal.component';
+import { CuentaComponent } from './cuenta/cuenta.component';
 // import { NgxPaginationModule } from 'ngx-pagination';
 
 
@@ -35,7 +36,8 @@ import { RevisionEquipoDetailModalComponent } from './laboratorios/revision-equi
     RevisionEquiposComponent,
     InventarioModalComponent,
     RevisionEquipoModalComponent,
-    RevisionEquipoDetailModalComponent
+    RevisionEquipoDetailModalComponent,
+    CuentaComponent
   ],
   imports: [
     BrowserModule,

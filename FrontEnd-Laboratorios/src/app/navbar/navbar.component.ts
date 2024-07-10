@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/login/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -10,7 +11,7 @@ export class NavbarComponent {
   userName: string | null = null;
   userRole: string | null = null;
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService, private router: Router) {
     this.userName = this.authService.getUserName();
     this.userRole = this.authService.getRole();
   }
@@ -18,7 +19,12 @@ export class NavbarComponent {
   logout() {
     this.authService.logout();
   }
+
+  isAuthenticated(): boolean {
+    return this.authService.isAuthenticated();
+  }
 }
+
 
 // import { Component, OnInit } from '@angular/core';
 // import { AuthService } from '../services/login/auth.service';
