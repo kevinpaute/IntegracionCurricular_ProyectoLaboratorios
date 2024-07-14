@@ -21,8 +21,19 @@ import { InventarioModalComponent } from './laboratorios/inventario/inventario-m
 import { RevisionEquipoModalComponent } from './laboratorios/revision-equipos/revision-equipo-modal/revision-equipo-modal.component';
 import { RevisionEquipoDetailModalComponent } from './laboratorios/revision-equipos/revision-equipo-detail-modal/revision-equipo-detail-modal.component';
 import { CuentaComponent } from './cuenta/cuenta.component';
-// import { NgxPaginationModule } from 'ngx-pagination';
+import { ReservasComponent } from './reservas/reservas.component';
 
+import { FullCalendarModule } from '@fullcalendar/angular';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.component';
+// import { NgxPaginationModule } from 'ngx-pagination';
+// FullCalendarModule.registerPlugins([
+//   dayGridPlugin,
+//   timeGridPlugin,
+//   interactionPlugin,
+// ]);
 
 @NgModule({
   declarations: [
@@ -37,7 +48,9 @@ import { CuentaComponent } from './cuenta/cuenta.component';
     InventarioModalComponent,
     RevisionEquipoModalComponent,
     RevisionEquipoDetailModalComponent,
-    CuentaComponent
+    CuentaComponent,
+    ReservasComponent,
+    ReservasDocenteComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +61,7 @@ import { CuentaComponent } from './cuenta/cuenta.component';
     HttpClientModule,
     NgbModule, // Asegúrate de que HttpClientModule está en las importaciones
     // NgxPaginationModule
+    FullCalendarModule,
   ],
   providers: [
     AuthService,

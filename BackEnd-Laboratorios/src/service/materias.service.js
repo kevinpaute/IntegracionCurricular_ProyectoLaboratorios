@@ -7,7 +7,7 @@ class MateriasService {
             include: {
                 Catalogo_Materia: true,
                 Curso: true,
-                Docente: {
+                Usuario: {
                     include: {
                         Detalle_Usuario: true
                     }

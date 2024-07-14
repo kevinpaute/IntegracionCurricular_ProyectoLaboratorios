@@ -1,0 +1,40 @@
+<div>
+    <full-calendar #calendar [options]="calendarOptions"></full-calendar>
+    <ng-template #reservaModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Reserva</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="motivo">Motivo</label>
+          <input type="text" class="form-control" id="motivo" [(ngModel)]="selectedReserva.motivo">
+        </div>
+        <div class="form-group">
+          <label for="fechaInicio">Fecha y Hora de Inicio</label>
+          <input type="datetime-local" class="form-control" id="fechaInicio" [(ngModel)]="selectedReserva.fechaInicio">
+        </div>
+        <div class="form-group">
+          <label for="fechaFin">Fecha y Hora de Fin</label>
+          <input type="datetime-local" class="form-control" id="fechaFin" [(ngModel)]="selectedReserva.fechaFin">
+        </div>
+        <div class="form-group">
+          <label for="laboratorio">Laboratorio</label>
+          <input type="text" class="form-control" id="laboratorio" [(ngModel)]="selectedReserva.laboratorio">
+        </div>
+        <div class="form-group">
+          <label for="materia">Materia</label>
+          <select class="form-control" id="materia" [(ngModel)]="selectedReserva.materia">
+            <option *ngFor="let materia of materias" [value]="materia.id_materia">{{ materia.Catalogo_Materia.nombre_materia }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="modal.dismiss('Close click')">Cerrar</button>
+        <button type="button" class="btn btn-primary" (click)="saveReserva()">Guardar</button>
+      </div>
+    </ng-template>
+  </div>
+  

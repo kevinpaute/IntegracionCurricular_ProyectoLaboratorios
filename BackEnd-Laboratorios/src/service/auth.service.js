@@ -47,8 +47,8 @@ class AuthService {
                 process.env.ACCESS_TOKEN_SECRET,
                 { expiresIn: '1d' }
             );
-
-            return { token, role: userWithDetails.Roles.nombre_rol, nombres: userWithDetails.Detalle_Usuario.nombres, apellidos: userWithDetails.Detalle_Usuario.apellidos };
+            
+            return { token, role: userWithDetails.Roles.nombre_rol, nombres: userWithDetails.Detalle_Usuario.nombres, apellidos: userWithDetails.Detalle_Usuario.apellidos , id: userWithDetails.id_usuario};
         } catch (error) {
             console.error('Error en la consulta a la base de datos:', error);
             throw new Error('Error al realizar el login');

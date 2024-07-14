@@ -8,7 +8,7 @@ class LaboratorioService {
         try {
             const laboratorios = await prisma.laboratorio.findMany({
                 include: {
-                    Equipos_Laboratorio: true,
+                    Equipos: true,
                     Reservas: true 
                 }
             });

@@ -42,7 +42,7 @@ import { GestionMateriasComponent } from './gestion-materias/gestion-materias.co
     CursosComponent,
     DetalleMateriaComponent,
     ProgramasComponent,
-    GestionMateriasComponent
+    GestionMateriasComponent,
   ],
   imports: [
     CommonModule,

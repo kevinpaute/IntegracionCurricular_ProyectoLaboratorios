@@ -1,0 +1,52 @@
+<div>
+  <h1>Reservas</h1>
+  <div class="form-group">
+    <label for="laboratorioFilter">Filtrar por Laboratorio</label>
+    <select class="form-control" id="laboratorioFilter" [(ngModel)]="selectedLaboratorio" (change)="filterReservations()">
+      <option value="">Todos los Laboratorios</option>
+      <option *ngFor="let lab of laboratorios" [value]="lab.id_laboratorio">{{ lab.nombre_laboratorio }}</option>
+    </select>
+  </div>
+  <button class="btn btn-primary" (click)="openReservaModal()">Crear Reserva</button>
+  <full-calendar [options]="calendarOptions"></full-calendar>
+</div>
+
+<!-- Modal para crear/editar reservas -->
+<ng-template #reservaModal let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title">Reserva</h4>
+    <button type="button" class="close" (click)="modal.dismiss('Cross click')">&times;</button>
+  </div>
+  <div class="modal-body">
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="motivo">Motivo</label>
+        <input type="text" class="form-control" id="motivo" [(ngModel)]="reserva.motivo" name="motivo" required>
+      </div>
+      <div class="form-group">
+        <label for="fecha_inicio">Fecha y Hora de Inicio</label>
+        <input type="datetime-local" class="form-control" id="fecha_inicio" [(ngModel)]="reserva.fecha_inicio" name="fecha_inicio" required (change)="validateTime('fecha_inicio')">
+      </div>
+      <div class="form-group">
+        <label for="fecha_fin">Fecha y Hora de Fin</label>
+        <input type="datetime-local" class="form-control" id="fecha_fin" [(ngModel)]="reserva.fecha_fin" name="fecha_fin" required (change)="validateTime('fecha_fin')">
+      </div>
+      <div class="form-group">
+        <label for="laboratorio">Laboratorio</label>
+        <select class="form-control" id="laboratorio" [(ngModel)]="reserva.id_laboratorio" name="laboratorio" required>
+          <option *ngFor="let lab of laboratorios" [value]="lab.id_laboratorio">{{ lab.nombre_laboratorio }}</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="materia">Materia</label>
+        <select class="form-control" id="materia" [(ngModel)]="reserva.id_materia" name="materia" required>
+          <option *ngFor="let mat of materias" [value]="mat.id_materia">{{ mat.Catalogo_Materia.nombre_materia }}</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="button" class="btn btn-danger" (click)="cancelReserva()" *ngIf="reserva.id_reserva">Cancelar Reserva</button>
+    </form>
+  </div>
+  
+  
+</ng-template>

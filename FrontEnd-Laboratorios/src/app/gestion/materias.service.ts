@@ -21,22 +21,26 @@ export class MateriasService {
 
   /////
   getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.apiUrl);
+    return this.http.get<any[]>(`${this.apiUrl}/materias/`);
+  }
+
+  getMateriasByDocente(idDocente: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/docente/${idDocente}`);
   }
 
   getById(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+    return this.http.get<any>(`${this.apiUrl}/materias/${id}`);
   }
 
   create(materia: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, materia);
+    return this.http.post<any>(`${this.apiUrl}/materias/`, materia);
   }
 
   update(id: number, materia: any): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, materia);
+    return this.http.put<any>(`${this.apiUrl}/materias/${id}`, materia);
   }
 
   delete(id: number): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/${id}`, { estado: 'inactivo' });
+    return this.http.put<any>(`${this.apiUrl}/materias/${id}`, { estado: 'inactivo' });
   }
 }

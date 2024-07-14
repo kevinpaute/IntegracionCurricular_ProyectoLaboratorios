@@ -13,7 +13,9 @@
     "fs": "^0.0.1-security",
     "jsonwebtoken": "^9.0.2",
     "mysql": "^2.18.1",
-    "path": "^0.12.7"
+    "node-cron": "^3.0.3",
+    "path": "^0.12.7",
+    "socket.io": "^4.7.5"
   },
   "name": "backend-laboratorios",
   "version": "1.0.0",

@@ -1,16 +1,28 @@
 const express = require('express');
-const app = express();
+const http = require('http');
+const socketIo = require('socket.io');
 const cors = require('cors');
 const fs = require('fs');
 const path = require('path');
-const http = require('http').Server(app);
 require('dotenv').config();
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server, {
+  cors: {
+    origin: '*',
+    methods: ['GET', 'POST']
+  }
+});
 
 const hostname = '127.0.0.1';
 const port = 3000;
 
 app.use(cors());
 app.use(express.json());
+
+// Configurar el middleware para que el objeto socketio esté disponible en req.app
+app.set('socketio', io);
 
 // Rutas dinámicas
 const routesDirectory = path.join(__dirname, 'src', 'routes');
@@ -28,9 +40,23 @@ routeFiles.forEach((routeFile) => {
 const authRoutes = require('./src/routes/auth');
 app.use('/api/auth', authRoutes);
 
-http.listen(port, hostname, () => {
+io.on('connection', (socket) => {
+  console.log('a user connected');
+
+  socket.on('reservaCambiada', (data) => {
+    io.emit('reservaCambiada', data);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
+
+server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
 
 // const express = require('express');
 // const app = express();
