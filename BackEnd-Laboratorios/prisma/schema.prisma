@@ -92,7 +92,7 @@ model Materia {
   Reservas          Reserva[]
 }
 
-model Inscripcion {
+model Inscripcion { //Estudiantes inscritos
   id_inscripcion Int     @id @default(autoincrement())
   id_materia     Int
   id_estudiante  Int

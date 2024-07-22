@@ -1,13 +1,15 @@
 <div>
   <h1>Reservas</h1>
-  <div class="form-group">
-    <label for="laboratorioFilter">Filtrar por Laboratorio</label>
-    <select class="form-control" id="laboratorioFilter" [(ngModel)]="selectedLaboratorio" (change)="filterReservations()">
-      <option value="">Todos los Laboratorios</option>
-      <option *ngFor="let lab of laboratorios" [value]="lab.id_laboratorio">{{ lab.nombre_laboratorio }}</option>
-    </select>
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <button class="btn btn-primary" (click)="openReservaModal()">Crear Reserva</button>
+    <div class="form-group mb-0">
+      <label for="laboratorioFilter" class="sr-only">Filtrar por Laboratorio</label>
+      <select class="form-control form-select" id="laboratorioFilter" [(ngModel)]="selectedLaboratorio" (change)="filterReservations()">
+        <option value="" selected>Todos los Laboratorios</option>
+        <option *ngFor="let lab of laboratorios" [value]="lab.id_laboratorio">{{ lab.nombre_laboratorio }}</option>
+      </select>
+    </div>
   </div>
-  <button class="btn btn-primary" (click)="openReservaModal()">Crear Reserva</button>
   <full-calendar [options]="calendarOptions"></full-calendar>
 </div>
 
@@ -47,6 +49,5 @@
       <button type="button" class="btn btn-danger" (click)="cancelReserva()" *ngIf="reserva.id_reserva">Cancelar Reserva</button>
     </form>
   </div>
-  
-  
 </ng-template>
+

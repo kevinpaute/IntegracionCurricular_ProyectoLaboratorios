@@ -28,12 +28,19 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.component';
+//import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 // import { NgxPaginationModule } from 'ngx-pagination';
 // FullCalendarModule.registerPlugins([
 //   dayGridPlugin,
 //   timeGridPlugin,
 //   interactionPlugin,
 // ]);
+
+import { ToastrModule } from 'ngx-toastr';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { AsistenciaDocenteComponent } from './asistencia-docente/asistencia-docente.component';
+
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -50,7 +57,8 @@ import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.co
     RevisionEquipoDetailModalComponent,
     CuentaComponent,
     ReservasComponent,
-    ReservasDocenteComponent
+    ReservasDocenteComponent,
+    AsistenciaDocenteComponent
   ],
   imports: [
     BrowserModule,
@@ -62,6 +70,9 @@ import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.co
     NgbModule, // Asegúrate de que HttpClientModule está en las importaciones
     // NgxPaginationModule
     FullCalendarModule,
+    ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot(),
+    QRCodeModule
   ],
   providers: [
     AuthService,

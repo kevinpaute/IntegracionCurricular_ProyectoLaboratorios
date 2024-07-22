@@ -13,4 +13,9 @@ export class InscripcionesService {
   getEstudiantesByMateria(idMateria: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/materia/${idMateria}/estudiantes`);
   }
+
+  getInscripcionesPorMateria(id_materia: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/inscripciones/materia/${id_materia}`);
+  }
+  
 }

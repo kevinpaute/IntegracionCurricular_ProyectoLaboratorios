@@ -10,6 +10,7 @@ import { AuthService } from '../services/login/auth.service';
 import { ReservaSocketService } from '../services/reservas/reserva-socket.service';
 import { MateriasService } from '../gestion/materias.service';
 import { LaboratoriosService } from '../services/laboratorios/laboratorios.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-reservas',
@@ -23,7 +24,7 @@ export class ReservasComponent implements OnInit {
   laboratorios: any[] = [];
   materias: any[] = [];
   reserva: any = {};
-  selectedLaboratorio: number | null = null;
+  selectedLaboratorio: number | "" = "";
 
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -55,7 +56,7 @@ export class ReservasComponent implements OnInit {
       day: 'Día'
     },
     slotMinTime: '07:00:00', // Inicio del horario
-    slotMaxTime: '24:00:00', // Fin del horario
+    slotMaxTime: '18:00:00', // Fin del horario
     allDaySlot: false, // Desactivar el slot de todo el día
     height: 'auto', // Ajustar la altura del calendario automáticamente
     slotDuration: '00:30:00', // Intervalos de 30 minutos
@@ -64,30 +65,7 @@ export class ReservasComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false // Formato de 24 horas
-    },
-    // eventContent: function(arg) {
-    //   let customContent = document.createElement('div');
-    //   let time = document.createElement('div');
-    //   let title = document.createElement('div');
-    //   let laboratorioNombre = document.createElement('div');
-  
-    //   // Include the time element from the default
-    //   time.innerHTML = arg.timeText;
-    //   time.classList.add('fc-event-time');
-  
-    //   // Add the title and laboratorioNombre
-    //   title.innerHTML = arg.event.title;
-    //   title.classList.add('fc-event-title');
-  
-    //   laboratorioNombre.innerHTML = `${arg.event.extendedProps['laboratorioNombre']}`;
-    //   laboratorioNombre.classList.add('fc-event-laboratorio');
-  
-    //   customContent.appendChild(time);
-    //   customContent.appendChild(title);
-    //   customContent.appendChild(laboratorioNombre);
-  
-    //   return { domNodes: [customContent] };
-    // }
+    }
   };
 
   constructor(
@@ -104,19 +82,37 @@ export class ReservasComponent implements OnInit {
     this.loadLaboratorios();
     this.loadMaterias();
     this.loadReservas();
+
+    // Suscribirse a los cambios en las reservas
+    this.reservaSocketService.onReservaCambiada().subscribe(() => {
+      this.loadReservas();
+    });
   }
 
   getEventColor(reserva: any): string {
     const colors = [
-      '#A569BD', '#5499C7', '#1ABC9C', '#CD6155', '#EB984E', '#D4AC0D', '#5DADE2'
+      '#5C6BC0', //azulado
+      '#7E57C2', //morado
+      '#FF7043', //naranja
+      '#e67c73', //flamenco
+      '#33b679', //salvia
+      '#039be5', //lavanda
+      '#EF5350', //rojo
+
+      //'#7986cb'
+
     ];
     return colors[reserva.id_reserva % colors.length];
   }
+
   loadReservas(): void {
     this.reservaService.getReservas().subscribe(data => {
       console.log('Reservas cargadas:', data);
       this.reservas = data;
       this.filterReservations(); // Filtrar al cargar reservas
+    }, error => {
+      console.error('Error al cargar reservas:', error);
+      Swal.fire('Error', 'Error al cargar las reservas', 'error');
     });
   }
 
@@ -151,9 +147,9 @@ export class ReservasComponent implements OnInit {
     const events: EventInput[] = reservas.map(reserva => {
       const materiaNombre = reserva.Materia?.Catalogo_Materia?.nombre_materia || 'Sin Materia';
       const laboratorioNombre = reserva.Laboratorio?.nombre_laboratorio || 'Sin Laboratorio';
-  
+
       return {
-        title: materiaNombre,
+        title: materiaNombre + '\n' + laboratorioNombre,
         start: reserva.fecha_inicio,
         end: reserva.fecha_fin,
         id: reserva.id_reserva,
@@ -172,7 +168,6 @@ export class ReservasComponent implements OnInit {
     };
     this.changeDetector.detectChanges(); // Forzar la detección de cambios
   }
-  
 
   handleDateSelect(selectInfo: DateSelectArg) {
     this.reserva = {
@@ -206,29 +201,62 @@ export class ReservasComponent implements OnInit {
   validateTime(field: string): void {
     const date = new Date(this.reserva[field]);
     const hours = date.getHours();
-  
+
     if (hours < 7 || hours > 24) {
-      alert('La hora debe estar entre las 07:00 y las 24:00.');
+      Swal.fire('Advertencia', 'La hora debe estar entre las 07:00 y las 24:00.', 'warning');
       this.reserva[field] = '';
+    } else {
+      this.adjustTime(field);
     }
   }
-  
+
+  areFieldsFilled(): boolean {
+    return this.reserva.motivo && this.reserva.fecha_inicio && this.reserva.fecha_fin && this.reserva.id_laboratorio && this.reserva.id_materia;
+  }
+
   onSubmit(): void {
+    if (!this.areFieldsFilled()) {
+      Swal.fire('Error', 'Por favor, complete todos los campos antes de continuar.', 'error');
+      return;
+    }
+
+    if (this.reserva.id_reserva) {
+      Swal.fire({
+        title: '¿Estás seguro?',
+        text: "Editar la reserva",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, confirmar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.submitReservation();
+        }
+      });
+    } else {
+      this.submitReservation();
+    }
+  }
+
+  submitReservation(): void {
     console.log('Submitting reservation:', this.reserva);
     this.reserva.id_laboratorio = Number(this.reserva.id_laboratorio);
     this.reserva.id_materia = Number(this.reserva.id_materia);
     this.reserva.fecha_inicio = this.formatDate(new Date(this.reserva.fecha_inicio));
     this.reserva.fecha_fin = this.formatDate(new Date(this.reserva.fecha_fin));
-  
+
     if (this.reserva.id_reserva) {
       this.reservaService.updateReserva(this.reserva.id_reserva, this.reserva).subscribe(
         () => {
           this.loadReservas();
           this.reservaSocketService.emitReservaCambiada(this.reserva);
           this.modalService.dismissAll();
+          Swal.fire('Éxito', 'Reserva actualizada exitosamente', 'success');
         },
         error => {
           console.error('Error updating reservation:', error);
+          Swal.fire('Error', 'Error al actualizar la reserva', 'error');
         }
       );
     } else {
@@ -237,32 +265,46 @@ export class ReservasComponent implements OnInit {
           this.loadReservas();
           this.reservaSocketService.emitReservaCambiada(this.reserva);
           this.modalService.dismissAll();
+          Swal.fire('Éxito', 'Reserva creada exitosamente', 'success');
         },
         error => {
           console.error('Error creating reservation:', error);
+          if (error.status === 400) {
+            Swal.fire('Error', 'El laboratorio ya está reservado para este horario', 'error');
+          } else {
+            Swal.fire('Error', 'Error al crear la reserva', 'error');
+          }
         }
       );
     }
   }
-  
-  
-  
 
   cancelReserva(): void {
-    this.reservaService.changeReservaStatus(this.reserva.id_reserva).subscribe(
-      () => {
-        this.loadReservas();
-        this.reservaSocketService.emitReservaCambiada(this.reserva);
-        this.modalService.dismissAll();
-      },
-      error => {
-        console.error('Error al cancelar la reserva:', error);
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: "La reserva será cancelada",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, cancelar reserva'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.reservaService.changeReservaStatus(this.reserva.id_reserva).subscribe(
+          () => {
+            this.loadReservas();
+            this.reservaSocketService.emitReservaCambiada(this.reserva);
+            this.modalService.dismissAll();
+            Swal.fire('Éxito', 'Reserva cancelada exitosamente', 'success');
+          },
+          error => {
+            console.error('Error al cancelar la reserva:', error);
+            Swal.fire('Error', 'Error al cancelar la reserva', 'error');
+          }
+        );
       }
-    );
+    });
   }
-
-
-  
 
   formatDate(date: Date): string {
     const offset = date.getTimezoneOffset();
@@ -294,7 +336,4 @@ export class ReservasComponent implements OnInit {
     date.setMinutes(adjustedMinutes, 0, 0);
     this.reserva[field] = this.formatDate(date);
   }
-
-
-  
 }

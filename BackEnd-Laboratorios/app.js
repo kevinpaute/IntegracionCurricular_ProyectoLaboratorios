@@ -15,7 +15,10 @@ const io = socketIo(server, {
   }
 });
 
-const hostname = '127.0.0.1';
+// Hacer accesible el objeto io globalmente
+global.io = io;
+
+const hostname = '0.0.0.0'; // Cambiado de '127.0.0.1' a '0.0.0.0'
 const port = 3000;
 
 app.use(cors());
@@ -55,6 +58,8 @@ io.on('connection', (socket) => {
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`);
 });
+
+
 
 
 

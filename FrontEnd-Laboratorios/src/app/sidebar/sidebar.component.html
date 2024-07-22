@@ -41,6 +41,10 @@
     <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
       <a routerLink="/reservas/" routerLinkActive="active"> <i class="bi bi-calendar-date-fill"></i> RESERVAS</a>
     </div>
+    <!-- Gestion de Asistencia -->
+    <div class="sidebar-item" *ngIf="isRole('docente') || isRole('laboratorista')">
+      <a routerLink="/asistencia/" routerLinkActive="active"> <i class="bi bi-calendar-date-fill"></i> ASISTENCIA</a>
+    </div>
     <!-- Gestión de reportes -->
     <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista') || isRole('docente')">
       <a routerLink="/reportes" routerLinkActive="active"><i class="bi bi-file-earmark-pdf"></i> REPORTES</a>

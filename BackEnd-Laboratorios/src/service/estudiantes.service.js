@@ -20,6 +20,26 @@ class EstudiantesService {
         }
 
     }
+
+    async getInscripcionesPorMateria(id_materia) {
+        try {
+          return await prisma.inscripcion.findMany({
+            where: {
+              id_materia: id_materia
+            },
+            include: {
+              Usuario:  {        
+                include: {
+                  Detalle_Usuario: true
+                }
+              },
+            }
+          });
+        } catch (error) {
+          console.error('Error al obtener inscripciones por materia:', error);
+          throw new Error('Error al obtener inscripciones por materia');
+        }
+      }
 }
 
 

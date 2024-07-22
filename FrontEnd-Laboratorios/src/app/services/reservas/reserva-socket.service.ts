@@ -12,15 +12,15 @@ export class ReservaSocketService {
     this.socket = io('http://localhost:3000');
   }
 
+  emitReservaCambiada(data: any): void {
+    this.socket.emit('reservaCambiada', data);
+  }
+
   onReservaCambiada(): Observable<any> {
     return new Observable(observer => {
-      this.socket.on('reservaCambiada', data => {
+      this.socket.on('reservaCambiada', (data) => {
         observer.next(data);
       });
     });
-  }
-
-  emitReservaCambiada(data: any): void {
-    this.socket.emit('reservaCambiada', data);
   }
 }

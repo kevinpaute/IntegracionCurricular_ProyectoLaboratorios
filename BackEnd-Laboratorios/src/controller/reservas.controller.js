@@ -6,14 +6,13 @@ class ReservaController {
     try {
       const reserva = await reservaService.createReserva(req.body);
       const io = req.app.get('socketio');
-      if (!io) {
-        throw new Error('Socket.io no está configurado correctamente');
+      if (io) {
+        io.emit('reservaCambiada', reserva);
       }
-      io.emit('reservaCambiada', reserva); // Emitir el evento usando Socket.io
       res.status(201).json(reserva);
     } catch (error) {
-      console.error('Error al crear la reserva:', error); // Log del error
-      res.status(500).json({ message: `Error al crear la reserva: ${error.message}` });
+      console.error('Error al crear la reserva:', error);
+      res.status(error.status || 500).json({ message: error.message });
     }
   }
 
@@ -21,23 +20,27 @@ class ReservaController {
     try {
       const reserva = await reservaService.updateReserva(req.params.id_reserva, req.body);
       const io = req.app.get('socketio');
-      io.emit('reservaCambiada', reserva);
+      if (io) {
+        io.emit('reservaCambiada', reserva);
+      }
       res.status(200).json(reserva);
     } catch (error) {
-      console.error('Error al actualizar la reserva:', error); // Log del error
-      res.status(500).json({ message: 'Error al actualizar la reserva', error: error.message });
+      console.error('Error al actualizar la reserva:', error);
+      res.status(error.status || 500).json({ message: 'Error al actualizar la reserva' });
     }
   }
 
   async changeReservaStatus(req, res) {
     try {
-      const reserva = await reservaService.changeReservaStatus(req.params.id);
+      const reserva = await reservaService.changeReservaStatus(req.params.id_reserva);
       const io = req.app.get('socketio');
-      io.emit('reservaCambiada', reserva);
+      if (io) {
+        io.emit('reservaCambiada', reserva);
+      }
       res.status(200).json(reserva);
     } catch (error) {
       console.error('Error al cambiar el estado de la reserva:', error);
-      res.status(500).json({ message: 'Error al cambiar el estado de la reserva' });
+      res.status(error.status || 500).json({ message: 'Error al cambiar el estado de la reserva' });
     }
   }
 
@@ -46,7 +49,8 @@ class ReservaController {
       const reservas = await reservaService.getReservas();
       res.status(200).json(reservas);
     } catch (error) {
-      res.status(500).json({ message: 'Error al obtener las reservas' });
+      console.error('Error al obtener las reservas:', error);
+      res.status(error.status || 500).json({ message: 'Error al obtener las reservas' });
     }
   }
 
@@ -56,7 +60,8 @@ class ReservaController {
       const reservas = await reservaService.getReservasByLaboratorio(Number(laboratorioId));
       res.status(200).json(reservas);
     } catch (error) {
-      res.status(500).json({ message: 'Error al obtener las reservas filtradas por laboratorio' });
+      console.error('Error al obtener las reservas filtradas por laboratorio:', error);
+      res.status(error.status || 500).json({ message: 'Error al obtener las reservas filtradas por laboratorio' });
     }
   }
 
@@ -65,9 +70,36 @@ class ReservaController {
       await reservaService.markExpiredReservas();
       res.status(200).json({ message: 'Reservas expiradas marcadas como inactivas' });
     } catch (error) {
-      res.status(500).json({ message: 'Error al marcar reservas expiradas' });
+      console.error('Error al marcar reservas expiradas:', error);
+      res.status(error.status || 500).json({ message: 'Error al marcar reservas expiradas' });
     }
   }
+
+  //docente
+
+  async getMateriasPorDocente(req, res) {
+    try {
+      const { id_docente } = req.params;
+      const materias = await reservaService.getMateriasPorDocente(Number(id_docente));
+      res.status(200).json(materias);
+    } catch (error) {
+      console.error('Error al obtener las materias del docente:', error);
+      res.status(500).json({ message: 'Error al obtener las materias del docente' });
+    }
+  }
+
+  async getReservasByDocente(req, res) {
+    try {
+      const { docenteId } = req.params;
+      const reservas = await reservaService.getReservasByDocente(Number(docenteId));
+      res.status(200).json(reservas);
+    } catch (error) {
+      console.error('Error al obtener las reservas del docente:', error);
+      res.status(error.status || 500).json({ message: 'Error al obtener las reservas del docente' });
+    }
+  }
+  
+  
 }
 
 module.exports = new ReservaController();

@@ -1,0 +1,58 @@
+<!-- asistencia-docente.component.html -->
+<div class="container">
+  <h1>Asistencia Docente</h1>
+  
+  <div class="form-group">
+    <label for="reservaSelect">Seleccione la Reserva</label>
+    <select #reservaSelect class="form-control" id="reservaSelect" (change)="loadAsistenciasByReserva(+reservaSelect.value)">
+      <option *ngFor="let reserva of reservas" [value]="reserva.id_reserva">{{ reserva.Materia.Catalogo_Materia.nombre_materia }} - {{ reserva.Laboratorio.nombre_laboratorio }}</option>
+    </select>
+  </div>
+
+  <div *ngIf="selectedReserva">
+    <h2>Asistencias</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Estudiante</th>
+          <th>Asistencia</th>
+          <th>Observaciones</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estudiante of estudiantes">
+          <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }} {{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
+          <td>
+            <select [(ngModel)]="estudiante.tipo_asistencia" class="form-control">
+              <option value="Presente">Presente</option>
+              <option value="Ausente">Ausente</option>
+              <option value="Tarde">Tarde</option>
+            </select>
+          </td>
+          <td>
+            <input type="text" [(ngModel)]="estudiante.observaciones" class="form-control">
+          </td>
+          <td>
+            <button class="btn btn-success" (click)="createOrUpdateAsistencia(estudiante)">Guardar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <button class="btn btn-primary" (click)="openQrModal()">Generar Código QR</button>
+
+    <!-- Modal para QR Code -->
+    <ng-template #qrModal let-modal>
+      <div class="modal-header">
+        <h5 class="modal-title">Código QR para {{ selectedReserva.Materia.Catalogo_Materia.nombre_materia }}</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center">
+        <qrcode [qrdata]="qrCodeData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+      </div>
+    </ng-template>
+  </div>
+</div>

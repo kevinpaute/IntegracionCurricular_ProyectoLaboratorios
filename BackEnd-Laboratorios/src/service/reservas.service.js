@@ -4,7 +4,8 @@ const prisma = new PrismaClient();
 
 class ReservaService {
   async createReserva(data) {
-    // Verificar disponibilidad del laboratorio
+    data.fecha_inicio = new Date(data.fecha_inicio).toISOString();
+    data.fecha_fin = new Date(data.fecha_fin).toISOString();
     const overlappingReservations = await prisma.reserva.findMany({
       where: {
         id_laboratorio: data.id_laboratorio,
@@ -13,23 +14,32 @@ class ReservaService {
         estado: 'activo'
       }
     });
-  
+
     if (overlappingReservations.length > 0) {
-      throw new Error('El laboratorio ya está reservado para este horario');
+      const error = new Error('El laboratorio ya está reservado para este horario');
+      error.status = 400;
+      throw error;
     }
-  
+
     data.estado = 'activo';
-    return await prisma.reserva.create({ data });
+    const reserva = await prisma.reserva.create({ data });
+
+    const io = global.io;
+    if (io) {
+      io.emit('reservaCambiada', reserva);
+    }
+
+    return reserva;
   }
 
   async updateReserva(id, data) {
     try {
-      // Formatear fechas a ISO-8601 si no lo están
       data.fecha_inicio = new Date(data.fecha_inicio).toISOString();
       data.fecha_fin = new Date(data.fecha_fin).toISOString();
+
       console.log('Datos para actualizar reserva:', data);
-  
-      return await prisma.reserva.update({
+
+      const reserva = await prisma.reserva.update({
         where: { id_reserva: parseInt(id) },
         data: {
           fecha_inicio: data.fecha_inicio,
@@ -44,20 +54,32 @@ class ReservaService {
           }
         }
       });
+
+      const io = global.io;
+      if (io) {
+        io.emit('reservaCambiada', reserva);
+      }
+
+      return reserva;
     } catch (error) {
       console.error('Error en updateReserva:', error); // Log del error
       throw new Error('Error al actualizar la reserva');
     }
   }
-  
-  
 
   async changeReservaStatus(id) {
     try {
-      return await prisma.reserva.update({
+      const reserva = await prisma.reserva.update({
         where: { id_reserva: parseInt(id) },
         data: { estado: 'inactivo' }
       });
+
+      const io = global.io;
+      if (io) {
+        io.emit('reservaCambiada', reserva);
+      }
+
+      return reserva;
     } catch (error) {
       console.error('Error en changeReservaStatus:', error);
       throw new Error('Error al cambiar el estado de la reserva');
@@ -65,49 +87,104 @@ class ReservaService {
   }
 
   async getReservas() {
-    return await prisma.reserva.findMany({ where: { estado: 'activo'},
-      include: {
-        Materia: {
-          include: {
-            Catalogo_Materia: true,
-          }
-        },
-        Laboratorio: true
-      }
+    try {
+      return await prisma.reserva.findMany({
+        where: { estado: 'activo' },
+        include: {
+          Materia: {
+            include: {
+              Catalogo_Materia: true,
+            }
+          },
+          Laboratorio: true
+        }
       });
-
-    
+    } catch (error) {
+      console.error('Error en getReservas:', error);
+      throw new Error('Error al obtener las reservas');
+    }
   }
 
   async getReservasByLaboratorio(laboratorioId) {
-    return await prisma.reserva.findMany({
-      where: {
-        estado: 'activo',
-        id_laboratorio: laboratorioId
-      },
-      include: {
-        Materia: {
-          include: {
-            Catalogo_Materia: true,
-          },
+    try {
+      return await prisma.reserva.findMany({
+        where: {
+          estado: 'activo',
+          id_laboratorio: laboratorioId
         },
-        Laboratorio: true,
-      },
-    });
+        include: {
+          Materia: {
+            include: {
+              Catalogo_Materia: true,
+            },
+          },
+          Laboratorio: true,
+        },
+      });
+    } catch (error) {
+      console.error('Error en getReservasByLaboratorio:', error);
+      throw new Error('Error al obtener las reservas por laboratorio');
+    }
   }
 
   async markExpiredReservas() {
-    const now = new Date();
-    return await prisma.reserva.updateMany({
-      where: {
-        fecha_fin: {
-          lt: now
+    try {
+      const now = new Date();
+      return await prisma.reserva.updateMany({
+        where: {
+          fecha_fin: {
+            lt: now
+          },
+          estado: 'activo'
         },
-        estado: 'activo'
-      },
-      data: { estado: 'inactivo' }
-    });
+        data: { estado: 'inactivo' }
+      });
+    } catch (error) {
+      console.error('Error en markExpiredReservas:', error);
+      throw new Error('Error al marcar reservas expiradas');
+    }
   }
+
+  //DOCENTE
+
+  async getMateriasPorDocente(id_docente) {
+    try {
+      return await prisma.materia.findMany({
+        where: { id_docente: id_docente },
+        include: {
+          Catalogo_Materia: true,
+        }
+      });
+    } catch (error) {
+      console.error('Error en getMateriasPorDocente:', error);
+      throw new Error('Error al obtener las materias del docente');
+    }
+  }
+  
+  async getReservasByDocente(docenteId) {
+    try {
+      return await prisma.reserva.findMany({
+        where: {
+          Materia: {
+            id_docente: docenteId,
+          },
+          estado: 'activo',
+        },
+        include: {
+          Materia: {
+            include: {
+              Catalogo_Materia: true,
+            },
+          },
+          Laboratorio: true,
+        },
+      });
+    } catch (error) {
+      console.error('Error en getReservasByDocente:', error);
+      throw new Error('Error al obtener las reservas del docente');
+    }
+  }
+
 }
 
 module.exports = new ReservaService();
