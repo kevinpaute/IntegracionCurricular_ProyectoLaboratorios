@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       await authProvider.login(_emailController.text, _passwordController.text);
-      if (authProvider.user?.role == 'Estudiante') {
+      if (authProvider.user?.role == 'estudiante') {
         Navigator.pushReplacementNamed(context, '/home');
         ArtSweetAlert.show(
           context: context,
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Color.fromARGB(255, 19, 96, 160),
       body: Center(
         child: SingleChildScrollView(
           child: Padding(
@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               children: [
                 Image.asset(
-                  'assets/logo.png', // Agrega tu logo aquí
+                  'assets/images/logo_istla.png', 
                   height: 150,
                   width: 150,
                 ),
@@ -71,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 10),
                 Text(
-                  'biometría de precisión',
+                  'Instituto Superior Tecnológico Los Andes',
                   style: TextStyle(fontSize: 18, color: Colors.white),
                 ),
                 SizedBox(height: 40),

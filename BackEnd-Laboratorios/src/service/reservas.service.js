@@ -185,6 +185,53 @@ class ReservaService {
     }
   }
 
+  //ESTUDIANTE
+  async getReservasByEstudiante(id_estudiante) {
+    try {
+      // Obtener todas las inscripciones del estudiante
+      const inscripciones = await prisma.inscripcion.findMany({
+        where: {
+          id_estudiante: id_estudiante,
+        },
+        select: {
+          id_materia: true
+        }
+      });
+  
+      // Extraer todos los ids de las materias de las inscripciones
+      const materiaIds = inscripciones.map(inscripcion => inscripcion.id_materia);
+  
+      // Obtener las reservas que correspondan a las materias en las que está inscrito el estudiante
+      return await prisma.reserva.findMany({
+        where: {
+          id_materia: {
+            in: materiaIds
+          }
+        },
+        include: {
+          Materia: {
+            include: {
+              Usuario: {
+                select: {
+                  Detalle_Usuario: {
+                    select: {
+                      nombres: true,
+                      apellidos: true
+                    }
+                  }
+                }
+              },
+              Catalogo_Materia: true,
+            }
+          },
+          Laboratorio: true,
+        }
+      });
+    } catch (error) {
+      console.error('Error en getReservasByEstudiante:', error);
+      throw new Error('Error al obtener las reservas del estudiante');
+    }
+  }
 }
 
 module.exports = new ReservaService();

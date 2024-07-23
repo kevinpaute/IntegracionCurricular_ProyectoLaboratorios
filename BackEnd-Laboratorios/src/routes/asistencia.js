@@ -8,4 +8,5 @@ router.get('/asistencias/reserva/:id_reserva', (req, res) => AsistenciaControlle
 router.put('/asistencias/:id', (req, res) => AsistenciaController.updateAsistencia(req, res));
 router.post('/asistencias/qr', (req, res) => AsistenciaController.markAttendanceViaQr(req, res)); // Nueva ruta
 
+
 module.exports = router;

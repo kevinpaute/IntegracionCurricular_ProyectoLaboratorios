@@ -35,8 +35,10 @@ class AsistenciaController {
     try {
       const { id_reserva, id_estudiante } = req.body;
       const asistencia = await asistenciaService.markAttendance(id_reserva, id_estudiante);
+      console.log(`Asistencia registrada para reserva ${id_reserva} y estudiante ${id_estudiante}`);
       res.status(200).json(asistencia);
     } catch (error) {
+      console.error('Error en markAttendanceViaQr:', error);
       res.status(500).json({ message: 'Error al marcar la asistencia via QR' });
     }
   }

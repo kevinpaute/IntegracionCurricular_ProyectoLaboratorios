@@ -98,7 +98,22 @@ class ReservaController {
       res.status(error.status || 500).json({ message: 'Error al obtener las reservas del docente' });
     }
   }
-  
+
+
+  //estudiante
+  async getReservasByEstudiante(req, res) {
+    try {
+      const { id_estudiante } = req.params;
+      if (!id_estudiante) {
+        return res.status(400).json({ message: 'El id del estudiante es requerido' });
+      }
+      const reservas = await reservaService.getReservasByEstudiante(Number(id_estudiante));
+      res.status(200).json(reservas);
+    } catch (error) {
+      console.error('Error al obtener las reservas del estudiante:', error);
+      res.status(500).json({ message: 'Error interno del servidor' });
+    }
+  }
   
 }
 

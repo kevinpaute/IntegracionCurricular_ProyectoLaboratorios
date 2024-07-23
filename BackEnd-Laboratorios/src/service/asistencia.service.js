@@ -62,21 +62,36 @@ class AsistenciaService {
 
   async markAttendance(id_reserva, id_estudiante) {
     try {
+      const reservaId = parseInt(id_reserva, 10);
+      const estudianteId = parseInt(id_estudiante, 10);
+
+      if (isNaN(reservaId) || isNaN(estudianteId)) {
+        console.error('id_reserva o id_estudiante no son válidos', { id_reserva, id_estudiante });
+        throw new Error('id_reserva o id_estudiante no son válidos');
+      }
+
+      const reserva = await prisma.reserva.findFirst({ where: { id_reserva: reservaId } });
+      if (!reserva) {
+        console.error('Reserva no encontrada', { id_reserva });
+        throw new Error('Reserva no encontrada');
+      }
+
       const inscripcion = await prisma.inscripcion.findFirst({
         where: {
-          id_materia: (await prisma.reserva.findFirst({ where: { id_reserva } })).id_materia,
-          id_estudiante
+          id_materia: reserva.id_materia,
+          id_estudiante: estudianteId
         }
       });
 
       if (!inscripcion) {
+        console.error('Inscripción no encontrada', { id_materia: reserva.id_materia, id_estudiante });
         throw new Error('Inscripción no encontrada');
       }
 
       const asistencia = await prisma.asistencia.findFirst({
         where: {
           id_inscripcion: inscripcion.id_inscripcion,
-          id_reserva
+          id_reserva: reservaId
         }
       });
 
@@ -92,7 +107,7 @@ class AsistenciaService {
         return await prisma.asistencia.create({
           data: {
             id_inscripcion: inscripcion.id_inscripcion,
-            id_reserva,
+            id_reserva: reservaId,
             tipo_asistencia: 'Presente',
             fecha_asistencia: new Date()
           }
@@ -104,5 +119,7 @@ class AsistenciaService {
     }
   }
 }
+
+
 
 module.exports = new AsistenciaService();
