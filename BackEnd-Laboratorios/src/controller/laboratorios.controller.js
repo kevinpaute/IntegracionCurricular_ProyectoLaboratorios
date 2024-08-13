@@ -27,7 +27,7 @@ class LaboratorioController {
     async create(req, res) {
         try {
             const { nombre_laboratorio, ubicacion, capacidad } = req.body;
-            const nuevoLaboratorio = await laboratorioService.create({ nombre_laboratorio, ubicacion, capacidad });
+            const nuevoLaboratorio = await laboratorioService.create({ nombre_laboratorio, ubicacion, capacidad, estado});
             res.status(201).json(nuevoLaboratorio);
         } catch (error) {
             res.status(500).json({ error: error.message });
@@ -48,7 +48,7 @@ class LaboratorioController {
         try {
             const { id } = req.params;
             const { nombre_laboratorio, ubicacion, capacidad } = req.body;
-            const laboratorioActualizado = await laboratorioService.update(id, { nombre_laboratorio, ubicacion, capacidad });
+            const laboratorioActualizado = await laboratorioService.update(id, { nombre_laboratorio, ubicacion, capacidad, estado });
             if (laboratorioActualizado) {
                 res.json(laboratorioActualizado);
             } else {

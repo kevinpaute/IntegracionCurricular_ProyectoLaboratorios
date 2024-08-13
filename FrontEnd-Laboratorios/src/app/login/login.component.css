@@ -69,10 +69,17 @@ h2 {
 
 .form-group label {
   font-family: 'Raleway', sans-serif;
-  font-size: 12px;
+  font-size: 14px;
   display: block;
   margin-bottom: 5px;
   color: #333333;
+}
+
+.form-group a {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  display: block;
+
 }
 
 .form-control {

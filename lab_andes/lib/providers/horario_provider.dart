@@ -16,7 +16,7 @@ class HorarioProvider with ChangeNotifier {
     try {
       final response = await http.get(
         Uri.parse('http://192.168.1.65:3000/api/reservas/estudiante/$estudianteId'),
-         headers: {
+        headers: {
           'Content-Type': 'application/json; charset=UTF-8',
           'Authorization': 'Bearer $token',
         },
@@ -24,6 +24,7 @@ class HorarioProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         List<dynamic> data = json.decode(utf8.decode(response.bodyBytes));
+        developer.log('Datos recibidos: $data');
         _horarios = data.map((item) => Horario.fromJson(item)).toList();
         notifyListeners();
       } else {

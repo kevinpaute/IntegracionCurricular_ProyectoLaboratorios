@@ -43,7 +43,8 @@ class LaboratorioService {
                 data: {
                     nombre_laboratorio,
                     ubicacion,
-                    capacidad
+                    capacidad,
+                    estado
                 }
             });
             return nuevoLaboratorio;
@@ -64,7 +65,7 @@ class LaboratorioService {
   
     // Actualizar un laboratorio por id
 
-    async update(id, { nombre_laboratorio, ubicacion, capacidad }) {
+    async update(id, { nombre_laboratorio, ubicacion, capacidad, estado }) {
         try {
             const laboratorioActualizado = await prisma.laboratorio.update({
                 where: {
@@ -73,7 +74,8 @@ class LaboratorioService {
                 data: {
                     nombre_laboratorio,
                     ubicacion,
-                    capacidad
+                    capacidad,
+                    estado
                 }
             });
             return laboratorioActualizado;

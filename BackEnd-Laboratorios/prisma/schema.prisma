@@ -16,163 +16,177 @@ model Roles {
   id_rol    Int    @id @default(autoincrement())
   nombre_rol String @db.VarChar(100)
   estado    String @db.VarChar(8)
-  Usuarios  Usuario[]
+  Usuario   Usuario[]
 }
 
 model Detalle_Usuario {
-  id_detalle_usuario Int    @id
+  id_detalle_usuario Int    @id @default(autoincrement())
   nombres            String @db.VarChar(50)
   apellidos          String @db.VarChar(50)
   cedula             String @db.VarChar(10)
-  fecha_nacimiento   DateTime
+  fecha_nacimiento   DateTime @db.Date  // Aquí indicamos que es un DATE en MySQL
   correo             String @db.VarChar(100)
   celular            String? @db.VarChar(20)
   edad               Int
   genero             String @db.VarChar(15)
   estado             String @db.VarChar(8)
   contrasena         String @db.VarChar(255)
-  Usuarios           Usuario[]
+  Usuario            Usuario[]
 }
 
+
 model Usuario {
-  id_usuario          Int             @id
-  id_detalle_usuario  Int
-  id_rol              Int
-  Detalle_Usuario     Detalle_Usuario @relation(fields: [id_detalle_usuario], references: [id_detalle_usuario])
-  Roles               Roles           @relation(fields: [id_rol], references: [id_rol])  Materias            Materia[]       
-  Inscripciones       Inscripcion[]   
-  Revision_Equipos    Revision_Equipo[]
+  id_usuario         Int            @id @default(autoincrement())
+  id_detalle_usuario Int
+  id_rol             Int
+  codigo_usuario     String         @db.VarChar(10)
+  Detalle_Usuario    Detalle_Usuario @relation(fields: [id_detalle_usuario], references: [id_detalle_usuario])
+  Roles              Roles          @relation(fields: [id_rol], references: [id_rol])
+  Materia            Materia[]
+  Inscripcion        Inscripcion[]
+  Revision_Equipo    Revision_Equipo[]
 }
 
 model Carrera {
-  id_carrera    Int     @id
-  nombre_carrera String  @db.VarChar(100)
-  estado        String  @db.VarChar(8)
-  Cursos        Curso[]
+  id_carrera    Int    @id @default(autoincrement())
+  nombre_carrera String @db.VarChar(100)
+  estado        String @db.VarChar(8)
+  codigo_carrera String @db.VarChar(10)
+  Curso         Curso[]
 }
 
 model Periodo_Academico {
-  id_periodo       Int    @id
-  nombre_periodo   String @db.VarChar(100)
-  detalle_periodo  String? @db.VarChar(255)
-  anio_lectivo     String @db.VarChar(10)
-  estado           String @db.VarChar(8)
-  Cursos           Curso[]
+  id_periodo    Int      @id @default(autoincrement())
+  nombre_periodo String   @db.VarChar(24)
+  detalle_periodo String? @db.VarChar(100)
+  anio_periodo   Int
+  estado         String   @db.VarChar(8)
+  fecha_creacion DateTime?
+  codigo_periodo String   @db.VarChar(10)
+  Curso          Curso[]
 }
 
 model Curso {
-  id_curso        Int    @id
-  nombre_curso    String @db.VarChar(100)
-  paralelo        String @db.VarChar(24)
-  estado          String @db.VarChar(8)
-  id_periodo      Int
-  id_carrera      Int
+  id_curso       Int              @id @default(autoincrement())
+  nombre_curso   String           @db.VarChar(100)
+  paralelo       String           @db.VarChar(24)
+  id_periodo     Int
+  id_carrera     Int
+  codigo_curso   String           @db.VarChar(10)
   Periodo_Academico Periodo_Academico @relation(fields: [id_periodo], references: [id_periodo])
-  Carrera         Carrera            @relation(fields: [id_carrera], references: [id_carrera])
-  Materias        Materia[]
+  Carrera        Carrera          @relation(fields: [id_carrera], references: [id_carrera])
+  Materia        Materia[]
 }
 
 model Catalogo_Materia {
-  id_catalogo_materia Int     @id @default(autoincrement())
-  nombre_materia      String  @db.VarChar(255)
-  Materias            Materia[]
+  id_catalogo_materia Int    @id @default(autoincrement())
+  nombre_materia      String @db.VarChar(255)
+  Materia             Materia[]
 }
 
 model Materia {
-  id_materia        Int               @id @default(autoincrement())
+  id_materia        Int             @id @default(autoincrement())
   id_catalogo_materia Int
   id_curso          Int
   id_docente        Int
-  descripcion       String?            @db.VarChar(255)
-  estado            String             @db.VarChar(8)
-  Curso             Curso              @relation(fields: [id_curso], references: [id_curso])
-  Catalogo_Materia  Catalogo_Materia   @relation(fields: [id_catalogo_materia], references: [id_catalogo_materia])
-  Usuario           Usuario            @relation(fields: [id_docente], references: [id_usuario])
-  Inscripciones     Inscripcion[]
-  Reservas          Reserva[]
+  descripcion       String?         @db.VarChar(24)
+  estado            String          @db.VarChar(8)
+  codigo_materia    String          @db.VarChar(15)
+  Curso             Curso           @relation(fields: [id_curso], references: [id_curso])
+  Usuario           Usuario         @relation(fields: [id_docente], references: [id_usuario])
+  Catalogo_Materia  Catalogo_Materia @relation(fields: [id_catalogo_materia], references: [id_catalogo_materia])
+  Inscripcion       Inscripcion[]
+  Reserva           Reserva[]
 }
 
-model Inscripcion { //Estudiantes inscritos
-  id_inscripcion Int     @id @default(autoincrement())
+model Inscripcion {
+  id_inscripcion Int      @id @default(autoincrement())
   id_materia     Int
   id_estudiante  Int
-  Materia        Materia  @relation(fields: [id_materia], references: [id_materia])
-  Usuario        Usuario  @relation(fields: [id_estudiante], references: [id_usuario])
-  Asistencias    Asistencia[]
+  codigo_inscripcion String @db.VarChar(100)
+  Materia        Materia   @relation(fields: [id_materia], references: [id_materia])
+  Usuario        Usuario   @relation(fields: [id_estudiante], references: [id_usuario])
+  Asistencia     Asistencia[]
 }
 
 model Laboratorio {
-  id_laboratorio    Int              @id @default(autoincrement())
-  nombre_laboratorio String           @db.VarChar(100)
-  ubicacion         String            @db.VarChar(255)
-  capacidad         Int
-  Equipos           Equipo_Laboratorio[]
-  Reservas          Reserva[]
-  Bitacoras         Bitacora[]
+  id_laboratorio  Int               @id @default(autoincrement())
+  nombre_laboratorio String         @db.VarChar(100)
+  ubicacion       String            @db.VarChar(100)
+  capacidad       Int
+  estado          String?           @db.VarChar(8)
+  Equipo_Laboratorio Equipo_Laboratorio[]
+  Reserva         Reserva[]
+  Bitacora        Bitacora[]
 }
 
 model Equipo_Laboratorio {
-  id_equipo       Int              @id @default(autoincrement())
-  id_laboratorio  Int
-  codigo_equipo   String           @db.VarChar(100)
-  descripcion     String?           @db.VarChar(255)
-  fecha_ingreso   DateTime
-  marca           String           @db.VarChar(100)
-  modelo          String?           @db.VarChar(100)
-  serie           String?           @db.VarChar(255)
-  proveedor       String?           @db.VarChar(100)
-  estado          String           @db.VarChar(12)
-  Laboratorio     Laboratorio      @relation(fields: [id_laboratorio], references: [id_laboratorio])
-  Revision_Equipos Revision_Equipo[]
+  id_equipo         Int      @id @default(autoincrement())
+  id_laboratorio    Int
+  codigo_equipo     String   @db.VarChar(100)
+  descripcion       String?  @db.VarChar(100)
+  fecha_ingreso     DateTime
+  marca             String   @db.VarChar(100)
+  modelo            String?  @db.VarChar(100)
+  serie             String?  @db.VarChar(100)
+  proveedor         String?  @db.VarChar(100)
+  numero_factura    String?  @db.VarChar(100)
+  estado            String   @db.VarChar(12)
+  Laboratorio       Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  Revision_Equipo   Revision_Equipo[]
 }
 
 model Revision_Equipo {
-  id_revision       Int               @id @default(autoincrement())
+  id_revision       Int      @id @default(autoincrement())
   id_equipo         Int
   id_responsable    Int
   fecha_inicio      DateTime
-  tipo_revision     String            @db.VarChar(50)
-  estado_revision   String            @db.VarChar(20)
-  novedad           String            @db.VarChar(50)
-  observaciones     String?           @db.VarChar(255)
-  solucion          String            @db.VarChar(255)
-  repuestos_utilizados String?        @db.VarChar(255)
-  costo_revision    Float?
+  hora_inicio       DateTime @db.Time
+  tipo_revision     String   @db.VarChar(50)
+  estado_revision   String   @db.VarChar(20)
+  novedad           String   @db.VarChar(50)
+  observaciones     String?  @db.VarChar(255)
+  solucion          String   @db.VarChar(255)
+  repuestos_utilizados String? @db.VarChar(255)
+  costo_revision    Decimal  @db.Decimal(10, 2)
   fecha_fin         DateTime
-  foto_antes        String?           @db.VarChar(255)
-  foto_despues      String?           @db.VarChar(255)
+  evidencia_inicio  String?  @db.VarChar(255)
+  evidencia_fin     String?  @db.VarChar(255)
+  Usuario           Usuario   @relation(fields: [id_responsable], references: [id_usuario])
   Equipo_Laboratorio Equipo_Laboratorio @relation(fields: [id_equipo], references: [id_equipo])
-  Usuario           Usuario           @relation(fields: [id_responsable], references: [id_usuario])
 }
 
 model Reserva {
-  id_reserva     Int       @id @default(autoincrement())
+  id_reserva     Int        @id @default(autoincrement())
   id_laboratorio Int
   id_materia     Int
   fecha_inicio   DateTime
   fecha_fin      DateTime
-  motivo         String    @db.VarChar(255)
-  estado         String    @db.VarChar(8)
+  motivo         String     @db.VarChar(255)
+  estado         String     @db.VarChar(8)
   Laboratorio    Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
-  Materia        Materia    @relation(fields: [id_materia], references: [id_materia])
-  Asistencias    Asistencia[]
+  Materia        Materia     @relation(fields: [id_materia], references: [id_materia])
+  Asistencia     Asistencia[]
 }
 
 model Asistencia {
-  id_asistencia   Int    @id @default(autoincrement())
-  id_inscripcion  Int
-  id_reserva      Int
-  tipo_asistencia String 
+  id_asistencia  Int         @id @default(autoincrement())
+  id_inscripcion Int
+  id_reserva     Int
   fecha_asistencia DateTime
-  observaciones   String? @db.VarChar(255)
-  Inscripcion     Inscripcion @relation(fields: [id_inscripcion], references: [id_inscripcion])
-  Reserva         Reserva     @relation(fields: [id_reserva], references: [id_reserva])
+  observaciones  String?     @db.VarChar(255)
+  Inscripcion    Inscripcion @relation(fields: [id_inscripcion], references: [id_inscripcion])
+  Reserva        Reserva     @relation(fields: [id_reserva], references: [id_reserva])
 }
 
 model Bitacora {
-  id_bitacora   Int     @id @default(autoincrement())
+  id_bitacora    Int       @id @default(autoincrement())
   id_laboratorio Int
-  fecha         DateTime
-  ruta          String  @db.VarChar(255)
-  Laboratorio   Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  descripcion    String    @db.VarChar(255)
+  semana         String?   @db.VarChar(255)
+  fecha_generado DateTime
+  evidencia      String    @db.VarChar(255)
+  fecha_registro DateTime
+  estado         String    @db.VarChar(10)
+  Laboratorio    Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
 }

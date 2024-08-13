@@ -10,9 +10,10 @@ import { LaboratoriosService } from '../services/laboratorios/laboratorios.servi
 })
 export class LaboratoriosComponent implements OnInit {
   laboratorios: any[] = [];
-  searchTerm: string = '';
-  page: number = 1;
-  pageSize: number = 10;
+  filteredLaboratorios: any[] = [];
+  loading: boolean = true;
+  search: string = '';
+  pageSize: number = 5;
 
   constructor(private laboratorioService: LaboratoriosService, private modalService: NgbModal) {}
 
@@ -21,11 +22,25 @@ export class LaboratoriosComponent implements OnInit {
   }
 
   getLaboratorios(): void {
+    this.loading = true; // Set loading to true before fetching data
     this.laboratorioService.getLaboratorios().subscribe(data => {
       this.laboratorios = data;
+      this.filteredLaboratorios = this.laboratorios;
+      this.loading = false; // Set loading to false after data is fetched
+    }, () => {
+      this.loading = false; // Set loading to false in case of error
     });
   }
 
+  searchLaboratorios(): void {
+    if (this.search) {
+      this.filteredLaboratorios = this.laboratorios.filter(laboratorio => 
+        laboratorio.nombre_laboratorio.toLowerCase().includes(this.search.toLowerCase()));
+    } else {
+      this.filteredLaboratorios = this.laboratorios;
+    }
+  }
+  
   openCreateModal(): void {
     const modalRef = this.modalService.open(LaboratorioModalComponent);
     modalRef.result.then((result) => {

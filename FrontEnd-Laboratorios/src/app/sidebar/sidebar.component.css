@@ -1,119 +1,3 @@
-/* .sidebar {
-    width: 300px;
-    height: 100vh;
-    background-color: #3082ca;
-    padding-top: 20px;
-    position: fixed;
-  }
-  
-  .sidebar-item, .sidebar-subitem {
-    padding: 15px 20px;
-    color: #ffffff;
-    text-decoration: none;
-  }
-  
-  .sidebar-item a, .sidebar-subitem a {
-    color: #ffffff;
-    text-decoration: none;
-  }
-  
-  .sidebar-item a:hover, .sidebar-subitem a:hover {
-    text-decoration: underline;
-  }
-   */
-
-.sidebar {
-  background-color: #0274BE;
-  height: 100vh;
-  padding-top: 20px;
-  color: white;
-}
-
-h5 {
-  color: white;
-  font-size: 15px;
-  font-family: 'Raleway', sans-serif;
-  margin-right: 7%;
-}
-
-label {
-  color: white;
-  font-size: 12px;
-  font-family: 'Raleway', sans-serif;
-}
-
-a {
-  font-size: 13px;
-  font-family: 'Raleway', sans-serif;
-}
-
-.img-fluid {
-  max-width: 100%;
-  height: auto;
-  margin-left: 2px;
-  margin-left: 5px;
-}
-
-hr {
-  opacity: 50;
-  height: 14px;
-  width: 250px;
-  color: white;
-}
-
-.sidebar-item {
-  margin-bottom: 10px;
-}
-
-.w3-dropdown-content {
-  background-color: #ffffff;
-  /* Fondo blanco */
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  /* Sombra */
-}
-
-.w3-dropdown-content a {
-  padding: 10px 15px;
-  display: block;
-  text-decoration: none;
-  color: #333333;
-}
-
-.w3-dropdown-content a:hover {
-  color: black;
-}
-
-.w3-button {
-  background-color: #ffffff;
-}
-
-
-/*  .logo {
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  .logo img {
-    max-height: 80px;
-  }
-  
-  .sidebar-item, .sidebar-subitem {
-    margin: 10px 0;
-    padding-left: 20px;
-  }
-  
-  .sidebar a {
-    color: white;
-    text-decoration: none;
-    display: block;
-    padding: 10px;
-  }
-  
-  .sidebar a.active {
-    font-weight: bold;
-    background-color: #0056b3;
-  }*/
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -123,34 +7,122 @@ hr {
   background-color: #0274BE;
   color: white;
   padding-top: 20px;
-  /* Espacio para el logo */
-  z-index: 1099;
-  overflow-y: auto;
+  z-index: 1000;
+  /* overflow-y: auto; */
 }
 
 .logo {
   text-align: center;
-  padding: 10px 0;
+  padding-left: 10px;
 }
 
 .logo img {
   max-height: 80px;
 }
 
-.sidebar-item,
-.sidebar-subitem {
+h5 {
+  color: white;
+  font-size: 15px;
+  font-family: 'Raleway', sans-serif;
+}
+
+hr {
+  opacity: 50;
+  height: 14px;
+  width: 100%;
+  color: white;
+}
+
+.sidebar-item {
   margin: 10px 0;
-  padding-left: 20px;
+  padding-left: 10px;
+  position: relative;
+  transition: background-color 0.3s, color 0.3s;
 }
 
 .sidebar a {
   color: white;
   text-decoration: none;
   display: block;
+  font-size: 14px;
   padding: 10px;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-.sidebar a.active {
-  font-weight: bold;
-  background-color: #0273be60;
+.sidebar-item:hover,
+.sidebar-item.selected {
+  background-color: rgb(191, 232, 255);
+  color: black;
+}
+
+.sidebar-item:hover a,
+.sidebar-item.selected a {
+  color: black;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  left: 100%;
+  top: 0;
+  background-color: rgb(191, 232, 255);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1100;
+  min-width: 200px;
+}
+
+.dropdown-content a {
+  color: black !important;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  white-space: nowrap;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    height: auto;
+    width: 100%;
+    color: black;
+  }
+}
+
+
+.logout-item {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
+}
+
+.logout-button {
+  background-color: rgb(138, 23, 23);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  
+  cursor: pointer;
+  border-radius: 4px;
+  width: 100%; /* Ajustar el ancho para centrado */
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.logout-button:hover {
+  background-color: darkred;
 }

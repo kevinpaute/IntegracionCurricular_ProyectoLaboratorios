@@ -7,14 +7,14 @@
   display: block; 
   /*padding-top: 80px; /* height of navbar */
 }
-
+/* 
 main {
-  margin-left: 300px; /* width of sidebar */
+  margin-left: 300px;
   padding: 20px;
-}
+} */
 
-.container-fluid{
-  padding-top: 80px !important;
+body{
+  background-color: rgb(217, 166, 98) !important;
 }
 
 /* Estilos específicos para el componente de inicio de sesión */
@@ -40,4 +40,8 @@ main {
 
 .login-form {
   text-align: center;
+}
+
+.router-outlet {
+  background-color: #007bff;
 }

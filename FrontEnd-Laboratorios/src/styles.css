@@ -1,8 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
 /* Remove that awful yellow color and border from today in Schedule */
+
+
+
+.bi{
+  font-size: 20px;
+}
+
 .fc-state-highlight {
     opacity: 0;
     border: none;
+}
+
+body{
+    font-family: 'Raleway', sans-serif !important;
+    background-color: #edebf3;
 }
 
 /* Styling for each event from Schedule */
@@ -146,4 +158,24 @@
   .fc-event .fc-event-laboratorio {
     white-space: pre-line;
     line-height: 1.2; /* Ajustar el espaciado entre líneas */
+  }
+
+
+
+
+  /*tablas*/
+  /* Ajustar el padding de los td para hacerlos más finos */
+/* Ajustar el padding de los td para hacerlos más finos */
+p-table td, p-table th {
+    padding: 0.9rem 0.9rem;
+  }
+
+
+  p-table tr.header {
+    background-color: #f8f9fa;
+  }
+  
+  p-table .btn {
+    padding: 0.25rem 0.5rem; 
+    font-size: 0.875rem; 
   }

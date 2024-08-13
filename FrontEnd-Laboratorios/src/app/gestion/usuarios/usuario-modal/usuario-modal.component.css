@@ -1,0 +1,23 @@
+.modal-header {
+    background-color: #17a2b8;
+    color: white;
+    border-bottom: none;
+  }
+
+  .form-label{
+    font-weight: bold;
+  }
+  
+  .modal-body {
+    padding: 2rem;
+  }
+  
+  .btn-close {
+    color: white;
+  }
+  
+  p {
+    font-size: 1rem;
+    margin: 0;
+  }
+  

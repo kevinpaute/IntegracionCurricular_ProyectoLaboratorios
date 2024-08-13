@@ -39,8 +39,21 @@ import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.co
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { AsistenciaDocenteComponent } from './asistencia-docente/asistencia-docente.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { QRCodeModule } from 'angularx-qrcode';
+import { BitacoraComponent } from './bitacora/bitacora.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
+
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
+import { CardModule } from 'primeng/card';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+
+
 
 @NgModule({
   declarations: [
@@ -58,7 +71,11 @@ import { QRCodeModule } from 'angularx-qrcode';
     CuentaComponent,
     ReservasComponent,
     ReservasDocenteComponent,
-    AsistenciaDocenteComponent
+    AsistenciaDocenteComponent,
+    BitacoraComponent,
+    MainLayoutComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent
   ],
   imports: [
     BrowserModule,
@@ -70,9 +87,22 @@ import { QRCodeModule } from 'angularx-qrcode';
     NgbModule, // Asegúrate de que HttpClientModule está en las importaciones
     // NgxPaginationModule
     FullCalendarModule,
-    ToastrModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      positionClass: 'toast-top-right',
+      timeOut: 3000,
+      closeButton: true,
+      progressBar: true
+    }),
     SweetAlert2Module.forRoot(),
-    QRCodeModule
+    QRCodeModule,
+
+
+    TableModule,
+    PaginatorModule,
+    InputTextModule,
+    ButtonModule,
+    CardModule,
   ],
   providers: [
     AuthService,

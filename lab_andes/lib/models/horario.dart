@@ -16,19 +16,19 @@ class Horario {
   });
 
   factory Horario.fromJson(Map<String, dynamic> json) {
-    final laboratorio = json['Laboratorio']?['nombre_laboratorio'] ?? 'Sin laboratorio';
-    final materia = json['Materia']?['Catalogo_Materia']?['nombre_materia'] ?? 'Sin materia';
-    final docente = (json['Materia']?['Usuario']?['Detalle_Usuario']?['nombres'] ?? 'Desconocido') +
-        ' ' +
-        (json['Materia']?['Usuario']?['Detalle_Usuario']?['apellidos'] ?? 'Desconocido');
-    
     return Horario(
       motivo: json['motivo'] ?? 'Sin motivo',
-      laboratorio: laboratorio,
-      materia: materia,
-      docente: docente,
-      fechaInicio: DateTime.parse(json['fecha_inicio'] ?? DateTime.now().toIso8601String()),
-      fechaFin: DateTime.parse(json['fecha_fin'] ?? DateTime.now().toIso8601String()),
+      laboratorio: json['Laboratorio'] != null && json['Laboratorio']['nombre_laboratorio'] != null 
+        ? json['Laboratorio']['nombre_laboratorio'] 
+        : 'Sin laboratorio',
+      materia: json['Materia'] != null && json['Materia']['Catalogo_Materia'] != null && json['Materia']['Catalogo_Materia']['nombre_materia'] != null 
+        ? json['Materia']['Catalogo_Materia']['nombre_materia'] 
+        : 'Sin materia',
+      docente: json['Materia'] != null && json['Materia']['Usuario'] != null && json['Materia']['Usuario']['Detalle_Usuario'] != null 
+        ? '${json['Materia']['Usuario']['Detalle_Usuario']['nombres']} ${json['Materia']['Usuario']['Detalle_Usuario']['apellidos']}' 
+        : 'Desconocido',
+      fechaInicio: DateTime.parse(json['fecha_inicio']),
+      fechaFin: DateTime.parse(json['fecha_fin']),
     );
   }
 

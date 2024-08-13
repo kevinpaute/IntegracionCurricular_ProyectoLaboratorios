@@ -10,15 +10,35 @@ export class UsuariosService {
 
   constructor(private http: HttpClient) { }
 
+  importUsuarios(): Observable<any> {
+    return this.http.post(`${this.apiUrl}/importar`, {});
+  }
+  
   getUsuarios(): Observable<any[]> {
     return this.http.get<any[]>(this.apiUrl);
+  }
+
+  getUsuario(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  }
+
+  createUsuario(usuario: any): Observable<any> {
+    return this.http.post<any>(this.apiUrl, usuario);
   }
 
   updateUsuario(id: number, usuario: any): Observable<any> {
     return this.http.put<any>(`${this.apiUrl}/${id}`, usuario);
   }
 
-  createUsuario(usuario: any): Observable<any> {
-    return this.http.post<any>(this.apiUrl, usuario);
+  assignRole(docenteId: number, rolId: number): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/assign-role`, { docenteId, rolId });
+  }
+
+  getRoles(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/api/roles`); // Suponiendo que tengas un endpoint que devuelva los roles
+  }
+
+  getDocentes(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/docentes`);
   }
 }

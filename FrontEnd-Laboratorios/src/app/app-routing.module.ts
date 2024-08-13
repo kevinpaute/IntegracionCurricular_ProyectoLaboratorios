@@ -11,26 +11,37 @@ import { CuentaComponent } from './cuenta/cuenta.component';
 import { ReservasComponent } from './reservas/reservas.component';
 import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.component';
 import { AsistenciaDocenteComponent } from './asistencia-docente/asistencia-docente.component';
+import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent},
+  { path: 'reset-password/:token', component: ResetPasswordComponent },
+
   {
     path: '',
-    component: NavbarComponent,
+    component: MainLayoutComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'laboratorios/modulo', component: LaboratoriosComponent, canActivate: [AuthGuard], data: { role: 'administrador' } },  
-      { path: 'laboratorios/inventario', component: InventarioComponent, canActivate: [AuthGuard], data: { role: 'administrador' } },
-      { path: 'laboratorios/revision', component: RevisionEquiposComponent, canActivate: [AuthGuard], data: { role: 'administrador' } },
-      { path: 'gestion/carreras', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule), canActivate: [AuthGuard], data: { role: 'administrador' } },
-      { path: 'gestion/mis-materias', component: GestionMateriasComponent, canActivate: [AuthGuard], data: { role: 'docente' } },
-      { path: 'reservas', component: ReservasComponent},
-      { path: 'reservas-docente', component: ReservasDocenteComponent },
+      { path: 'laboratorios/modulo', component: LaboratoriosComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },  
+      { path: 'laboratorios/inventario', component: InventarioComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },
+      { path: 'laboratorios/revision', component: RevisionEquiposComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },
+      { path: 'gestion/carreras', loadChildren: () => import('./gestion/gestion.module').then(m => m.GestionModule), canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },
+      { path: 'gestion/mis-materias', component: GestionMateriasComponent, canActivate: [AuthGuard], data: { roles: ['docente'] } },
+      { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },
+      { path: 'reservas-docente', component: ReservasDocenteComponent, canActivate: [AuthGuard], data: { roles: ['docente'] } },
       { path: 'cuenta', component: CuentaComponent, canActivate: [AuthGuard] },
-      { path: 'asistencia', component: AsistenciaDocenteComponent },
+      { path: 'gestion/usuarios', component: UsuariosComponent, canActivate: [AuthGuard], data: { roles: ['administrador']}},
+      { path: 'asistencia', component: AsistenciaDocenteComponent, canActivate: [AuthGuard], data: { roles: ['docente', 'laboratorista'] } },
+     
       { path: '', redirectTo: '/gestion/carreras', pathMatch: 'full' }
     ]
-  }
+  },
+  { path: '**', redirectTo: '/login', pathMatch: 'full' }, // Redirección por defecto a login si no coincide ninguna ruta
+
 ];
 
 @NgModule({

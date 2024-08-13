@@ -58,6 +58,14 @@ export class AuthService {
     return localStorage.getItem('nombres') + ' ' + localStorage.getItem('apellidos');
   }
 
+  forgotPassword(email: string): Observable<any> {
+    return this.http.post(`${this.authUrl}/forgot-password`, { email });
+  }
+
+  resetPassword(token: string, password: string): Observable<any> {
+    return this.http.post(`${this.authUrl}/reset-password`, { token, password });
+  }
+
   // getUserId(): number | null {
   //   if (!this.userId && sessionStorage.getItem('userId')) {
   //     this.userId = parseInt(sessionStorage.getItem('userId')!, 10);

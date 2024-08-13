@@ -1,62 +1,40 @@
-h2 {
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 40px;
-    flex: 1;
-    padding: 40px;
-    text-align: center;
+.container {
+    font-family: "Helvetica Neue", Arial, sans-serif;
 }
 
-/*TABLA*/
-.tabla {
-    margin: 80px;
-}
-
-.table {
-    margin: 20px;
-}
-
-th {
-    font-family: 'Raleway', sans-serif;
-
-}
-
-td {
-    font-family: 'Raleway', sans-serif;
-
-}
-
-button {
-    font-family: 'Raleway', sans-serif;
-}
-
-.btn-primary {
-    background-color: #39D56E;
-    border: 1px solid #39D56E;
+.header > th {
+    background-color: #9c1257c0;
     color: white;
-    height: 35px;
-    width: 40px;
 }
 
 .btn-success {
-    background-color: #39D56E;
-    border: 1px solid #39D56E;
-    margin-left: 11%;
-    color: white;
-    height: 40px;
-    width: 65px;
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 13px;
+    background-color: #28a745;
+    border-color: #28a745;
 }
 
 .btn-success:hover {
-    background-color: #39d56d4d;
-    border: 1px solid #39d56d4d;
-    color: black;
-    height: 40px;
-    width: 65px;
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 13px;
+    background-color: #218838;
+    border-color: #1e7e34;
 }
+
+.btn-primary {
+    background-color: #0274BE;
+    border-color: #0274BE;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-info:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+}
+
+

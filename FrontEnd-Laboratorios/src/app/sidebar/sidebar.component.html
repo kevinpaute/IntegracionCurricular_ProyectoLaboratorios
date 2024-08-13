@@ -1,55 +1,59 @@
-<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-<div>
-  <div class="sidebar">
-    <div class="logo d-flex align-items-center">
-      <img src="assets/logo_istla.png" alt="Instituto Superior de los Andes" class="img-fluid">
-      <div class="ms-3">
-        <h5>Instituto Superior Tecnológico "Los Andes" ISTLA</h5>
-      </div>
+<div class="sidebar">
+  <div class="logo d-flex align-items-center">
+    <div class="md-3">
+      <img src="assets/logo_istla.png" alt="Instituto Superior de los Andes" class="img-fluid">   
+     </div>
+    <div class="md-2">
+      <h5>Sistema Gestion <br>laboratorios <br>LabAndes</h5>
     </div>
-    <hr>
-    <!-- Gestión de Usuarios -->
-    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
-      <a routerLink="/gestion/usuarios" routerLinkActive="active"> <i class="bi bi-people-fill"></i> GESTIÓN DE USUARIOS</a>
-    </div>
-    <!-- Módulo de programas académicos -->
-    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
-      <a routerLink="/gestion/carreras" routerLinkActive="active"><i class="bi bi-journals"></i> PROGRAMAS ACADÉMICOS</a>
-    </div>
-    <div class="sidebar-item" *ngIf="isRole('docente')">
-      <a routerLink="/gestion/mis-materias" routerLinkActive="active"><i class="bi bi-book"></i> MIS MATERIAS</a>
-    </div>
-    <!-- Gestión de laboratorios -->
-    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
-      <div class="w3-dropdown-hover">
-        <button class="w3-button" routerLink="/laboratorios" routerLinkActive="active"> <i class="bi bi-pc-display"></i> LABORATORIOS
-          <i class="fa fa-caret-down"></i>
-        </button>
-        <div class="w3-dropdown-content ">
-          <a routerLink="/laboratorios/modulo" routerLinkActive="active"><i class="bi bi-pc-display-horizontal"></i> MÓDULO</a>
-          <a routerLink="/laboratorios/inventario" routerLinkActive="active"><i class="bi bi-folder2"></i> INVENTARIO</a>
-          <a routerLink="/laboratorios/revision" routerLinkActive="active"> <i class="bi bi-wrench-adjustable"></i> REVISIÓN</a>
-        </div>
-      </div>
-    </div>
-    <!-- Gestión de reservas -->
-    <div class="sidebar-item" *ngIf="isRole('docente')">
-      <a routerLink="/reservas-docente/" routerLinkActive="active"> <i class="bi bi-calendar-date-fill"></i> RESERVAS</a>
-    </div>
-    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista')">
-      <a routerLink="/reservas/" routerLinkActive="active"> <i class="bi bi-calendar-date-fill"></i> RESERVAS</a>
-    </div>
-    <!-- Gestion de Asistencia -->
-    <div class="sidebar-item" *ngIf="isRole('docente') || isRole('laboratorista')">
-      <a routerLink="/asistencia/" routerLinkActive="active"> <i class="bi bi-calendar-date-fill"></i> ASISTENCIA</a>
-    </div>
-    <!-- Gestión de reportes -->
-    <div class="sidebar-item" *ngIf="isRole('administrador') || isRole('laboratorista') || isRole('docente')">
-      <a routerLink="/reportes" routerLinkActive="active"><i class="bi bi-file-earmark-pdf"></i> REPORTES</a>
-    </div>
-
   </div>
-</div>
 
+  <hr>
+  <!-- Gestión de Usuarios -->
+  <div class="sidebar-item" [class.selected]="selectedMenu === 'usuarios'" (mouseenter)="hoverMenu('usuarios')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/gestion/usuarios" routerLinkActive="active" (click)="selectMenu('usuarios')"> <i class="bi bi-people-fill"></i> GESTIÓN DE USUARIOS</a>
+  </div>
+  <!-- Módulo de programas académicos -->
+  <div class="sidebar-item" [class.selected]="selectedMenu === 'carreras'" (mouseenter)="hoverMenu('carreras')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/gestion/carreras" routerLinkActive="active" (click)="selectMenu('carreras')"><i class="bi bi-journals"></i> PROGRAMAS ACADÉMICOS</a>
+  </div>
+  <div class="sidebar-item" *ngIf="isRole('docente')" [class.selected]="selectedMenu === 'mis-materias'" (mouseenter)="hoverMenu('mis-materias')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/gestion/mis-materias" routerLinkActive="active" (click)="selectMenu('mis-materias')"><i class="bi bi-book"></i> MIS MATERIAS</a>
+  </div>
+  <!-- Gestión de laboratorios -->
+  <div class="sidebar-item dropdown" [class.selected]="selectedMenu === 'laboratorios' || hoveredMenu === 'laboratorios'" (mouseenter)="hoverMenu('laboratorios')" (mouseleave)="hoverMenu('')">
+    <a (click)="selectMenu('laboratorios')"><i class="bi bi-pc-display"></i> LABORATORIOS</a>
+    <div class="dropdown-content">
+      <a routerLink="/laboratorios/modulo" routerLinkActive="active" (click)="selectMenu('laboratorios')"><i class="bi bi-pc-display-horizontal"></i> MÓDULO</a>
+      <a routerLink="/laboratorios/inventario" routerLinkActive="active" (click)="selectMenu('laboratorios')"><i class="bi bi-folder2"></i> INVENTARIO</a>
+      <a routerLink="/laboratorios/revision" routerLinkActive="active" (click)="selectMenu('laboratorios')"> <i class="bi bi-wrench-adjustable"></i> REVISIÓN</a>
+    </div>
+  </div>
+  <!-- Gestión de reservas -->
+  <div class="sidebar-item" *ngIf="isRole('docente')" [class.selected]="selectedMenu === 'reservas-docente'" (mouseenter)="hoverMenu('reservas-docente')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/reservas-docente" routerLinkActive="active" (click)="selectMenu('reservas-docente')"> <i class="bi bi-calendar-date-fill"></i> RESERVAS</a>
+  </div>
+  <div class="sidebar-item" [class.selected]="selectedMenu === 'reservas'" (mouseenter)="hoverMenu('reservas')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/reservas" routerLinkActive="active" (click)="selectMenu('reservas')"> <i class="bi bi-calendar-date-fill"></i> RESERVAS</a>
+  </div>
+  <!-- Gestion de Asistencia -->
+  <div class="sidebar-item" [class.selected]="selectedMenu === 'asistencia'" (mouseenter)="hoverMenu('asistencia')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/asistencia" routerLinkActive="active" (click)="selectMenu('asistencia')"> <i class="bi bi-calendar-date-fill"></i> ASISTENCIA</a>
+  </div>
+  <!-- Gestión de reportes -->
+  <div class="sidebar-item" [class.selected]="selectedMenu === 'reportes'" (mouseenter)="hoverMenu('reportes')" (mouseleave)="hoverMenu('')">
+    <a routerLink="/reportes" routerLinkActive="active" (click)="selectMenu('reportes')"><i class="bi bi-file-earmark-pdf"></i> REPORTES</a>
+  </div>
+  <div class="sidebar-spacer"></div>
+  <hr>
+
+
+  <div class="sidebar-item dropdown" [class.selected]="selectedMenu === 'usuario' || hoveredMenu === 'usuario'" (mouseenter)="hoverMenu('usuario')" (mouseleave)="hoverMenu('')">
+    <a (click)="selectMenu('usuario')"><i class="bi bi-person-badge"></i> {{ userName }}</a>
+    <div class="dropdown-content">
+      <a routerLink="/usuario/cuenta" routerLinkActive="active" (click)="selectMenu('usuario')"><i class="bi bi-person-gear"></i> CUENTA</a>
+      <a routerLink="/cerrar-sesion" routerLinkActive="active" (click)="logout()"> <i class="bi bi-box-arrow-right"></i>  CERRAR SESIÓN</a>
+    </div>
+  </div>
+
+</div>

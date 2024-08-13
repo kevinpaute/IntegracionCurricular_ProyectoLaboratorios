@@ -1,4 +1,72 @@
-h4 {
+.modal-header {
+    background-color: #0274BE;
+    color: white;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+  }
+  
+  .modal-title {
+    font-family: 'Raleway', sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+  }
+  
+  /* .btn-close {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 20px;
+  } */
+  
+  .modal-body {
+    padding: 20px;
+  }
+  
+  .form-label {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+  }
+  
+  .form-control {
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+  }
+  
+  .btn-primary {
+    background-color: #0274BE;
+    border-color: #0274BE;
+    font-family: 'Raleway', sans-serif;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+  }
+  
+  /* Estilo específico para el botón de cerrar en la esquina superior derecha */
+  /* .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: white;
+    cursor: pointer;
+  } */
+  
+
+/* h4 {
     font-family: 'Raleway', sans-serif;
     font-weight: regular;
     font-size: 20px;
@@ -26,17 +94,14 @@ input{
 .modal-body {
     background-color: #0692e311;
     margin: 28px;
-}
+} */
 
-.btn-light {
+/* .btn-light {
     background-color: #0274BE;
     border: 1px solid #0274BE;
-}
+} */
 
-.btn-light:hover {
-    background-color: #0273be9f;
-}
-
+/*
 .btn-primary {
     background-color: #0274BE;
     border: 1px solid #0274BE;
@@ -57,15 +122,14 @@ input{
     font-family: 'Raleway', sans-serif;
     font-weight: regular;
     font-size: 13px;
+} */
+
+.btn-close {
+    border: 0;
+    background-color: white;
 }
 
-.btn-light {
-    background-color: #0274BE;
-    border: 1px solid #0274BE;
-    color: white;
-}
-
-.btn-light:hover {
-    background-color: #0273be4a;
-    color: black;
-}
+.btn-close:hover {
+    background-color: #8b0000;
+    color: white !important;
+} 

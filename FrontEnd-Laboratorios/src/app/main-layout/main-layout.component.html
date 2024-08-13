@@ -1,0 +1,18 @@
+<div class="container-fluid">
+  <div class="row">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+      <div class="sidebar-sticky">
+        <app-sidebar></app-sidebar>
+      </div>
+    </nav>
+
+    <!-- Content -->
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 main">
+      <button class="btn btn-primary d-md-none" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars"></i> Menu
+      </button>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

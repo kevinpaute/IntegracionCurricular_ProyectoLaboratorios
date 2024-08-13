@@ -10,48 +10,22 @@ import { UsuariosService } from '../usuarios.service';
 })
 export class UsuarioModalComponent implements OnInit{
   @Input() usuario: any;
-  @Input() rol: string;
-  usuarioForm: FormGroup;
+  fechaNacimientoLocal: string;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private usuarioService: UsuariosService) {
-    this.usuarioForm = this.fb.group({
-      nombres: ['', Validators.required],
-      apellidos: ['', Validators.required],
-      cedula: ['', Validators.required],
-      fecha_nacimiento: ['', Validators.required],
-      correo: ['', [Validators.required, Validators.email]],
-      celular: [''],
-      edad: ['', Validators.required],
-      genero: ['', Validators.required],
-      estado: ['', Validators.required],
-      contrasena: ['', Validators.required]
-    });
-  }
+  constructor(public activeModal: NgbActiveModal) {}
 
   ngOnInit(): void {
-    if (this.usuario) {
-      this.usuarioForm.patchValue(this.usuario.Detalle_Usuario);
+    if (this.usuario && this.usuario.Detalle_Usuario.fecha_nacimiento) {
+      const fechaUtc = new Date(this.usuario.Detalle_Usuario.fecha_nacimiento);
+      this.fechaNacimientoLocal = this.convertToLocalDateString(fechaUtc);
     }
   }
 
-  save(): void {
-    if (this.usuarioForm.invalid) {
-      return;
-    }
-
-    const usuarioData = {
-      Detalle_Usuario: this.usuarioForm.value,
-      id_rol: this.rol
-    };
-
-    if (this.usuario) {
-      this.usuarioService.updateUsuario(this.usuario.id_usuario, usuarioData).subscribe(() => {
-        this.activeModal.close('saved');
-      });
-    } else {
-      this.usuarioService.createUsuario(usuarioData).subscribe(() => {
-        this.activeModal.close('saved');
-      });
-    }
+  convertToLocalDateString(date: Date): string {
+    return date.toLocaleDateString('es-EC', {
+      day: '2-digit',
+      month: 'long',
+      year: 'numeric'
+    });
   }
 }

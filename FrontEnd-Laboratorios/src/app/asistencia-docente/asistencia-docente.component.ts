@@ -1,4 +1,3 @@
-// asistencia-docente.component.ts
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ReservaService } from '../services/reservas/reservas.service';
 import { AuthService } from '../services/login/auth.service';
@@ -53,6 +52,7 @@ export class AsistenciaDocenteComponent implements OnInit {
     this.selectedReserva = this.reservas.find(reserva => reserva.id_reserva === reservaId);
     this.asistenciaService.getAsistenciasByReserva(reservaId).subscribe(data => {
       this.asistencias = data;
+      this.updateEstudiantesConAsistencia();
     }, error => {
       Swal.fire('Error', 'Error al cargar las asistencias', 'error');
     });
@@ -60,9 +60,20 @@ export class AsistenciaDocenteComponent implements OnInit {
     this.loadInscripcionesByMateria(this.selectedReserva.Materia.id_materia);
   }
 
+  updateEstudiantesConAsistencia(): void {
+    this.estudiantes.forEach(estudiante => {
+      const asistencia = this.asistencias.find(a => a.id_inscripcion === estudiante.id_inscripcion);
+      if (asistencia) {
+        estudiante.tipo_asistencia = asistencia.tipo_asistencia;
+        estudiante.observaciones = asistencia.observaciones;
+      }
+    });
+  }
+
   loadInscripcionesByMateria(materiaId: number): void {
     this.inscripcionService.getInscripcionesPorMateria(materiaId).subscribe(data => {
       this.estudiantes = data;
+      this.updateEstudiantesConAsistencia();
     }, error => {
       Swal.fire('Error', 'Error al cargar las inscripciones', 'error');
     });
@@ -71,6 +82,7 @@ export class AsistenciaDocenteComponent implements OnInit {
   saveAsistencia(asistencia: any): void {
     this.asistenciaService.updateAsistencia(asistencia.id_asistencia, asistencia).subscribe(() => {
       Swal.fire('Éxito', 'Asistencia actualizada correctamente', 'success');
+      this.loadAsistenciasByReserva(this.selectedReserva.id_reserva);
     }, error => {
       Swal.fire('Error', 'Error al actualizar la asistencia', 'error');
     });
@@ -98,3 +110,4 @@ export class AsistenciaDocenteComponent implements OnInit {
     this.modalService.open(this.qrModal);
   }
 }
+

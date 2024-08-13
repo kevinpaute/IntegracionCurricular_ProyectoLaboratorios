@@ -1,31 +1,33 @@
-<div>
-  <div class="container mt-3">
-    <h2 class="text-center">Módulo Laboratorios</h2>
-    <div class="d-flex align-items-center">
-      <button class="btn btn-success" (click)="openCreateModal()">Crear</button>
-    </div>
-    <section class="tabla">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Nombre de laboratorio</th>
-            <th>Ubicación</th>
-            <th>Capacidad</th>
-            <th>Acción</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let laboratorio of laboratorios">
-            <td>{{ laboratorio.nombre_laboratorio }}</td>
-            <td>{{ laboratorio.ubicacion }}</td>
-            <td>{{ laboratorio.capacidad }}</td>
-            <td>
-              <button type="button" class="btn btn-primary" (click)="openEditModal(laboratorio)"><i
-                  class="bi bi-pencil-square"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+<div class="container mt-3">
+  <h2 class="text-center">Gestión de Laboratorios</h2>
+  <div class="d-flex align-items-center mb-3">
+    <input type="text" pInputText class="form-control me-2" placeholder="Buscar por nombre" [(ngModel)]="search" (input)="searchLaboratorios()">
+    <button class="btn btn-success ms-3" (click)="openCreateModal()"><i class="bi bi-plus-circle"></i></button>
   </div>
+  <p-table [value]="filteredLaboratorios" [paginator]="true" [rows]="5" [totalRecords]="filteredLaboratorios.length" [loading]="loading">
+    <ng-template pTemplate="header">
+      <tr class="header">
+        <th>Nombre de laboratorio</th>
+        <th>Ubicación</th>
+        <th>Capacidad</th>
+        <th>Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-laboratorio>
+      <tr>
+        <td>{{ laboratorio.nombre_laboratorio }}</td>
+        <td>{{ laboratorio.ubicacion }}</td>
+        <td>{{ laboratorio.capacidad }}</td>
+        <td>{{ laboratorio.estado }}</td>
+        <td>
+          <button type="button" class="btn btn-primary" (click)="openEditModal(laboratorio)"><i class="bi bi-pencil-square"></i></button> &nbsp; 
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="4" class="text-center">No se encontraron laboratorios.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

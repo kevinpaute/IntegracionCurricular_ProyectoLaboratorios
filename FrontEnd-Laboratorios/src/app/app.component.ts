@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/login/auth.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,23 @@ import { AuthService } from './services/login/auth.service';
 })
 export class AppComponent {
   title = 'FrontEnd-Laboratorios';
-  constructor(private authService: AuthService) {}
+  // constructor(private authService: AuthService) {}
 
-  isAuthenticated(): boolean {
-    return this.authService.isAuthenticated();
+  // isAuthenticated(): boolean {
+  //   return this.authService.isAuthenticated();
+  // }
+
+  isAuthenticated: boolean = false;
+
+  constructor(private authService: AuthService, private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.isAuthenticated = this.authService.isAuthenticated();
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isAuthenticated();
   }
 }

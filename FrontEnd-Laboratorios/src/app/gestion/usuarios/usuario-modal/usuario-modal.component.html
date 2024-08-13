@@ -1,4 +1,58 @@
 <div class="modal-header">
+  <h4 class="modal-title">Información del Usuario</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label class="form-label">Nombres</label>
+        <p>{{ usuario.Detalle_Usuario.nombres }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Apellidos</label>
+        <p>{{ usuario.Detalle_Usuario.apellidos }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">N° Identidad</label>
+        <p>{{ usuario.Detalle_Usuario.cedula }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Fecha de Nacimiento</label>
+        <p>{{ fechaNacimientoLocal }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Género</label>
+        <p>{{ usuario.Detalle_Usuario.genero }}</p>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="mb-3">
+        <label class="form-label">Correo</label>
+        <p>{{ usuario.Detalle_Usuario.correo }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Celular</label>
+        <p>{{ usuario.Detalle_Usuario.celular }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Edad</label>
+        <p>{{ usuario.Detalle_Usuario.edad }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Estado</label>
+        <p>{{ usuario.Detalle_Usuario.estado }}</p>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Rol</label>
+        <p>{{ usuario.Roles.nombre_rol }}</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="modal-header">
     <h4 class="modal-title">{{ usuario ? 'Editar Usuario' : 'Crear Usuario' }}</h4>
     <button type="button" class="btn btn-light" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
       <i class="bi bi-x-lg"></i>
@@ -50,4 +104,4 @@
       <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
   </div>
-  
+   -->

@@ -1,3 +1,83 @@
+<div class="modal-header">
+  <h4 class="modal-title">{{ isCreating ? 'Crear Usuario' : 'Asignar Docente' }}</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div *ngIf="isCreating">
+    <form [formGroup]="usuarioForm" (ngSubmit)="save()">
+      <div class="mb-3">
+        <label for="esEcuatoriano" class="form-check-label">¿Es Ecuatoriano?</label>
+        <input type="checkbox" class="form-check-input" id="esEcuatoriano" formControlName="esEcuatoriano">
+      </div>
+      <div class="mb-3" *ngIf="usuarioForm.get('esEcuatoriano')?.value">
+        <label for="cedula" class="form-label">Cédula</label>
+        <input id="cedula" type="text" class="form-control" formControlName="cedula" required maxlength="10">
+        <div *ngIf="usuarioForm.get('cedula')?.invalid && usuarioForm.get('cedula')?.touched" class="text-danger">
+          <div *ngIf="usuarioForm.get('cedula')?.errors?.['required']">Este campo es obligatorio.</div>
+          <div *ngIf="usuarioForm.get('cedula')?.errors?.['invalidCedula']">Cédula ecuatoriana inválida.</div>
+        </div>
+      </div>
+      <div class="mb-3" *ngIf="!usuarioForm.get('esEcuatoriano')?.value">
+        <label for="identificacion" class="form-label">N° Identificación</label>
+        <input id="identificacion" type="text" class="form-control" formControlName="cedula">
+      </div>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="nombres" class="form-label">Nombres</label>
+            <input id="nombres" type="text" class="form-control" formControlName="nombres">
+          </div>
+
+          <div class="mb-3">
+            <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento</label>
+            <input id="fecha_nacimiento" type="date" class="form-control" formControlName="fecha_nacimiento">
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="apellidos" class="form-label">Apellidos</label>
+            <input id="apellidos" type="text" class="form-control" formControlName="apellidos">
+          </div>
+
+
+          <div class="mb-3">
+            <label for="genero" class="form-label">Género</label>
+            <select id="genero" class="form-select" formControlName="genero">
+              <option value="Masculino">Masculino</option>
+              <option value="Femenino">Femenino</option>
+            </select>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="correo" class="form-label">Correo</label>
+          <input id="correo" type="email" class="form-control" formControlName="correo">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="celular" class="form-label">Celular</label>
+            <input id="celular" type="text" class="form-control" formControlName="celular">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label for="rol" class="form-label">Rol</label>
+            <select id="rol" class="form-select" formControlName="rol">
+              <option *ngFor="let rol of roles" [value]="rol.id">{{ rol.nombre }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Guardar</button>
+    </form>
+  </div>
+</div>
+
+
 <!-- Crear Usuario Component -->
 <!-- <div class="container">
     <h2>Crear Usuario</h2>
