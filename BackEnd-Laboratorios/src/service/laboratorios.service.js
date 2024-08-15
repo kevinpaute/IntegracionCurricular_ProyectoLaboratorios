@@ -7,10 +7,10 @@ class LaboratorioService {
     async getAll() {
         try {
             const laboratorios = await prisma.laboratorio.findMany({
-                include: {
-                    Equipos: true,
-                    Reservas: true 
-                }
+                // include: {
+                //     Equipos: true,
+                //     Reservas: true 
+                // }
             });
             return laboratorios;
         } catch (error) {
@@ -37,14 +37,14 @@ class LaboratorioService {
     }
   
     // Crear un nuevo laboratorio
-    async create({ nombre_laboratorio, ubicacion, capacidad }) {
+    async create({ nombre_laboratorio, ubicacion, capacidad, estado }) {
         try {
             const nuevoLaboratorio = await prisma.laboratorio.create({
                 data: {
                     nombre_laboratorio,
                     ubicacion,
                     capacidad,
-                    estado
+                    estado: estado || 'ACTIVO'
                 }
             });
             return nuevoLaboratorio;

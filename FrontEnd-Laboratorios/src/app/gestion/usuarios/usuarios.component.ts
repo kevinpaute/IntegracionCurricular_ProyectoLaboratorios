@@ -28,6 +28,45 @@ export class UsuariosComponent implements OnInit {
     this.getUsuarios();
   }
 
+  importUsuarios(): void {
+    this.loading = true; // Activar animación de carga
+    Swal.fire({
+      title: 'Importando datos...',
+      html: 'Por favor espere mientras se importan los datos.',
+      allowOutsideClick: false,
+      didOpen: () => {
+        Swal.showLoading();
+      }
+    });
+  
+    this.usuarioService.importUsuarios().subscribe(
+      () => {
+        this.getUsuarios(); // Refrescar la lista de usuarios
+        Swal.fire({
+          icon: 'success',
+          title: 'Usuarios importados exitosamente',
+          showConfirmButton: true, // Mostrar botón de confirmación
+          confirmButtonText: 'OK', // Texto del botón
+        });
+        this.loading = false; // Desactivar animación de carga
+      },
+      (error) => {
+        console.error('Error importing usuarios', error);
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al importar usuarios',
+          text: 'Ocurrió un problema al importar los usuarios. Por favor, intente de nuevo.',
+          showConfirmButton: true, // Mostrar botón de confirmación
+          confirmButtonText: 'Entendido', // Texto del botón
+        });
+        this.loading = false; // Desactivar animación de carga
+      }
+    );
+  }
+  
+    
+
+
   getUsuarios(): void {
     this.loading = true; // Set loading to true before fetching data
     this.usuarioService.getUsuarios().subscribe(data => {

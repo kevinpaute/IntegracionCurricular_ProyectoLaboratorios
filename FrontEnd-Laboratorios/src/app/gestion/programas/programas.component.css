@@ -1,0 +1,48 @@
+.titulo{
+    margin-bottom: 10px;
+  }
+
+  .container{
+    padding-left: 10px !important;
+  }
+  
+  .carreras{
+    margin-bottom: 14px;
+  }
+  
+  .card {
+      border-radius: 10px;
+      position: relative;
+      overflow: hidden;
+      
+    }
+    
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px; /* Altura de la franja */
+      background-color: #93064b; /* Color de la franja */
+    }
+    
+    .card:hover {
+      transform: scale(1.05);
+      transition: transform 0.3s;
+    }
+    
+    .card-body i {
+      color: #007bff;
+    }
+    
+    .card-body h5 {
+      font-weight: bold;
+      font-size: 14px;
+    }
+  
+    h2{
+      font-weight: bold;
+    }
+  
+  

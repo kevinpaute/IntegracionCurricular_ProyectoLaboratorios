@@ -9,17 +9,31 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ProgramasComponent {
   currentView: string = 'carreras';
   selectedCarreraId: number | null = null;
+  selectedCarreraName: string = '';
   selectedCursoId: number | null = null;
   selectedMateriaId: number | null = null;
 
-  navigateTo(view: string, id: number | null = null): void {
+  navigateTo(view: string, event: { idCarrera: number, nombreCarrera: string } | number): void {
     this.currentView = view;
-    if (view === 'cursos') {
-      this.selectedCarreraId = id;
-    } else if (view === 'materias') {
-      this.selectedCursoId = id;
-    } else if (view === 'estudiantes') {
-      this.selectedMateriaId = id;
+    if (view === 'cursos' && typeof event === 'object') {
+      this.selectedCarreraId = event.idCarrera;
+      this.selectedCarreraName = event.nombreCarrera;
+    } else if (view === 'materias' && typeof event === 'number') {
+      this.selectedCursoId = event;
+    } else if (view === 'estudiantes' && typeof event === 'number') {
+      this.selectedMateriaId = event;
+    }
+  }
+
+  getTitle(): string {
+    if (this.currentView === 'cursos') {
+      return `Cursos`;
+    } else if (this.currentView === 'materias') {
+      return `Materias del Curso`;
+    } else if (this.currentView === 'estudiantes') {
+      return `Estudiantes Inscritos`;
+    } else {
+      return '';
     }
   }
 

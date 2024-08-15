@@ -24,13 +24,15 @@ model Detalle_Usuario {
   nombres            String @db.VarChar(50)
   apellidos          String @db.VarChar(50)
   cedula             String @db.VarChar(10)
-  fecha_nacimiento   DateTime @db.Date  // Aquí indicamos que es un DATE en MySQL
-  correo             String @db.VarChar(100)
+  fecha_nacimiento   DateTime? @db.Date  // Aquí indicamos que es un DATE en MySQL
+  correo             String @db.VarChar(100) @unique
   celular            String? @db.VarChar(20)
-  edad               Int
+  edad               Int?
   genero             String @db.VarChar(15)
   estado             String @db.VarChar(8)
   contrasena         String @db.VarChar(255)
+  codigo_usuario     String @db.VarChar(15) @unique
+
   Usuario            Usuario[]
 }
 
@@ -39,7 +41,6 @@ model Usuario {
   id_usuario         Int            @id @default(autoincrement())
   id_detalle_usuario Int
   id_rol             Int
-  codigo_usuario     String         @db.VarChar(10)
   Detalle_Usuario    Detalle_Usuario @relation(fields: [id_detalle_usuario], references: [id_detalle_usuario])
   Roles              Roles          @relation(fields: [id_rol], references: [id_rol])
   Materia            Materia[]
@@ -51,18 +52,18 @@ model Carrera {
   id_carrera    Int    @id @default(autoincrement())
   nombre_carrera String @db.VarChar(100)
   estado        String @db.VarChar(8)
-  codigo_carrera String @db.VarChar(10)
+  codigo_carrera String @db.VarChar(10) @unique
   Curso         Curso[]
 }
 
 model Periodo_Academico {
   id_periodo    Int      @id @default(autoincrement())
-  nombre_periodo String   @db.VarChar(24)
+  nombre_periodo String   @db.VarChar(100)
   detalle_periodo String? @db.VarChar(100)
   anio_periodo   Int
   estado         String   @db.VarChar(8)
   fecha_creacion DateTime?
-  codigo_periodo String   @db.VarChar(10)
+  codigo_periodo String   @db.VarChar(10) @unique
   Curso          Curso[]
 }
 
@@ -72,7 +73,7 @@ model Curso {
   paralelo       String           @db.VarChar(24)
   id_periodo     Int
   id_carrera     Int
-  codigo_curso   String           @db.VarChar(10)
+  codigo_curso   String           @db.VarChar(10) @unique
   Periodo_Academico Periodo_Academico @relation(fields: [id_periodo], references: [id_periodo])
   Carrera        Carrera          @relation(fields: [id_carrera], references: [id_carrera])
   Materia        Materia[]
@@ -89,9 +90,9 @@ model Materia {
   id_catalogo_materia Int
   id_curso          Int
   id_docente        Int
-  descripcion       String?         @db.VarChar(24)
+  descripcion       String?         @db.VarChar(255)
   estado            String          @db.VarChar(8)
-  codigo_materia    String          @db.VarChar(15)
+  codigo_materia    String          @db.VarChar(15) @unique
   Curso             Curso           @relation(fields: [id_curso], references: [id_curso])
   Usuario           Usuario         @relation(fields: [id_docente], references: [id_usuario])
   Catalogo_Materia  Catalogo_Materia @relation(fields: [id_catalogo_materia], references: [id_catalogo_materia])
@@ -124,7 +125,7 @@ model Equipo_Laboratorio {
   id_equipo         Int      @id @default(autoincrement())
   id_laboratorio    Int
   codigo_equipo     String   @db.VarChar(100)
-  descripcion       String?  @db.VarChar(100)
+  descripcion       String?  @db.VarChar(255)
   fecha_ingreso     DateTime
   marca             String   @db.VarChar(100)
   modelo            String?  @db.VarChar(100)

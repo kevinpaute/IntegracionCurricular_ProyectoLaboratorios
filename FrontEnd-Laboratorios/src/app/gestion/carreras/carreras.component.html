@@ -1,13 +1,16 @@
 <div class="container mt-3">
-  <h2 class="text-center">Carreras</h2>
+  <div class="d-flex justify-content-between titulo">
+    <h2 class="text-left me-3">Carreras Tecnológicas</h2> 
+    <button class="btn btn-dark" (click)="importAllData()"><i class="bi bi-cloud-download-fill"></i> Importar programas académicos</button>
+  </div>
   <div class="row">
-    <div class="col-md-4" *ngFor="let carrera of carreras">
-      <div class="card mb-3 shadow-sm" (click)="goToCursos(carrera.id_carrera)">
+    <div class="col-md-4 carreras" *ngFor="let carrera of carreras">
+      <div class="card mb-3 shadow-sm  h-100" (click)="goToCursos(carrera.id_carrera, carrera.nombre_carrera)">
         <div class="card-body text-center">
           <i class="{{ carrera.icono }}" style="font-size: 2em;"></i>
           <h5 class="card-title mt-3">{{ carrera.nombre_carrera }}</h5>
         </div>
       </div>
-    </div>
+    </div>    
   </div>
 </div>

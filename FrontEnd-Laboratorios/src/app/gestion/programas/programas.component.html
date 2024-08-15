@@ -1,8 +1,10 @@
-<div>
-    <button *ngIf="currentView !== 'carreras'" class="btn btn-secondary mb-3" (click)="goBack()">Regresar</button>
-    <app-carreras *ngIf="currentView === 'carreras'" (navigate)="navigateTo('cursos', $event)"></app-carreras>
-    <app-cursos *ngIf="currentView === 'cursos' && selectedCarreraId !== null" [idCarrera]="selectedCarreraId!" (navigate)="navigateTo('materias', $event)"></app-cursos>
-    <app-materias *ngIf="currentView === 'materias' && selectedCursoId !== null" [idCurso]="selectedCursoId!" (navigate)="navigateTo('estudiantes', $event)"></app-materias>
-    <app-inscripciones *ngIf="currentView === 'estudiantes' && selectedMateriaId !== null" [idMateria]="selectedMateriaId!"></app-inscripciones>
+<div class="container mt-3">
+  <div class="d-flex justify-content-between">
+    <h2 class="text-left me-3">{{ getTitle() }}</h2>
+    <button *ngIf="currentView !== 'carreras'" class="btn btn-secondary" (click)="goBack()">Regresar</button>
   </div>
-  
+  <app-carreras *ngIf="currentView === 'carreras'" (navigate)="navigateTo('cursos', $event)"></app-carreras>
+  <app-cursos *ngIf="currentView === 'cursos' && selectedCarreraId !== null" [idCarrera]="selectedCarreraId" [nombreCarrera]="selectedCarreraName || ''" (navigate)="navigateTo('materias', $event)"></app-cursos>
+  <app-materias *ngIf="currentView === 'materias' && selectedCursoId !== null" [idCurso]="selectedCursoId!" (navigate)="navigateTo('estudiantes', $event)"></app-materias>
+  <app-inscripciones *ngIf="currentView === 'estudiantes' && selectedMateriaId !== null" [idMateria]="selectedMateriaId!"></app-inscripciones>
+</div>

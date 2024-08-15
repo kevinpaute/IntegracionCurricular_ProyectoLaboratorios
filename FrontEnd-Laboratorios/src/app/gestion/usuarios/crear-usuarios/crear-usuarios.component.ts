@@ -38,6 +38,7 @@ export class CrearUsuariosComponent implements OnInit {
       genero: ['', Validators.required],
       estado: ['Activo', Validators.required],
       rol: ['', Validators.required],
+      codigo_usuario: [''],
       esEcuatoriano: [false] // Checkbox para indicar si es ecuatoriano
     });
   }
@@ -71,9 +72,11 @@ export class CrearUsuariosComponent implements OnInit {
         edad: this.calculateAge(this.usuarioForm.value.fecha_nacimiento),
         genero: this.usuarioForm.value.genero,
         estado: this.usuarioForm.value.estado,
-        contrasena: this.usuarioForm.value.cedula
+        contrasena: this.usuarioForm.value.cedula,
+        codigo_usuario: this.usuarioForm.value.cedula,
+        
       },
-      id_rol: parseInt(this.usuarioForm.value.rol) // Convertir el rol a número
+      id_rol: parseInt(this.usuarioForm.value.rol), // Convertir el rol a número
     };
 
     console.log("Saving user with data:", usuarioData);

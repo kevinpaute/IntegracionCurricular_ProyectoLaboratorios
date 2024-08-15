@@ -26,7 +26,7 @@ class LaboratorioController {
 
     async create(req, res) {
         try {
-            const { nombre_laboratorio, ubicacion, capacidad } = req.body;
+            const { nombre_laboratorio, ubicacion, capacidad, estado } = req.body;
             const nuevoLaboratorio = await laboratorioService.create({ nombre_laboratorio, ubicacion, capacidad, estado});
             res.status(201).json(nuevoLaboratorio);
         } catch (error) {

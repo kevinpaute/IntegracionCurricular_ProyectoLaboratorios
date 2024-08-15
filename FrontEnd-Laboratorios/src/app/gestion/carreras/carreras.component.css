@@ -1,7 +1,17 @@
+
+.titulo{
+  margin-bottom: 10px;
+}
+
+.carreras{
+  margin-bottom: 14px;
+}
+
 .card {
     border-radius: 10px;
     position: relative;
     overflow: hidden;
+    
   }
   
   .card::before {
@@ -25,5 +35,10 @@
   
   .card-body h5 {
     font-weight: bold;
+    font-size: 14px;
   }
-  
+
+  h2{
+    font-weight: bold;
+  }
+

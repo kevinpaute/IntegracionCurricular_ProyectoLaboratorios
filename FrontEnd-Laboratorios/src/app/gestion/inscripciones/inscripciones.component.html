@@ -1,21 +1,23 @@
-<div class="container mt-3">
-  <h2 class="text-center">Estudiantes Inscritos</h2>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th>Nombres</th>
-        <th>Apellidos</th>
-        <th>Cédula</th>
-        <th>Correo</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let estudiante of estudiantes">
-        <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }}</td>
-        <td>{{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
-        <td>{{ estudiante.Usuario.Detalle_Usuario.cedula }}</td>
-        <td>{{ estudiante.Usuario.Detalle_Usuario.correo }}</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<p-table [value]="estudiantes" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" responsiveLayout="scroll">
+  <ng-template pTemplate="header">
+    <tr>
+      <th>Nombres</th>
+      <th>Apellidos</th>
+      <th>Cédula</th>
+      <th>Correo</th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-estudiante>
+    <tr>
+      <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }}</td>
+      <td>{{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
+      <td>{{ estudiante.Usuario.Detalle_Usuario.cedula }}</td>
+      <td>{{ estudiante.Usuario.Detalle_Usuario.correo }}</td>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="emptymessage">
+    <tr>
+      <td colspan="4" class="text-center">No se encontraron estudiantes.</td>
+    </tr>
+  </ng-template>
+</p-table>

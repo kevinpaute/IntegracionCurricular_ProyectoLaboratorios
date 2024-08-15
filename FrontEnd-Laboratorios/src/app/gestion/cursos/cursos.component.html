@@ -1,5 +1,6 @@
-<div class="container mt-3">
-  <h2 class="text-center">Cursos</h2>
+
+  <!-- <h2 class="text-center">CURSOS</h2> Aquí se muestra el nombre de la carrera -->
+  <p class="text-left"> <b>CARRERA: </b>{{ nombreCarrera }}</p> <!-- Aquí se muestra el nombre de la carrera -->
   <div class="form-group">
     <label for="periodo">Seleccionar Periodo Académico:</label>
     <select id="periodo" class="form-control" [(ngModel)]="selectedPeriodo" (change)="getCursosByPeriodo()">
@@ -15,4 +16,4 @@
       </div>
     </div>
   </div>
-</div>
+

@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { LaboratoriosService } from '../../services/laboratorios/laboratorios.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-laboratorio-modal',
@@ -12,7 +13,7 @@ export class LaboratorioModalComponent implements OnInit {
   @Input() laboratorio: any;
   laboratorioForm: FormGroup;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private laboratoriosService: LaboratoriosService) {
+  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private laboratoriosService: LaboratoriosService, private toastr: ToastrService ) {
     this.laboratorioForm = this.fb.group({
       nombre_laboratorio: ['', Validators.required],
       ubicacion: ['', Validators.required],
@@ -32,13 +33,25 @@ export class LaboratorioModalComponent implements OnInit {
     }
 
     if (this.laboratorio) {
-      this.laboratoriosService.updateLaboratorio(this.laboratorio.id_laboratorio, this.laboratorioForm.value).subscribe(() => {
-        this.activeModal.close('saved');
-      });
+      this.laboratoriosService.updateLaboratorio(this.laboratorio.id_laboratorio, this.laboratorioForm.value).subscribe(
+        () => {
+          this.toastr.success('Laboratorio actualizado con éxito'); // Show success toastr
+          this.activeModal.close('saved');
+        },
+        (error) => {
+          this.toastr.error('Error al actualizar el laboratorio'); // Show error toastr
+        }
+      );
     } else {
-      this.laboratoriosService.createLaboratorio(this.laboratorioForm.value).subscribe(() => {
-        this.activeModal.close('saved');
-      });
+      this.laboratoriosService.createLaboratorio(this.laboratorioForm.value).subscribe(
+        () => {
+          this.toastr.success('Laboratorio creado con éxito'); // Show success toastr
+          this.activeModal.close('saved');
+        },
+        (error) => {
+          this.toastr.error('Error al crear el laboratorio'); // Show error toastr
+        }
+      );
     }
   }
 }

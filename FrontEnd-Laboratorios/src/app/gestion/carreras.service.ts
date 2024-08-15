@@ -40,4 +40,10 @@ export class CarrerasService {
   delete(id: number): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}`, { estado: 'inactivo' });
   }
+
+  private baseUrl2 = 'http://localhost:3000/api';
+
+  importAllData(): Observable<any> {
+    return this.http.post(`${this.baseUrl2}/import-all-data`, {});
+  }
 }

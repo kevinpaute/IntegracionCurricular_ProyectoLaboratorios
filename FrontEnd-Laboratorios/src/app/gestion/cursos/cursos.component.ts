@@ -9,6 +9,7 @@ import { PeriodosService } from '../periodos.service';
 })
 export class CursosComponent implements OnInit {
   @Input() idCarrera: number;
+  @Input() nombreCarrera: string; // Nuevo input
   @Output() navigate = new EventEmitter<number>();
   cursos: any[] = [];
   periodos: any[] = [];

@@ -32,43 +32,42 @@ class UsuariosService {
   }
 
   async create(usuario) {
+    const { Detalle_Usuario, id_rol } = usuario;
+    
+    const hashedPassword = await bcrypt.hash(Detalle_Usuario.contrasena, 10);
+    Detalle_Usuario.contrasena = hashedPassword;
+  
+    const fechaNacimiento = new Date(Detalle_Usuario.fecha_nacimiento).toISOString().split('T')[0];
+  
     try {
-      const { Detalle_Usuario, id_rol } = usuario;
-      const hashedPassword = await bcrypt.hash(Detalle_Usuario.contrasena, 10);
-      Detalle_Usuario.contrasena = hashedPassword;
-
-      const lastDetalleUsuarioId = await this.getLastDetalleUsuarioId();
-      const newDetalleUsuarioId = lastDetalleUsuarioId + 1;
-
-      // Convertir la fecha de nacimiento a formato ISO-8601 solo con la fecha (sin tiempo)
-      const fechaNacimiento = new Date(Detalle_Usuario.fecha_nacimiento).toISOString().split('T')[0];
-
-      // Crear el Detalle_Usuario primero
-      await prisma.detalle_Usuario.create({
-        data: {
-          ...Detalle_Usuario,
-          fecha_nacimiento: new Date(fechaNacimiento), // Pasar solo la fecha
-          id_detalle_usuario: newDetalleUsuarioId
-        }
-      });
-
-      // Crear el Usuario usando el id_detalle_usuario creado
-      return await prisma.usuario.create({
-        data: {
-          id_usuario: newDetalleUsuarioId,
-          id_detalle_usuario: newDetalleUsuarioId,
-          id_rol
-        },
-        include: {
-          Detalle_Usuario: true,
-          Roles: true
-        }
+      // Usar una transacción para asegurar que ambas operaciones se ejecuten de manera atómica
+      return await prisma.$transaction(async (prisma) => {
+        const detalleUsuario = await prisma.detalle_Usuario.create({
+          data: {
+            ...Detalle_Usuario,
+            fecha_nacimiento: new Date(fechaNacimiento)
+          }
+        });
+  
+        const usuarioCreado = await prisma.usuario.create({
+          data: {
+            id_detalle_usuario: detalleUsuario.id_detalle_usuario,
+            id_rol,
+          },
+          include: {
+            Detalle_Usuario: true,
+            Roles: true
+          }
+        });
+  
+        return usuarioCreado;
       });
     } catch (error) {
       console.error("Error creating user:", error);
       throw error;
     }
   }
+  
 
   async update(id, usuario) {
     try {
