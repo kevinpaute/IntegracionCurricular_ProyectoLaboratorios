@@ -181,13 +181,26 @@ model Asistencia {
 }
 
 model Bitacora {
-  id_bitacora    Int       @id @default(autoincrement())
-  id_laboratorio Int
-  descripcion    String    @db.VarChar(255)
-  semana         String?   @db.VarChar(255)
+  id_bitacora    Int           @id @default(autoincrement())
+  codigo_bitacora String        @db.VarChar(100)
+  descripcion    String         @db.VarChar(255)
   fecha_generado DateTime
-  evidencia      String    @db.VarChar(255)
+  evidencia      String?        @db.VarChar(255)
   fecha_registro DateTime
-  estado         String    @db.VarChar(10)
-  Laboratorio    Laboratorio @relation(fields: [id_laboratorio], references: [id_laboratorio])
+  estado         String         @db.VarChar(10)
+}
+
+model ReservaBitacora {
+  id            Int       @id @default(autoincrement())
+  id_bitacora   Int
+  id_reserva    Int
+  Bitacora      Bitacora  @relation(fields: [id_bitacora], references: [id_bitacora])
+  Reserva       Reserva   @relation(fields: [id_reserva], references: [id_reserva])
+  fecha_asignacion DateTime @default(now())
+
+  Bitacora      Bitacora  @relation(fields: [id_bitacora], references: [id_bitacora])
+  Reserva       Reserva   @relation(fields: [id_reserva], references: [id_reserva])
+
+
+  @@unique([id_reserva, id_bitacora]) // Asegura que una reserva solo esté asociada a una bitácora una vez
 }

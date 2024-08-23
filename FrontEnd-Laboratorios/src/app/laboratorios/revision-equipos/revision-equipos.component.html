@@ -1,39 +1,37 @@
-<div>
-  <div class="container mt-3">
-    <h2 class="text-center">Revisión de Equipos</h2>
-    <div class="d-flex align-items-center">
-      <button class="btn btn-success" (click)="openCreateModal()">Registrar Revisión</button>
-    </div>
-    <section class="tabla">
-      <table class="table table-striped">
-        <thead>
-          <tr>
-            <th>Nombre de Equipo</th>
-            <th>Responsable</th>
-            <th>Fecha de Inicio</th>
-            <th>Tipo de Revisión</th>
-            <th>Estado</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let revision of revisiones">
-            <td>{{ revision.Equipo_Laboratorio.nombre_equipo }}</td>
-            <td>{{ revision.Usuario.Detalle_Usuario.nombres }} {{ revision.Usuario.Detalle_Usuario.apellidos }}</td>
-            <td>{{ revision.fecha_inicio | date: 'short' }}</td>
-            <td>{{ revision.tipo_revision }}</td>
-            <td>{{ revision.estado_revision }}</td>
-            <td>
-              <button type="button" class="btn btn-primary" (click)="openEditModal(revision)"><i
-                  class="bi bi-pencil-square"></i></button>
-              <button *ngIf="revision.estado_revision !== 'completada'" type="button" class="btn btn-warning"
-                (click)="terminarProceso(revision)"><i class="bi bi-check-square"></i></button>
-              <button *ngIf="revision.estado_revision === 'completada'" type="button" class="btn btn-info"
-                (click)="openDetailModal(revision)"><i class="bi bi-info-circle-fill "></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
+<div class="container mt-3">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="text-left">Revisión de Equipos</h2>
+    <button pButton type="button" label="Registrar Revisión" icon="pi pi-plus" class="p-button-success" (click)="openCreateModal()"></button>
   </div>
+  <p-table [value]="revisiones" [paginator]="true" [rows]="6" [responsiveLayout]="'scroll'">
+    <ng-template pTemplate="header">
+      <tr class="header">
+        <th scope="col" pSortableColumn="Equipo_Laboratorio.nombre_equipo">Nombre de Equipo <p-sortIcon field="Equipo_Laboratorio.nombre_equipo"></p-sortIcon></th>
+        <th scope="col" pSortableColumn="Usuario.Detalle_Usuario.nombres">Responsable <p-sortIcon field="Usuario.Detalle_Usuario.nombres"></p-sortIcon></th>
+        <th scope="col" pSortableColumn="fecha_inicio">Fecha de Inicio <p-sortIcon field="fecha_inicio"></p-sortIcon></th>
+        <th scope="col" pSortableColumn="tipo_revision">Tipo de Revisión <p-sortIcon field="tipo_revision"></p-sortIcon></th>
+        <th scope="col">Estado</th>
+        <th scope="col">Acciones</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-revision>
+      <tr>
+        <td>{{ revision.Equipo_Laboratorio.nombre_equipo }}</td>
+        <td>{{ revision.Usuario.Detalle_Usuario.nombres }} {{ revision.Usuario.Detalle_Usuario.apellidos }}</td>
+        <td>{{ revision.fecha_inicio | date: 'short' }}</td>
+        <td>{{ revision.tipo_revision }}</td>
+        <td>{{ revision.estado_revision }}</td>
+        <td>
+          <button pButton type="button" icon="pi pi-pencil" class="p-button-primary" (click)="openEditModal(revision)"></button>
+          <button *ngIf="revision.estado_revision !== 'completada'" pButton type="button" icon="pi pi-check" class="p-button-warning" (click)="terminarProceso(revision)"></button>
+          <button *ngIf="revision.estado_revision === 'completada'" pButton type="button" icon="pi pi-info-circle" class="p-button-info" (click)="openDetailModal(revision)"></button>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="6" class="text-center">No se encontraron revisiones.</td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>

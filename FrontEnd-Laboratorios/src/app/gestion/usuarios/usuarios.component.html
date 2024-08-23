@@ -21,12 +21,12 @@
   <p-table [value]="filteredUsuarios" [paginator]="true" [rows]="pageSize" [totalRecords]="filteredUsuarios.length" [loading]="loading" >
     <ng-template pTemplate="header">
       <tr class="header" >
-        <th>N°</th> <!-- Columna de índice -->
-        <th>NOMBRES</th>
-        <th>EMAIL</th>
-        <th>N. IDENTIDAD</th>
-        <th>ROL</th>
-        <th>ACCIONES</th>
+        <th scope="col">N°</th> <!-- Columna de índice -->
+        <th scope="col">NOMBRES</th>
+        <th scope="col">EMAIL</th>
+        <th scope="col">N. IDENTIDAD</th>
+        <th scope="col">ROL</th>
+        <th scope="col">ACCIONES</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-usuario let-i="rowIndex"> <!-- Usar rowIndex para obtener el índice -->

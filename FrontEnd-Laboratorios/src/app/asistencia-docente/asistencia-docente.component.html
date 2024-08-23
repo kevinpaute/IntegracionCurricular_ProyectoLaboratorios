@@ -1,58 +1,67 @@
-<!-- asistencia-docente.component.html -->
-<div class="container">
-  <h1>Asistencia Docente</h1>
-  
-  <div class="form-group">
-    <label for="reservaSelect">Seleccione la Reserva</label>
-    <select #reservaSelect class="form-control" id="reservaSelect" (change)="loadAsistenciasByReserva(+reservaSelect.value)">
-      <option *ngFor="let reserva of reservas" [value]="reserva.id_reserva">{{ reserva.Materia.Catalogo_Materia.nombre_materia }} - {{ reserva.Laboratorio.nombre_laboratorio }}</option>
-    </select>
+<div class="container mt-3">
+  <h2>Asistencia</h2>
+
+  <!-- Reservation Selection and Button Group -->
+  <div class="row align-items-center mb-3">
+    <div class="col-md-9">
+      <div class="form-group mb-0">
+        <!-- <label for="reservaSelect">Seleccione la Reserva</label> -->
+        <select #reservaSelect class="form-select" id="reservaSelect" (change)="loadAsistenciasByReserva(+reservaSelect.value)">
+          <option value="" disabled selected>Seleccione una reserva</option> <!-- Default option -->
+          <option *ngFor="let reserva of reservas" [value]="reserva.id_reserva">{{ reserva.Materia.Catalogo_Materia.nombre_materia }} - {{ reserva.Laboratorio.nombre_laboratorio }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Button to generate QR code -->
+    <div class="col-md-3 text-right">
+      <button class="btn btn-primary" (click)="generateQrCode()">
+        <i class="bi bi-qr-code"></i> Generar Código QR
+      </button>
+    </div>
   </div>
 
-  <div *ngIf="selectedReserva">
-    <h2>Asistencias</h2>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Estudiante</th>
-          <th>Asistencia</th>
-          <th>Observaciones</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let estudiante of estudiantes">
-          <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }} {{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
-          <td>
-            <select [(ngModel)]="estudiante.tipo_asistencia" class="form-control">
-              <option value="Presente">Presente</option>
-              <option value="Ausente">Ausente</option>
-              <option value="Tarde">Tarde</option>
-            </select>
-          </td>
-          <td>
-            <input type="text" [(ngModel)]="estudiante.observaciones" class="form-control">
-          </td>
-          <td>
-            <button class="btn btn-success" (click)="createOrUpdateAsistencia(estudiante)">Guardar</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-
-    <button class="btn btn-primary" (click)="openQrModal()">Generar Código QR</button>
-
-    <!-- Modal para QR Code -->
-    <ng-template #qrModal let-modal>
-      <div class="modal-header">
-        <h5 class="modal-title">Código QR para {{ selectedReserva.Materia.Catalogo_Materia.nombre_materia }}</h5>
-        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body text-center">
-        <qrcode [qrdata]="qrCodeData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
-      </div>
+  <!-- PrimeNG Table Component -->
+  <p-table [value]="estudiantes" [paginator]="true" [rows]="10">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Estudiante</th>
+        <th>Asistencia</th>
+        <th>Observaciones</th>
+        <th>Acciones</th>
+      </tr>
     </ng-template>
-  </div>
+    <ng-template pTemplate="body" let-estudiante let-rowIndex="rowIndex">
+      <tr *ngIf="estudiantes.length > 0">
+        <td>{{ estudiante.Usuario.Detalle_Usuario.nombres }} {{ estudiante.Usuario.Detalle_Usuario.apellidos }}</td>
+        <td>
+          <p-selectButton [(ngModel)]="estudiante.tipo_asistencia" [options]="asistenciaOptions"></p-selectButton>
+        </td>
+        <td>
+          <input type="text" [(ngModel)]="estudiante.observaciones" class="form-control">
+        </td>
+        <td>
+          <button class="btn btn-success" (click)="createOrUpdateAsistencia(estudiante)">Guardar</button>
+        </td>
+      </tr>
+      <tr *ngIf="estudiantes.length === 0">
+        <td colspan="4" class="text-center">No hay registros disponibles</td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <!-- Modal for QR Code -->
+  <ng-template #qrModal let-modal>
+    <div class="modal-header">
+      <h5 class="modal-title">Código QR para {{ selectedReserva?.Materia.Catalogo_Materia.nombre_materia }}</h5>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-center">
+      <qrcode [qrdata]="qrCodeData" [width]="256" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+  </ng-template>
 </div>
+
+

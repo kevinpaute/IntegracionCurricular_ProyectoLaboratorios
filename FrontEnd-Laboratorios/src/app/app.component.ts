@@ -9,11 +9,6 @@ import { Router, NavigationEnd } from '@angular/router';
 })
 export class AppComponent {
   title = 'FrontEnd-Laboratorios';
-  // constructor(private authService: AuthService) {}
-
-  // isAuthenticated(): boolean {
-  //   return this.authService.isAuthenticated();
-  // }
 
   isAuthenticated: boolean = false;
 

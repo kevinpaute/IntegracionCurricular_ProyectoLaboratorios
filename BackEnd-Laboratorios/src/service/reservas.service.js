@@ -153,14 +153,22 @@ class ReservaService {
         where: { id_docente: id_docente },
         include: {
           Catalogo_Materia: true,
+
+          Usuario: {
+            include: {
+              Detalle_Usuario: true
+            }
+          }
         }
+
+
       });
     } catch (error) {
       console.error('Error en getMateriasPorDocente:', error);
       throw new Error('Error al obtener las materias del docente');
     }
   }
-  
+
   async getReservasByDocente(docenteId) {
     try {
       return await prisma.reserva.findMany({
@@ -197,10 +205,10 @@ class ReservaService {
           id_materia: true
         }
       });
-  
+
       // Extraer todos los ids de las materias de las inscripciones
       const materiaIds = inscripciones.map(inscripcion => inscripcion.id_materia);
-  
+
       // Obtener las reservas que correspondan a las materias en las que está inscrito el estudiante
       return await prisma.reserva.findMany({
         where: {

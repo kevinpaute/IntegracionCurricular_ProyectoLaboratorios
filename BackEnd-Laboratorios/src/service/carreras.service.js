@@ -14,13 +14,6 @@ class CarreraService {
         }
     }
 
-    // async getAll() {
-    //     return prisma.carrera.findMany({
-    //         where: { estado: 'activo' },
-    //     });
-    // }
-
-
 
     async getById(id) {
         try {
@@ -34,6 +27,7 @@ class CarreraService {
             throw new Error(`No se pudo obtener la carrera: ${error.message}`);
         }
     }
+
     async getCursosByCarrera(idCarrera) {
         try {
             const cursos = await prisma.curso.findMany({
@@ -62,6 +56,7 @@ class CarreraService {
             throw new Error(`No se pudo crear la carrera: ${error.message}`);
         }
     }
+    
     async createMany(carreras) {
         try {
             const nuevasCarreras = await prisma.carrera.createMany({

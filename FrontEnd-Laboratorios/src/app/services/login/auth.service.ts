@@ -66,11 +66,5 @@ export class AuthService {
     return this.http.post(`${this.authUrl}/reset-password`, { token, password });
   }
 
-  // getUserId(): number | null {
-  //   if (!this.userId && sessionStorage.getItem('userId')) {
-  //     this.userId = parseInt(sessionStorage.getItem('userId')!, 10);
-  //   }
-  //   return this.userId;
-  // }
 
 }

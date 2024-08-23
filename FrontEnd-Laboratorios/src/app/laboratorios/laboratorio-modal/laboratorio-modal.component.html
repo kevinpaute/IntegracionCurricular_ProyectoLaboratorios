@@ -1,5 +1,7 @@
 <div class="modal-header">
-  <h4 class="modal-title"> <i class="bi bi-pc-display"></i> {{ laboratorio ? 'Editar Laboratorio' : 'Crear Laboratorio' }}</h4>
+  <h4 class="modal-title">
+    <i class="bi bi-pc-display"></i> {{ laboratorio ? 'Editar Laboratorio' : 'Crear Laboratorio' }}
+  </h4>
   <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
 </div>
 
@@ -17,6 +19,16 @@
       <label for="capacidad">Capacidad</label>
       <input id="capacidad" type="number" class="form-control" formControlName="capacidad">
     </div>
+
+    <!-- Mostrar el campo de estado solo en edición -->
+    <div *ngIf="laboratorio" class="form-group">
+      <label for="estado">Estado</label>
+      <select id="estado" class="form-select" formControlName="estado">
+        <option value="ACTIVO">Activo</option>
+        <option value="INACTIVO">Inactivo</option>
+      </select>
+    </div>
+
     <button type="submit" class="btn btn-primary">Guardar</button>
   </form>
 </div>

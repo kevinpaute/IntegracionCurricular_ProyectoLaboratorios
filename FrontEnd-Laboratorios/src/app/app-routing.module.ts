@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { AuthGuard } from './guards/auth.guard';
-import { NavbarComponent } from './navbar/navbar.component';
 import { LaboratoriosComponent } from './laboratorios/laboratorios.component';
 import { InventarioComponent } from './laboratorios/inventario/inventario.component';
 import { RevisionEquiposComponent } from './laboratorios/revision-equipos/revision-equipos.component';
@@ -15,6 +14,7 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 import { UsuariosComponent } from './gestion/usuarios/usuarios.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { BitacoraComponent } from './bitacora/bitacora.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -33,10 +33,10 @@ const routes: Routes = [
       { path: 'gestion/mis-materias', component: GestionMateriasComponent, canActivate: [AuthGuard], data: { roles: ['docente'] } },
       { path: 'reservas', component: ReservasComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },
       { path: 'reservas-docente', component: ReservasDocenteComponent, canActivate: [AuthGuard], data: { roles: ['docente'] } },
-      { path: 'cuenta', component: CuentaComponent, canActivate: [AuthGuard] },
+      { path: 'cuenta', component: CuentaComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista','docente', ] }},
       { path: 'gestion/usuarios', component: UsuariosComponent, canActivate: [AuthGuard], data: { roles: ['administrador']}},
       { path: 'asistencia', component: AsistenciaDocenteComponent, canActivate: [AuthGuard], data: { roles: ['docente', 'laboratorista'] } },
-     
+      { path: 'bitacoras', component: BitacoraComponent, canActivate: [AuthGuard], data: { roles: ['administrador', 'laboratorista'] } },
       { path: '', redirectTo: '/gestion/carreras', pathMatch: 'full' }
     ]
   },

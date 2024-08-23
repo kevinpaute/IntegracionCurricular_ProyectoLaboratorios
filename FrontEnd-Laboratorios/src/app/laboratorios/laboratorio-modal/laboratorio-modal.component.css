@@ -11,12 +11,7 @@
     font-size: 18px;
   }
   
-  /* .btn-close {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-  } */
+
   
   .modal-body {
     padding: 20px;
@@ -52,77 +47,30 @@
     border-color: #0056b3;
   }
   
-  /* Estilo específico para el botón de cerrar en la esquina superior derecha */
-  /* .btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
-    font-size: 1.5rem;
-    line-height: 1;
-    color: white;
-    cursor: pointer;
-  } */
+
   
-
-/* h4 {
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 20px;
-    flex: 1;
-    padding: 10px;
-    text-align: center;
+.form-select {
+  font-family: 'Raleway', sans-serif;
+  font-size: 14px;
+  border-radius: 5px;
+  border: 1px solid #ced4da;
+  width: 100%;
+  box-sizing: border-box; /* Asegura que el padding no afecte el ancho */
+  appearance: none; /* Elimina el estilo por defecto del select */
 }
 
-label {
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 13px;
+.form-select option {
+  white-space: nowrap; /* Evita que el texto se corte */
+  overflow: hidden;
+  text-overflow: ellipsis; /* Añade puntos suspensivos si el texto es muy largo */
 }
 
-input{
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 13px;
+.form-control:focus, .form-select:focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
 
-.modal-header {
-    background: linear-gradient(#0274BE, #0274BE, #0274BE, );
-}
-
-.modal-body {
-    background-color: #0692e311;
-    margin: 28px;
-} */
-
-/* .btn-light {
-    background-color: #0274BE;
-    border: 1px solid #0274BE;
-} */
-
-/*
-.btn-primary {
-    background-color: #0274BE;
-    border: 1px solid #0274BE;
-    color: white;
-    height: 35px;
-    width: 90px;
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 13px;
-}
-
-.btn-primary:hover {
-    background-color: #0273be4b;
-    border: 1px solid #0273be4b;
-    color: black;
-    height: 35px;
-    width: 90px;
-    font-family: 'Raleway', sans-serif;
-    font-weight: regular;
-    font-size: 13px;
-} */
 
 .btn-close {
     border: 0;

@@ -2,16 +2,16 @@
   <h2 class="text-center">Gestión de Laboratorios</h2>
   <div class="d-flex align-items-center mb-3">
     <input type="text" pInputText class="form-control me-2" placeholder="Buscar por nombre" [(ngModel)]="search" (input)="searchLaboratorios()">
-    <button class="btn btn-success ms-3" (click)="openCreateModal()"><i class="bi bi-plus-circle"></i></button>
+    <button pButton label="Registrar" icon="pi pi-plus" class="p-button-success" type="button" (click)="openCreateModal()"></button>
   </div>
-  <p-table [value]="filteredLaboratorios" [paginator]="true" [rows]="5" [totalRecords]="filteredLaboratorios.length" [loading]="loading">
+  <p-table [value]="filteredLaboratorios" [paginator]="true" [rows]="5" [totalRecords]="filteredLaboratorios.length" [loading]="loading" [responsiveLayout]="'scroll'">
     <ng-template pTemplate="header">
       <tr class="header">
-        <th>Nombre de laboratorio</th>
-        <th>Ubicación</th>
-        <th>Capacidad</th>
-        <th>Estado</th>
-        <th>Acciones</th>
+        <th pSortableColumn="nombre_laboratorio" scope="col">Nombre de laboratorio <p-sortIcon field="nombre_laboratorio"></p-sortIcon></th>
+        <th pSortableColumn="ubicacion" scope="col">Ubicación <p-sortIcon field="ubicacion"></p-sortIcon></th>
+        <th pSortableColumn="capacidad" scope="col">Capacidad <p-sortIcon field="capacidad"></p-sortIcon></th>
+        <th scope="col">Estado </th>
+        <th scope="col">Acciones</th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-laboratorio>
@@ -21,13 +21,13 @@
         <td>{{ laboratorio.capacidad }}</td>
         <td>{{ laboratorio.estado }}</td>
         <td>
-          <button type="button" class="btn btn-primary" (click)="openEditModal(laboratorio)"><i class="bi bi-pencil-square"></i></button> &nbsp; 
+          <button pButton type="button" icon="pi pi-pencil" class="p-button-primary" (click)="openEditModal(laboratorio)"></button> 
         </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage">
       <tr>
-        <td colspan="4" class="text-center">No se encontraron laboratorios.</td>
+        <td colspan="5" class="text-center">No se encontraron laboratorios.</td>
       </tr>
     </ng-template>
   </p-table>

@@ -5,13 +5,8 @@
 
 :host {
   display: block; 
-  /*padding-top: 80px; /* height of navbar */
 }
-/* 
-main {
-  margin-left: 300px;
-  padding: 20px;
-} */
+
 
 body{
   background-color: rgb(217, 166, 98) !important;
@@ -27,7 +22,6 @@ body{
 }
 
 .login-box {
-  padding-top: -80px !important;
   background-color: #ffffff;
   padding: 20px;
   border-radius: 10px;

@@ -18,6 +18,11 @@ export class AsistenciaDocenteComponent implements OnInit {
   estudiantes: any[] = [];
   selectedReserva: any = null;
   qrCodeData: string = '';
+  asistenciaOptions = [
+    { label: 'Presente', value: 'Presente' },
+    { label: 'Ausente', value: 'Ausente' },
+    { label: 'Tarde', value: 'Tarde' }
+  ];
 
   @ViewChild('qrModal') qrModal: TemplateRef<any>;
 
@@ -79,15 +84,6 @@ export class AsistenciaDocenteComponent implements OnInit {
     });
   }
 
-  saveAsistencia(asistencia: any): void {
-    this.asistenciaService.updateAsistencia(asistencia.id_asistencia, asistencia).subscribe(() => {
-      Swal.fire('Éxito', 'Asistencia actualizada correctamente', 'success');
-      this.loadAsistenciasByReserva(this.selectedReserva.id_reserva);
-    }, error => {
-      Swal.fire('Error', 'Error al actualizar la asistencia', 'error');
-    });
-  }
-
   createOrUpdateAsistencia(estudiante: any): void {
     const asistencia = {
       id_inscripcion: estudiante.id_inscripcion,
@@ -105,9 +101,26 @@ export class AsistenciaDocenteComponent implements OnInit {
     });
   }
 
-  openQrModal(): void {
+  saveAllAsistencias(): void {
+    this.estudiantes.forEach(estudiante => {
+      this.createOrUpdateAsistencia(estudiante);
+    });
+    Swal.fire('Éxito', 'Todas las asistencias fueron guardadas', 'success');
+  }
+
+  generateQrCode(): void {
+    if (!this.reservas || this.reservas.length === 0) {
+      // Display toastr alert if there are no reservations available
+      Swal.fire('Error', 'No hay reservas disponibles', 'error');
+      return;
+    }
+  
+    if (!this.selectedReserva) {
+      Swal.fire('Advertencia', 'Seleccione una reserva para generar el código QR', 'warning');
+      return;
+    }
+  
     this.qrCodeData = `http://localhost:3000/api/asistencias/qr?reservaId=${this.selectedReserva.id_reserva}`;
     this.modalService.open(this.qrModal);
   }
 }
-

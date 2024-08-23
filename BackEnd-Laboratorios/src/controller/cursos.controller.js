@@ -38,6 +38,17 @@ class CursoController {
             res.status(500).json({error: error.message });
         }
     }
+
+    async obtenerCursosPorCarreraUltimoPeriodo(req, res) {
+      const { carreraId } = req.params;
+  
+      try {
+        const cursos = await cursoService.obtenerCursosPorCarreraUltimoPeriodo(carreraId);
+        res.json(cursos);
+      } catch (error) {
+        res.status(500).json({ error: error.message });
+      }
+    }
 }
 
 module.exports = new CursoController();

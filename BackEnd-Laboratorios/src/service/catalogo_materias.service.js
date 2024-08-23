@@ -25,58 +25,7 @@ class CatalogoMateriasService {
         }
     }
   
-    // async create({ nombre_materia }) {
-    //     try {
-    //         const nuevoCatalogoMateria = await prisma.catalogo_Materia.create({
-    //             data: {
-    //                 nombre_materia
-    //             }
-    //         });
-    //         return nuevoCatalogoMateria;
-    //     } catch (error) {
-    //         throw new Error(`No se pudo crear el catálogo de materia: ${error.message}`);
-    //     }
-    // }
 
-    // async createMany(materias) {
-    //     try {
-    //         const nuevasMaterias = await prisma.catalogo_Materia.createMany({
-    //             data: materias
-    //         });
-    //         return nuevasMaterias;
-    //     } catch (error) {
-    //         throw new Error(`No se pudieron crear los registros del catálogo de materias: ${error.message}`);
-    //     }
-    // }
-  
-    // async update(id, { nombre_materia }) {
-    //     try {
-    //         const catalogoMateriaActualizado = await prisma.catalogo_Materia.update({
-    //             where: {
-    //                 id_catalogo: parseInt(id, 10)
-    //             },
-    //             data: {
-    //                 nombre_materia
-    //             }
-    //         });
-    //         return catalogoMateriaActualizado;
-    //     } catch (error) {
-    //         throw new Error(`No se pudo actualizar el catálogo de materia: ${error.message}`);
-    //     }
-    // }
-  
-    // async delete(id) {
-    //     try {
-    //         const catalogoMateriaEliminado = await prisma.catalogo_Materia.delete({
-    //             where: {
-    //                 id_catalogo: parseInt(id, 10)
-    //             }
-    //         });
-    //         return catalogoMateriaEliminado;
-    //     } catch (error) {
-    //         throw new Error(`No se pudo eliminar el catálogo de materia: ${error.message}`);
-    //     }
-    // }
 }
 
 module.exports = new CatalogoMateriasService();

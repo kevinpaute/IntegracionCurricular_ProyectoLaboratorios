@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { GestionModule } from './gestion/gestion.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './login/login.component';  // Importa HttpClientModule
 
@@ -24,17 +23,8 @@ import { CuentaComponent } from './cuenta/cuenta.component';
 import { ReservasComponent } from './reservas/reservas.component';
 
 import { FullCalendarModule } from '@fullcalendar/angular';
-import dayGridPlugin from '@fullcalendar/daygrid';
-import timeGridPlugin from '@fullcalendar/timegrid';
-import interactionPlugin from '@fullcalendar/interaction';
 import { ReservasDocenteComponent } from './reservas-docente/reservas-docente.component';
-//import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-// import { NgxPaginationModule } from 'ngx-pagination';
-// FullCalendarModule.registerPlugins([
-//   dayGridPlugin,
-//   timeGridPlugin,
-//   interactionPlugin,
-// ]);
+
 
 import { ToastrModule } from 'ngx-toastr';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -45,6 +35,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { BitacoraComponent } from './bitacora/bitacora.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
 
+
+import { SelectButtonModule } from 'primeng/selectbutton';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputTextModule } from 'primeng/inputtext';
@@ -53,6 +45,12 @@ import { CardModule } from 'primeng/card';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
+
+
+import { DialogModule } from 'primeng/dialog';
+import { ListboxModule } from 'primeng/listbox';
+import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';  // Módulo para mostrar mensajes
 
 
 @NgModule({
@@ -85,7 +83,6 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule, // Asegúrate de que HttpClientModule está en las importaciones
-    // NgxPaginationModule
     FullCalendarModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
@@ -103,8 +100,15 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     InputTextModule,
     ButtonModule,
     CardModule,
+    SelectButtonModule,
+    DialogModule,
+    ListboxModule,
+    //MessageService,
+
   ],
+
   providers: [
+    MessageService,
     AuthService,
     AuthGuard,
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }

@@ -20,4 +20,8 @@ export class CursosService {
     return this.http.get<Curso[]>(`${this.baseUrl}/periodos/${idPeriodo}/cursos`);
   }
 
+  getCursosByCarreraUltimoPeriodo(idCarrera: number ):Observable<Curso[]>{
+    return this.http.get<Curso[]>(`${this.baseUrl}/carrera/${idCarrera}/ultimo-periodo`);
+  }
+
 }

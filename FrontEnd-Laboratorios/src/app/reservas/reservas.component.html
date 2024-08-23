@@ -14,6 +14,7 @@
 </div>
 
 <!-- Modal para crear/editar reservas -->
+<!-- Modal para crear/editar reservas -->
 <ng-template #reservaModal let-modal>
   <div class="modal-header">
     <h4 class="modal-title">Reserva</h4>
@@ -21,33 +22,63 @@
   </div>
   <div class="modal-body">
     <form (ngSubmit)="onSubmit()">
+          <!-- Campo de Motivo -->
+          <div class="form-group">
+            <label for="motivo">Motivo</label>
+            <input type="text" class="form-control" id="motivo" name="motivo" [(ngModel)]="reserva.motivo" required>
+          </div>
+      
+      <!-- Selector de Carrera -->
       <div class="form-group">
-        <label for="motivo">Motivo</label>
-        <input type="text" class="form-control" id="motivo" [(ngModel)]="reserva.motivo" name="motivo" required>
-      </div>
-      <div class="form-group">
-        <label for="fecha_inicio">Fecha y Hora de Inicio</label>
-        <input type="datetime-local" class="form-control" id="fecha_inicio" [(ngModel)]="reserva.fecha_inicio" name="fecha_inicio" required (change)="validateTime('fecha_inicio')">
-      </div>
-      <div class="form-group">
-        <label for="fecha_fin">Fecha y Hora de Fin</label>
-        <input type="datetime-local" class="form-control" id="fecha_fin" [(ngModel)]="reserva.fecha_fin" name="fecha_fin" required (change)="validateTime('fecha_fin')">
-      </div>
-      <div class="form-group">
-        <label for="laboratorio">Laboratorio</label>
-        <select class="form-control" id="laboratorio" [(ngModel)]="reserva.id_laboratorio" name="laboratorio" required>
-          <option *ngFor="let lab of laboratorios" [value]="lab.id_laboratorio">{{ lab.nombre_laboratorio }}</option>
+        <label for="carrera">Seleccionar Carrera:</label>
+        <select id="carrera" name="carrera" class="form-control" [(ngModel)]="selectedCarrera" (change)="onCarreraChange()">
+          <option value="" selected>Seleccione Carrera</option>
+          <option *ngFor="let carrera of carreras" [value]="carrera.id_carrera">{{ carrera.nombre_carrera }}</option>
         </select>
       </div>
-      <div class="form-group">
-        <label for="materia">Materia</label>
-        <select class="form-control" id="materia" [(ngModel)]="reserva.id_materia" name="materia" required>
+    
+      <!-- Selector de Curso -->
+      <div class="form-group mt-3">
+        <label for="curso">Seleccionar Curso:</label>
+        <select id="curso" name="curso" class="form-control" [(ngModel)]="selectedCurso" (change)="onCursoChange()" [disabled]="!selectedCarrera">
+          <option value="" selected>Seleccione Curso</option>
+          <option *ngFor="let curso of cursos" [value]="curso.id_curso">{{ curso.nombre_curso }} - {{ curso.paralelo }}</option>
+        </select>
+      </div>
+    
+      <!-- Selector de Materia -->
+      <div class="form-group mt-3">
+        <label for="materia">Seleccionar Materia:</label>
+        <select id="materia" name="materia" class="form-control" [(ngModel)]="reserva.id_materia" [disabled]="!selectedCurso" required>
+          <option value="" selected>Seleccione Materia</option>
           <option *ngFor="let mat of materias" [value]="mat.id_materia">{{ mat.Catalogo_Materia.nombre_materia }}</option>
         </select>
       </div>
-      <button type="submit" class="btn btn-primary">Guardar</button>
-      <button type="button" class="btn btn-danger" (click)="cancelReserva()" *ngIf="reserva.id_reserva">Cancelar Reserva</button>
+    
+      <!-- Selector de Laboratorio -->
+      <div class="form-group mt-3">
+        <label for="laboratorio">Laboratorio</label>
+        <select class="form-control" id="laboratorio" name="laboratorio" [(ngModel)]="reserva.id_laboratorio" required>
+          <option value="" selected>Seleccione Laboratorio</option>
+          <option *ngFor="let lab of laboratorios" [value]="lab.id_laboratorio">{{ lab.nombre_laboratorio }}</option>
+        </select>
+      </div>
+
+      <!-- Campo de Fecha y Hora de Inicio -->
+      <div class="form-group">
+        <label for="fecha_inicio">Fecha y Hora de Inicio</label>
+        <input type="datetime-local" class="form-control" id="fecha_inicio" name="fecha_inicio" [(ngModel)]="reserva.fecha_inicio" required (change)="validateTime('fecha_inicio')">
+      </div>
+    
+      <!-- Campo de Fecha y Hora de Fin -->
+      <div class="form-group">
+        <label for="fecha_fin">Fecha y Hora de Fin</label>
+        <input type="datetime-local" class="form-control" id="fecha_fin" name="fecha_fin" [(ngModel)]="reserva.fecha_fin" required (change)="validateTime('fecha_fin')">
+      </div>
+    
+      <button type="submit" class="btn btn-primary mt-3">Guardar</button>
+      <button type="button" class="btn btn-danger mt-3" (click)="cancelReserva()" *ngIf="reserva.id_reserva">Cancelar Reserva</button>
     </form>
+    
   </div>
 </ng-template>
-

@@ -28,7 +28,7 @@ class MateriasService {
                     }
                 }
             }
-        });
+        }); 
     }
 
     async getById(id) {

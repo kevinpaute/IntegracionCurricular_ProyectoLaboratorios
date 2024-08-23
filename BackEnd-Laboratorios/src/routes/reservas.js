@@ -12,6 +12,5 @@ router.get('/materias/docente/:id_docente', (req, res) => ReservaController.getM
 
 router.get('/reservas/docente/:docenteId', (req, res) => ReservaController.getReservasByDocente(req, res));
 
-//router.delete('reservas/:id_reserva', (req, res) => ReservaController.deleteReserva(req, res));
 router.get('/reservas/estudiante/:id_estudiante', (req, res) => ReservaController.getReservasByEstudiante(req, res));
 module.exports = router;

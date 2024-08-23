@@ -13,17 +13,27 @@ export class LaboratorioModalComponent implements OnInit {
   @Input() laboratorio: any;
   laboratorioForm: FormGroup;
 
-  constructor(public activeModal: NgbActiveModal, private fb: FormBuilder, private laboratoriosService: LaboratoriosService, private toastr: ToastrService ) {
+  constructor(
+    public activeModal: NgbActiveModal,
+    private fb: FormBuilder,
+    private laboratoriosService: LaboratoriosService,
+    private toastr: ToastrService
+  ) {
     this.laboratorioForm = this.fb.group({
       nombre_laboratorio: ['', Validators.required],
       ubicacion: ['', Validators.required],
-      capacidad: ['', [Validators.required, Validators.min(1)]]
+      capacidad: ['', [Validators.required, Validators.min(1)]],
+      estado: ['ACTIVO']  // Valor por defecto
     });
   }
 
   ngOnInit(): void {
     if (this.laboratorio) {
+      // Si estamos editando, incluimos el estado en el formulario
       this.laboratorioForm.patchValue(this.laboratorio);
+    } else {
+      // Si estamos creando, removemos el campo estado
+      this.laboratorioForm.removeControl('estado');
     }
   }
 

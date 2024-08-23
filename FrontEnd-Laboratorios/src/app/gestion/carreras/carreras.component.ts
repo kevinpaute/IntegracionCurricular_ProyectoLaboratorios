@@ -92,9 +92,3 @@ export class CarrerasComponent implements OnInit {
   }
 }
 
-
-  // eliminarCarrera(id: number): void {
-  //   this.carrerasService.delete(id).subscribe(() => {
-  //     this.carreras = this.carreras.filter(c => c.id_carrera !== id);
-  //   });
-  // }

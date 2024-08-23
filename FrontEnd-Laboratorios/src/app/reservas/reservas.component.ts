@@ -11,6 +11,8 @@ import { ReservaSocketService } from '../services/reservas/reserva-socket.servic
 import { MateriasService } from '../gestion/materias.service';
 import { LaboratoriosService } from '../services/laboratorios/laboratorios.service';
 import Swal from 'sweetalert2';
+import { CarrerasService } from '../gestion/carreras.service';
+import { CursosService } from '../gestion/cursos.service';
 
 @Component({
   selector: 'app-reservas',
@@ -23,8 +25,12 @@ export class ReservasComponent implements OnInit {
   reservas: any[] = [];
   laboratorios: any[] = [];
   materias: any[] = [];
+  carreras: any[] = [];
+  cursos: any[] = [];
   reserva: any = {};
   selectedLaboratorio: number | "" = "";
+  selectedCarrera: number | "" = "";
+  selectedCurso: number | "" = "";
 
   calendarOptions: CalendarOptions = {
     plugins: [
@@ -65,7 +71,8 @@ export class ReservasComponent implements OnInit {
       hour: '2-digit',
       minute: '2-digit',
       hour12: false // Formato de 24 horas
-    }
+    },
+
   };
 
   constructor(
@@ -75,12 +82,14 @@ export class ReservasComponent implements OnInit {
     private authService: AuthService,
     private reservaSocketService: ReservaSocketService,
     private changeDetector: ChangeDetectorRef,
-    private laboratorioService: LaboratoriosService
+    private laboratorioService: LaboratoriosService,
+    private carrerasService: CarrerasService,
+    private cursosService: CursosService
   ) {}
 
   ngOnInit(): void {
     this.loadLaboratorios();
-    this.loadMaterias();
+    this.loadCarreras();
     this.loadReservas();
 
     // Suscribirse a los cambios en las reservas
@@ -91,50 +100,62 @@ export class ReservasComponent implements OnInit {
 
   getEventColor(reserva: any): string {
     const colors = [
-      '#5C6BC0', //azulado
-      '#7E57C2', //morado
-      '#FF7043', //naranja
-      '#e67c73', //flamenco
-      '#33b679', //salvia
-      '#039be5', //lavanda
-      '#EF5350', //rojo
-
-      //'#7986cb'
-
+      '#5C6BC0', // azulado
+      '#7E57C2', // morado
+      '#FF7043', // naranja
+      '#e67c73', // flamenco
+      '#33b679', // salvia
+      '#039be5', // lavanda
+      '#EF5350', // rojo
     ];
     return colors[reserva.id_reserva % colors.length];
   }
 
   loadReservas(): void {
     this.reservaService.getReservas().subscribe(data => {
-      console.log('Reservas cargadas:', data);
       this.reservas = data;
       this.filterReservations(); // Filtrar al cargar reservas
     }, error => {
-      console.error('Error al cargar reservas:', error);
       Swal.fire('Error', 'Error al cargar las reservas', 'error');
     });
   }
 
   loadLaboratorios(): void {
     this.laboratorioService.getLaboratorios().subscribe(data => {
-      console.log('Laboratorios cargados:', data);
       this.laboratorios = data;
     });
   }
 
-  loadMaterias(): void {
-    this.materiasService.getAll().subscribe(data => {
-      console.log('Materias cargadas:', data);
-      this.materias = data;
+  loadCarreras(): void {
+    this.carrerasService.getCarreras().subscribe(data => {
+      this.carreras = data;
+      console.log('Carreras cargadas:', data);
     });
+  }
+  
+  onCarreraChange(): void {
+    if (this.selectedCarrera) {
+      this.cursosService.getCursosByCarreraUltimoPeriodo(this.selectedCarrera).subscribe(data => {
+        this.cursos = data;
+        console.log('Cursos cargados:', data);
+        this.selectedCurso = '';
+        this.materias = [];
+      });
+    }
+  }
+  
+  onCursoChange(): void {
+    if (this.selectedCurso) {
+      this.materiasService.getMateriasByCurso(this.selectedCurso).subscribe(data => {
+        this.materias = data;
+        console.log('Materias cargadas:', data);
+      });
+    }
   }
 
   filterReservations(): void {
-    console.log('Laboratorio seleccionado:', this.selectedLaboratorio);
     if (this.selectedLaboratorio) {
       this.reservaService.getReservasByLaboratorio(this.selectedLaboratorio).subscribe(filteredReservations => {
-        console.log('Reservas filtradas:', filteredReservations);
         this.updateCalendarEvents(filteredReservations);
       });
     } else {
@@ -143,28 +164,27 @@ export class ReservasComponent implements OnInit {
   }
 
   updateCalendarEvents(reservas: any[]): void {
-    console.log('Actualizando eventos del calendario con reservas:', reservas);
     const events: EventInput[] = reservas.map(reserva => {
       const materiaNombre = reserva.Materia?.Catalogo_Materia?.nombre_materia || 'Sin Materia';
       const laboratorioNombre = reserva.Laboratorio?.nombre_laboratorio || 'Sin Laboratorio';
 
       return {
-        title: materiaNombre + '\n' + laboratorioNombre,
+        title: `${materiaNombre}\n${laboratorioNombre}`,
         start: reserva.fecha_inicio,
         end: reserva.fecha_fin,
         id: reserva.id_reserva,
-        backgroundColor: this.getEventColor(reserva), // Color de fondo del evento
-        borderColor: this.getEventColor(reserva), // Color del borde del evento
+        backgroundColor: this.getEventColor(reserva),
+        borderColor: this.getEventColor(reserva),
         extendedProps: {
-          laboratorioNombre: laboratorioNombre,
+          laboratorioNombre,
           motivo: reserva.motivo
         }
       };
     });
-    console.log('Eventos generados:', events);
+
     this.calendarOptions = {
       ...this.calendarOptions,
-      events: events
+      events
     };
     this.changeDetector.detectChanges(); // Forzar la detección de cambios
   }
@@ -190,7 +210,6 @@ export class ReservasComponent implements OnInit {
   }
 
   handleEvents(events: EventApi[]) {
-    console.log('Eventos del calendario establecidos:', events);
     this.changeDetector.detectChanges();
   }
 
@@ -223,7 +242,7 @@ export class ReservasComponent implements OnInit {
     if (this.reserva.id_reserva) {
       Swal.fire({
         title: '¿Estás seguro?',
-        text: "Editar la reserva",
+        text: 'Editar la reserva',
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -240,7 +259,6 @@ export class ReservasComponent implements OnInit {
   }
 
   submitReservation(): void {
-    console.log('Submitting reservation:', this.reserva);
     this.reserva.id_laboratorio = Number(this.reserva.id_laboratorio);
     this.reserva.id_materia = Number(this.reserva.id_materia);
     this.reserva.fecha_inicio = this.formatDate(new Date(this.reserva.fecha_inicio));
@@ -255,7 +273,6 @@ export class ReservasComponent implements OnInit {
           Swal.fire('Éxito', 'Reserva actualizada exitosamente', 'success');
         },
         error => {
-          console.error('Error updating reservation:', error);
           Swal.fire('Error', 'Error al actualizar la reserva', 'error');
         }
       );
@@ -268,7 +285,6 @@ export class ReservasComponent implements OnInit {
           Swal.fire('Éxito', 'Reserva creada exitosamente', 'success');
         },
         error => {
-          console.error('Error creating reservation:', error);
           if (error.status === 400) {
             Swal.fire('Error', 'El laboratorio ya está reservado para este horario', 'error');
           } else {
@@ -282,7 +298,7 @@ export class ReservasComponent implements OnInit {
   cancelReserva(): void {
     Swal.fire({
       title: '¿Estás seguro?',
-      text: "La reserva será cancelada",
+      text: 'La reserva será cancelada',
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
@@ -298,7 +314,6 @@ export class ReservasComponent implements OnInit {
             Swal.fire('Éxito', 'Reserva cancelada exitosamente', 'success');
           },
           error => {
-            console.error('Error al cancelar la reserva:', error);
             Swal.fire('Error', 'Error al cancelar la reserva', 'error');
           }
         );

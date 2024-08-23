@@ -1,10 +1,10 @@
 <p-table [value]="estudiantes" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,20]" responsiveLayout="scroll">
   <ng-template pTemplate="header">
     <tr>
-      <th>Nombres</th>
-      <th>Apellidos</th>
-      <th>Cédula</th>
-      <th>Correo</th>
+      <th scope="col">Nombres</th>
+      <th scope="col">Apellidos</th>
+      <th scope="col">Cédula</th>
+      <th scope="col">Correo</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-estudiante>

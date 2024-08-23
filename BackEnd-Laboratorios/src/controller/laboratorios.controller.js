@@ -47,7 +47,7 @@ class LaboratorioController {
     async update(req, res) {
         try {
             const { id } = req.params;
-            const { nombre_laboratorio, ubicacion, capacidad } = req.body;
+            const { nombre_laboratorio, ubicacion, capacidad, estado} = req.body;
             const laboratorioActualizado = await laboratorioService.update(id, { nombre_laboratorio, ubicacion, capacidad, estado });
             if (laboratorioActualizado) {
                 res.json(laboratorioActualizado);
